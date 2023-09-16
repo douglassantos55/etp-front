@@ -1,0 +1,40 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "company_logo": "",
+            "company_name": "Coca-Cola",
+            "available_cash": 12532.51,
+            "available_slots": 3
+        },
+        {
+            "id": 2,
+            "company_name": "McDonalds",
+            "available_cash": 13200.9,
+            "available_slots": 6
+        }
+    ],
+    "buildings": [
+        {
+            "id": 1,
+            "level": 1,
+            "position": 0,
+            "name": "Beverage Factory",
+            "user_id": 1
+        },
+        {
+            "id": 2,
+            "level": 1,
+            "position": 2,
+            "name": "Recycling Factory",
+            "user_id": 1
+        },
+        {
+            "id": 4,
+            "level": 1,
+            "position": 0,
+            "name": "Catering",
+            "user_id": 2
+        }
+    ]
+}
