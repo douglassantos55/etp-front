@@ -53,7 +53,7 @@
 		<div class="flex items-center gap-4">
 			{#each resource.resource.requirements as requirement}
 				<div class="flex items-center gap-2">
-					{requirement.qty}x
+					{requirement.qty * (qty || 1)}x
 					<img src={requirement.resource.image} alt={requirement.resource.name} class="w-12 h-12" />
 				</div>
 			{/each}
