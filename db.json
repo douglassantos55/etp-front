@@ -2,7 +2,7 @@
     "users": [
         {
             "id": 1,
-            "company_logo": "",
+            "company_logo": "https://picsum.photos/100",
             "company_name": "Coca-Cola",
             "available_cash": 12532.51,
             "available_slots": 3
@@ -20,21 +20,95 @@
             "level": 1,
             "position": 0,
             "name": "Beverage Factory",
-            "user_id": 1
+            "userId": 1,
+            "wages_hour": 1523,
+            "resources": [
+                { "resourceId": 1, "production_hour": 1320 },
+                { "resourceId": 2, "production_hour": 100 }
+            ]
         },
         {
             "id": 2,
             "level": 1,
             "position": 2,
             "name": "Recycling Factory",
-            "user_id": 1
+            "userId": 1,
+            "wages_hour": 2523,
+            "resources": [
+                { "resourceId": 3, "production_hour": 150 },
+                { "resourceId": 4, "production_hour": 500 }
+            ]
         },
         {
             "id": 4,
             "level": 1,
             "position": 0,
             "name": "Catering",
-            "user_id": 2
+            "userId": 2,
+            "wages_hour": 3523,
+            "resources": [
+                { "resourceId": 5, "production_hour": 1320 },
+                { "resourceId": 6, "production_hour": 300 }
+            ]
         }
+    ],
+    "resources": [
+        {
+            "id": 1,
+            "name": "Beer",
+            "categoryId": 1,
+            "requirements": [],
+            "image": "https://picsum.photos/100"
+        },
+        {
+            "id": 2,
+            "name": "Juice",
+            "categoryId": 1,
+            "requirements": [
+                { "resourceId": 1, "qty": 5 }
+            ],
+            "image": "https://picsum.photos/100"
+        },
+        {
+            "id": 3,
+            "name": "Plastic",
+            "categoryId": 2,
+            "requirements": [
+                { "resourceId": 2, "qty": 5 }
+            ],
+            "image": "https://picsum.photos/100"
+        },
+        {
+            "id": 4,
+            "name": "Cardboard",
+            "categoryId": 2,
+            "requirements": [
+                { "resourceId": 3, "qty": 5 },
+                { "resourceId": 2, "qty": 5 }
+            ],
+            "image": "https://picsum.photos/100"
+        },
+        {
+            "id": 5,
+            "name": "Meatballs",
+            "categoryId": 1,
+            "requirements": [
+                { "resourceId": 4, "qty": 5 }
+            ],
+            "image": "https://picsum.photos/100"
+        },
+        {
+            "id": 6,
+            "name": "Hamburger",
+            "categoryId": 1,
+            "requirements": [
+                { "resourceId": 5, "qty": 5 }
+            ],
+            "image": "https://picsum.photos/100"
+        }
+    ],
+    "categories": [
+        { "id": 1, "name": "Food" },
+        { "id": 2, "name": "Materials" }
     ]
 }
