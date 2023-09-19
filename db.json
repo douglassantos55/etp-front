@@ -14,6 +14,38 @@
             "available_slots": 6
         }
     ],
+    "inventories": [
+        {
+            "userId": 1,
+            "resourceId": 2,
+            "qty": 105,
+            "sourcing_cost": 5.77
+        },
+        {
+            "userId": 1,
+            "resourceId": 1,
+            "qty": 55,
+            "sourcing_cost": 1.77
+        },
+        {
+            "userId": 2,
+            "resourceId": 5,
+            "qty": 524,
+            "sourcing_cost": 17.7
+        },
+        {
+            "userId": 2,
+            "resourceId": 6,
+            "qty": 24,
+            "sourcing_cost": 7.15
+        },
+        {
+            "userId": 1,
+            "resourceId": 4,
+            "qty": 24,
+            "sourcing_cost": 7.15
+        }
+    ],
     "buildings": [
         {
             "id": 1,

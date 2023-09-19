@@ -34,6 +34,12 @@ declare global {
         resource: Resource;
         production_hour: number;
     }
+
+    interface InventoryItem {
+        qty: number;
+        resource: Resource;
+        sourcing_cost: number;
+    }
 }
 
 export { };
