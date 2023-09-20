@@ -9,9 +9,44 @@
         },
         {
             "id": 2,
+            "company_logo": "https://picsum.photos/100",
             "company_name": "McDonalds",
             "available_cash": 13200.9,
             "available_slots": 6
+        }
+    ],
+    "orders": [
+        {
+            "id": 1,
+            "userId": 2,
+            "resourceId": 6,
+            "qty": 152,
+            "price": 30.75,
+            "quality": 0
+        },
+        {
+            "id": 2,
+            "userId": 2,
+            "resourceId": 5,
+            "qty": 15,
+            "price": 3.75,
+            "quality": 1
+        },
+        {
+            "id": 3,
+            "userId": 1,
+            "resourceId": 2,
+            "qty": 125,
+            "price": 23.75,
+            "quality": 0
+        },
+        {
+            "id": 4,
+            "userId": 2,
+            "resourceId": 2,
+            "qty": 1125,
+            "price": 20.75,
+            "quality": 0
         }
     ],
     "inventories": [

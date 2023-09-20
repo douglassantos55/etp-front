@@ -8,6 +8,14 @@ declare global {
         // interface Platform {}
     }
 
+    interface User {
+        id: number;
+        company_name: string;
+        company_logo: string;
+        available_cash: number;
+        available_slots: number;
+    }
+
     interface Resource {
         id: number;
         name: string;
@@ -39,6 +47,13 @@ declare global {
         qty: number;
         resource: Resource;
         sourcing_cost: number;
+    }
+
+    interface OrderItem {
+        qty: number;
+        price: number;
+        user: User;
+        resource: Resource;
     }
 }
 
