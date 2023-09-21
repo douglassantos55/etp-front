@@ -1,10 +1,15 @@
 <script lang="ts">
 	type ButtonVariant = 'hollow' | 'primary' | undefined;
 	export let variant: ButtonVariant = 'primary';
+
+	$: component = $$props.href ? 'a' : 'button';
 </script>
 
-<button
+<svelte:element
+	this={component}
 	on:click
+	role="button"
+	tabindex="0"
 	{...$$props}
 	class:border={variant === 'hollow'}
 	class:hover:bg-slate-100={variant === 'hollow'}
@@ -14,4 +19,4 @@
 	class="py-2 px-3 w-full rounded-lg text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
 >
 	<slot />
-</button>
+</svelte:element>
