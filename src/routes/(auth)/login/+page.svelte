@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
+	import Input from '$lib/components/Input.svelte';
+	import Button from '$lib/components/Button.svelte';
 
 	export let form: ActionData;
 </script>
@@ -9,12 +11,7 @@
 	<form method="post" use:enhance>
 		<div class="mb-4">
 			<label for="username">Username</label>
-			<input
-				type="text"
-				id="username"
-				name="username"
-				class="border w-full py-3 px-4 mt-2 rounded-md"
-			/>
+			<Input type="text" id="username" name="username" />
 
 			{#if form?.error}
 				<span class="text-red-500">{form?.message}</span>
@@ -23,17 +20,9 @@
 
 		<div class="mb-8">
 			<label for="password">Password</label>
-			<input
-				type="password"
-				id="password"
-				name="password"
-				class="border w-full py-3 px-4 mt-2 rounded-md"
-			/>
+			<Input type="password" id="password" name="password" />
 		</div>
 
-		<button
-			type="submit"
-			class="p-4 w-full text-white bg-indigo-600 rounded-xl text-lg font-semibold">Login</button
-		>
+		<Button type="submit">Login</Button>
 	</form>
 </div>

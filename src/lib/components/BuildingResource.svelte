@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { inventory } from '$lib/stores/inventory';
+	import Input from '$lib/components/Input.svelte';
+	import Button from './Button.svelte';
 
 	export let building: Building;
 	export let resource: BuildingResource;
 
 	let qty: number;
+
+	function maxQty() {}
 
 	$: inputId = `qty-${resource.resource.id}`;
 	$: duration = qty / resource.production_hour;
@@ -63,22 +67,15 @@
 	<div class="w-36">
 		<label for={inputId} class="uppercase font-semibold">Quantity</label>
 
-		<input
-			min="0"
-			id={inputId}
-			type="number"
-			bind:value={qty}
-			class="border w-full py-2 px-3 rounded-md mt-2"
-		/>
+		<Input min="0" id={inputId} type="number" bind:value={qty} />
 
 		<div class="flex gap-3 my-3">
-			<button
-				class="py-2 px-3 w-full border rounded-md"
-				on:click={() => (qty = Math.floor(resource.production_hour * 24))}>24h</button
+			<Button variant="hollow" on:click={() => (qty = Math.floor(resource.production_hour * 24))}
+				>24h</Button
 			>
-			<button class="py-2 px-3 w-full border rounded-md">Max</button>
+			<Button variant="hollow" on:click={maxQty}>Max</Button>
 		</div>
 
-		<button class="py-2 px-3 w-full text-white bg-indigo-600 disabled:bg-indigo-400 rounded-lg" disabled={!qty || qty == 0}>Produce</button>
+		<Button disabled={!qty || qty == 0}>Produce</Button>
 	</div>
 </div>
