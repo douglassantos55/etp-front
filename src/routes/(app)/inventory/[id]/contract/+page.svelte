@@ -34,7 +34,7 @@
 	{/if}
 
 	<div class="relative max-w-lg">
-		<div class="mb-4">
+		<div class="group mb-4">
 			<label for="recipient">Recipient</label>
 
 			<Input
@@ -45,17 +45,23 @@
 				value={selected?.company_name}
 			/>
 
-			{#if focused}
-				<div class="absolute w-full bg-white shadow-md rounded overflow-hidden">
-					{#if results.length == 0 && data.partners.length > 0}
-						<Options companies={data.partners} on:select={selectCompany} />
+			<div
+				class="hidden group-focus-within:block absolute w-full bg-white shadow-md rounded overflow-hidden"
+			>
+				{#await data.stream.partners}
+					<p>Loading partners</p>
+				{:then partners}
+					{#if results.length == 0 && partners.length > 0}
+						<Options companies={partners} on:select={selectCompany} />
 					{/if}
 
 					{#if results.length > 0}
 						<Options companies={results} on:select={selectCompany} />
 					{/if}
-				</div>
-			{/if}
+				{:catch}
+					<p>Could not fetch partners</p>
+				{/await}
+			</div>
 		</div>
 
 		<div class="grid grid-cols-2 sm:grid-cols-3 gap-5 mb-8 items-end max-w-xl">
