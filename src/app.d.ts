@@ -53,6 +53,7 @@ declare global {
         qty: number;
         price: number;
         user: User;
+        quality: number;
         resource: Resource;
     }
 }

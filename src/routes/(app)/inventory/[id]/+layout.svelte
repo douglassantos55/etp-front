@@ -27,24 +27,56 @@
 
 	<slot />
 
-	{#await data.streamed.orders}
-		<p>Loading current market orders...</p>
-	{:then orders}
-		<table class="w-full border-collapse">
-			<thead>
-				<th>&nbsp;</th>
-				<th class="px-4 text-right">Qty</th>
-				<th class="px-4 text-right">Price</th>
-				<th class="px-4 text-right">Subtotal</th>
-			</thead>
+	<div class="grid grid-cols-2 gap-10">
+		{#await data.streamed.orders}
+			<p>Loading current market orders...</p>
+		{:then orders}
+			<div>
+				<h2 class="font-semibold">Market orders</h2>
 
-			<tbody>
-				{#each orders as order}
-					<OrderItem {order} current={data.user.id} />
-				{/each}
-			</tbody>
-		</table>
-	{:catch error}
-		<p>Could not fetch orders: {error}</p>
-	{/await}
+				<table class="w-full border-collapse">
+					<thead>
+						<th>&nbsp;</th>
+						<th class="px-4 text-right">Qty</th>
+						<th class="px-4 text-right">Price</th>
+						<th class="px-4 text-right">Subtotal</th>
+					</thead>
+
+					<tbody>
+						{#each orders as order}
+							<OrderItem {order} current={data.user.id} />
+						{/each}
+					</tbody>
+				</table>
+			</div>
+		{:catch error}
+			<p>Could not fetch orders: {error}</p>
+		{/await}
+
+
+		{#await data.streamed.contracts}
+			<p>Loading pending contracts...</p>
+		{:then contracts}
+			<div>
+				<h2 class="font-semibold">Pending contracts</h2>
+
+				<table class="w-full border-collapse">
+					<thead>
+						<th>&nbsp;</th>
+						<th class="px-4 text-right">Qty</th>
+						<th class="px-4 text-right">Price</th>
+						<th class="px-4 text-right">Subtotal</th>
+					</thead>
+
+					<tbody>
+						{#each contracts as order}
+							<OrderItem {order} current={data.user.id} />
+						{/each}
+					</tbody>
+				</table>
+			</div>
+		{:catch error}
+			<p>Could not fetch contracts: {error}</p>
+		{/await}
+	</div>
 </div>

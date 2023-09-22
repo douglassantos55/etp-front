@@ -59,6 +59,28 @@
             "quality": 0
         }
     ],
+    "contracts": [
+        {
+            "id": 1,
+            "userId": 2,
+            "senderId": 1,
+            "resourceId": 1,
+            "price": 22,
+            "quality": 0,
+            "qty": 100,
+            "date": "2023-09-21T19:09:28.953Z"
+        },
+        {
+            "id": 2,
+            "userId": 3,
+            "senderId": 1,
+            "resourceId": 2,
+            "price": 12,
+            "quality": 0,
+            "qty": 133,
+            "date": "2023-09-21T19:09:28.953Z"
+        }
+    ],
     "inventories": [
         {
             "userId": 1,
