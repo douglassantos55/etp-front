@@ -5,14 +5,24 @@
             "company_logo": "https://picsum.photos/100",
             "company_name": "Coca-Cola",
             "available_cash": 12532.51,
-            "available_slots": 3
+            "available_slots": 3,
+            "users": [2, 3]
         },
         {
             "id": 2,
             "company_logo": "https://picsum.photos/100",
             "company_name": "McDonalds",
             "available_cash": 13200.9,
-            "available_slots": 6
+            "available_slots": 6,
+            "users": [1, 3]
+        },
+        {
+            "id": 3,
+            "company_logo": "https://picsum.photos/100",
+            "company_name": "Amazno",
+            "available_cash": 13200.9,
+            "available_slots": 6,
+            "users": [1, 2]
         }
     ],
     "orders": [

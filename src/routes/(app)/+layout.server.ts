@@ -6,6 +6,6 @@ export const load: LayoutServerLoad = async function({ fetch, cookies }) {
     if (!accessToken) {
         throw redirect(302, "/login");
     }
-    const response = await fetch(`http://localhost:3000/users/1`);
+    const response = await fetch(`http://localhost:3000/users/1?_expand=users`);
     return { user: await response.json() };
 }

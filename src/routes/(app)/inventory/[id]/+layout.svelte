@@ -1,6 +1,7 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
 	import type { LayoutData } from './$types';
+	import Button from '$lib/components/Button.svelte';
+	import OrderItem from '$lib/components/OrderItem.svelte';
 
 	export let data: LayoutData;
 </script>
@@ -25,4 +26,25 @@
 	</div>
 
 	<slot />
+
+	{#await data.streamed.orders}
+		<p>Loading current market orders...</p>
+	{:then orders}
+		<table class="w-full border-collapse">
+			<thead>
+				<th>&nbsp;</th>
+				<th class="px-4 text-right">Qty</th>
+				<th class="px-4 text-right">Price</th>
+				<th class="px-4 text-right">Subtotal</th>
+			</thead>
+
+			<tbody>
+				{#each orders as order}
+					<OrderItem {order} current={data.user.id} />
+				{/each}
+			</tbody>
+		</table>
+	{:catch error}
+		<p>Could not fetch orders: {error}</p>
+	{/await}
 </div>
