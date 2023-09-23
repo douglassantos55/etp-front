@@ -13,6 +13,7 @@
 <div class="space-y-1">
 	{#each companies as company}
 		<button
+			type="button"
 			on:click={() => select(company)}
 			class="w-full flex items-center gap-2 hover:bg-slate-100"
 		>
