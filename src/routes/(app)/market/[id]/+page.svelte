@@ -14,6 +14,11 @@
 	let _qty = $page.url.searchParams.get('qty') || '0';
 	let quality = $page.url.searchParams.get('quality') || '0';
 
+	function repurchase(purchase: Purchase) {
+		_qty = purchase.qty.toString();
+		quality = purchase.order.quality.toString();
+	}
+
 	$: qty = parseInt(_qty);
 
 	$: {
@@ -45,11 +50,39 @@
 		qty > totalOrders ? 'Too much my dude' : total > $user.available_cash ? 'Not enough cash' : '';
 </script>
 
+{#if data.recent.length > 0}
+	<h2 class="uppercase font-semibold tracking-tight">Recent purchases</h2>
+
+	<table class="w-full border-collapse mt-4 mb-12">
+		<thead>
+			<th class="pe-4 text-left">Quality</th>
+			<th class="px-4 text-right">Qty</th>
+			<th class="px-4 text-right">Price</th>
+			<th class="px-4 text-right">Subtotal</th>
+			<th>&nbsp;</th>
+		</thead>
+
+		<tbody>
+			{#each data.recent as purchase}
+				<tr>
+					<td class="pe-4">{purchase.order.quality}</td>
+					<td class="px-4 text-right">{purchase.qty}</td>
+					<td class="px-4 text-right">{purchase.order.price}</td>
+					<td class="px-4 text-right">{purchase.order.price * purchase.qty}</td>
+					<td class="px-4 w-48">
+						<Button type="button" on:click={() => repurchase(purchase)}>Repurchase</Button>
+					</td>
+				</tr>
+			{/each}
+		</tbody>
+	</table>
+{/if}
+
 <div class="mb-12">
 	<form>
 		<input type="hidden" name="resourceId" value={$page.params.id} />
 
-		<table class="table-auto align-bottom">
+		<table class="w-full table-auto align-bottom">
 			<td>
 				<label for="qty">Qty</label>
 				<Input id="qty" name="qty" type="number" bind:value={_qty} />

@@ -56,6 +56,21 @@ declare global {
         quality: number;
         resource: Resource;
     }
+
+    interface Order {
+        id: number;
+        user: User;
+        quality: number;
+        qty: number;
+        price: number;
+        resource: Resource;
+    }
+
+    interface Purchase {
+        id: number;
+        order: Order;
+        qty: number;
+    }
 }
 
 export { };

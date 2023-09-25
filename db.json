@@ -59,6 +59,22 @@
             "quality": 0
         }
     ],
+    "purchases": [
+        {
+            "id": 1,
+            "orderId": 4,
+            "resourceId": 2,
+            "qty": 125,
+            "userId": 1
+        },
+        {
+            "id": 1,
+            "orderId": 3,
+            "resourceId": 2,
+            "qty": 125,
+            "userId": 1
+        }
+    ],
     "contracts": [
         {
             "id": 1,
