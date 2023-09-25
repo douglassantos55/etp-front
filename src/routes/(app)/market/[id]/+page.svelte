@@ -6,6 +6,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import { user } from '$lib/stores/user';
 
 	export let data: PageData;
 
@@ -40,7 +41,8 @@
 	$: totalOrders = data.orders.reduce((total: number, order: OrderItem) => total + order.qty, 0);
 	$: sourcingCost = (qty && qty > 0 && round(total / qty)) || 0;
 
-	$: error = qty > totalOrders ? 'Too much my dude' : '';
+	$: error =
+		qty > totalOrders ? 'Too much my dude' : total > $user.available_cash ? 'Not enough cash' : '';
 </script>
 
 <div class="mb-12">
