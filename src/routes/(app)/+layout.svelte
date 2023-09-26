@@ -28,4 +28,5 @@
 <div class="flex absolute bottom-10 justify-center w-full gap-10">
 	<a href="/inventory" class="w-24 h-24 border inline-flex items-center justify-center rounded-full">Inventory</a>
 	<a href="/market" class="w-24 h-24 border inline-flex items-center justify-center rounded-full">Market</a>
+	<a href="/financing" class="w-24 h-24 border inline-flex items-center justify-center rounded-full">Finances</a>
 </div>
