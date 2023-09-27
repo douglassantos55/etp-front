@@ -58,8 +58,10 @@
 						<td class="p-2 border text-right">1%</td>
 						<td class="p-2 border text-right">$ 10.000</td>
 						<td class="p-2 border text-right">
-							<Input placeholder="Amount" />
-							<Button type="submit">Pay</Button>
+							<div class="flex gap-2">
+								<Input placeholder="Amount" max="1000000" type="number" />
+								<Button type="submit">Pay</Button>
+							</div>
 						</td>
 					</tr>
 				</tbody>
