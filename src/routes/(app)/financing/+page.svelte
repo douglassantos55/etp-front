@@ -24,122 +24,126 @@
 </script>
 
 <div class="container px-4 mx-auto py-12">
-	<div class="flex gap-8">
-		<div class="w-1/2 mb-4">
-			<h2 class="uppercase tracking-tight font-semibold mb-4">Loans</h2>
+	<div class="mb-16">
+		<h2 class="uppercase tracking-tight font-semibold mb-4">Loans</h2>
 
-			<form class="flex items-end gap-4 mb-6">
-				<div class="flex-grow">
-					<label for="loan">Amount</label>
-					<Input id="loan" name="amount" />
-				</div>
+		<form class="flex items-end gap-4 mb-6">
+			<div class="w-48">
+				<label for="loan">Amount</label>
+				<Input id="loan" name="amount" type="number" />
+			</div>
 
-				<Button type="submit">Take loan</Button>
-			</form>
+			<Button type="submit">Take loan</Button>
+		</form>
 
-			<table class="w-full table-auto border-collape border">
-				<thead>
-					<tr>
-						<th class="p-2 border text-right">Amount</th>
-						<th class="p-2 border text-right">Interest rate</th>
-						<th class="p-2 border text-right">Interest payment</th>
-						<th class="p-2 border text-right">Payable at</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="p-2 border text-right">$ 1.252.300</td>
-						<td class="p-2 border text-right">10%</td>
-						<td class="p-2 border text-right">$ 125.230</td>
-						<td class="p-2 border text-right">01/10/2023</td>
-					</tr>
-					<tr>
-						<td class="p-2 border text-right">$ 1.000.000</td>
-						<td class="p-2 border text-right">1%</td>
-						<td class="p-2 border text-right">$ 10.000</td>
-						<td class="p-2 border text-right">
-							<div class="flex gap-2">
-								<Input placeholder="Amount" max="1000000" type="number" />
-								<Button type="submit">Pay</Button>
+		<table class="table-auto border-collapse">
+			<thead>
+				<tr>
+					<th class="py-2 px-4 text-right">Amount</th>
+					<th class="py-2 px-4 text-right">Interest rate</th>
+					<th class="py-2 px-4 text-right">Interest payment</th>
+					<th class="py-2 px-4 text-right">Payable at</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="py-2 px-4 border-y text-right">$ 1.252.300</td>
+					<td class="py-2 px-4 border-y text-right">10%</td>
+					<td class="py-2 px-4 border-y text-right">$ 125.230</td>
+					<td class="py-2 px-4 border-y text-right">01/10/2023</td>
+				</tr>
+				<tr>
+					<td class="py-2 px-4 border-y text-right">$ 1.000.000</td>
+					<td class="py-2 px-4 border-y text-right">1%</td>
+					<td class="py-2 px-4 border-y text-right">$ 10.000</td>
+					<td class="py-2 px-4 border-y text-right w-64">
+						<div class="flex gap-2">
+							<Input placeholder="Amount" max="1000000" type="number" />
+							<Button type="submit">Pay</Button>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td class="font-semibold text-end py-2 px-4 border-y">$ 2.252.300</td>
+					<td class="border-y">&nbsp;</td>
+					<td class="font-semibold text-end py-2 px-4 border-y">$ 135.300</td>
+					<td class="border-y">&nbsp;</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+
+	<div class="mb-4">
+		<h2 class="uppercase tracking-tight font-semibold mb-4">Bonds</h2>
+
+		<form class="flex items-end gap-4 mb-6">
+			<div class="w-48">
+				<label for="bond">Amount</label>
+				<Input id="bond" name="amount" type="number" />
+			</div>
+
+			<div class="w-48">
+				<label for="rate">Interest rate</label>
+				<Input id="rate" name="rate" type="number" />
+			</div>
+
+			<div class="flex-shrink-0">
+				<Button type="submit">Emit bonds</Button>
+			</div>
+		</form>
+
+		<table class="table-fixed border-collapse">
+			<thead>
+				<tr>
+					<th class="px-4 py-2 text-left">Company</th>
+					<th class="px-4 py-2 text-end">Amount</th>
+					<th class="px-4 py-2 text-end">Interest rate</th>
+					<th class="px-4 py-2 text-end">Interest payment</th>
+					<th class="px-4 py-2 text-end">Callable at</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="border-y px-4 py-2">
+						<img src="https://picsum.photos/100" class="w-10 h-10 inline-block" alt="Coca-Cola" />
+						Coca-Cola
+					</td>
+					<td class="border-y px-4 py-2 text-end">$ 1.500.000</td>
+					<td class="border-y px-4 py-2 text-end">1%</td>
+					<td class="border-y px-4 py-2 text-end">$ 15.000</td>
+					<td class="border-y px-4 py-2 text-end">01/10/2023</td>
+				</tr>
+
+				<tr>
+					<td class="border-y px-4 py-2">
+						<img src="https://picsum.photos/100" class="w-10 h-10 inline-block" alt="Coca-Cola" />
+						Marfrig
+					</td>
+					<td class="border-y px-4 py-2 text-end">$ 2.000.000</td>
+					<td class="border-y px-4 py-2 text-end">1%</td>
+					<td class="border-y px-4 py-2 text-end">$ 20.000</td>
+					<td class="border-y px-4 py-2 text-end">
+						<div class="flex items-end gap-2 w-64">
+							<Input placeholder="Amount" type="number" max="2000000" />
+							<div class="flex-shrink-0">
+								<Button type="button">Call bond</Button>
 							</div>
-						</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td class="font-semibold text-end p-2 border">$ 2.252.300</td>
-						<td>&nbsp;</td>
-						<td class="font-semibold text-end p-2 border">$ 135.300</td>
-					</tr>
-				</tfoot>
-			</table>
-		</div>
-
-		<div class="w-1/2 mb-4">
-			<h2 class="uppercase tracking-tight font-semibold mb-4">Bonds</h2>
-
-			<form class="flex items-end gap-4 mb-6">
-				<div class="flex-grow">
-					<label for="bond">Amount</label>
-					<Input id="bond" name="amount" />
-				</div>
-
-				<div>
-					<label for="rate">Interest rate</label>
-					<Input id="rate" name="rate" />
-				</div>
-
-				<div class="flex-shrink-0">
-					<Button type="submit">Emit bonds</Button>
-				</div>
-			</form>
-
-			<table class="w-full table-fixed border border-collapse">
-				<thead>
-					<tr>
-						<th class="border p-2 text-left">Company</th>
-						<th class="border p-2 text-end">Amount</th>
-						<th class="border p-2 text-end">Interest rate</th>
-						<th class="border p-2 text-end">Interest payment</th>
-						<th class="border p-2 text-end">Callable at</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="border">
-							<img src="https://picsum.photos/100" class="w-10 h-10 inline-block" alt="Coca-Cola" />
-							Coca-Cola
-						</td>
-						<td class="border p-2 text-end">$ 1.500.000</td>
-						<td class="border p-2 text-end">1%</td>
-						<td class="border p-2 text-end">$ 15.000</td>
-						<td class="border p-2 text-end">01/10/2023</td>
-					</tr>
-
-					<tr>
-						<td class="border">
-							<img src="https://picsum.photos/100" class="w-10 h-10 inline-block" alt="Coca-Cola" />
-							Marfrig
-						</td>
-						<td class="border p-2 text-end">$ 2.000.000</td>
-						<td class="border p-2 text-end">1%</td>
-						<td class="border p-2 text-end">$ 20.000</td>
-						<td class="border p-2 text-end">
-							<Input placeholder="Amount" />
-							<Button type="button">Call bond</Button>
-						</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td>&nbsp;</td>
-						<td class="font-semibold text-end p-2 border">$ 2.252.300</td>
-						<td>&nbsp;</td>
-						<td class="font-semibold text-end p-2 border">$ 135.300</td>
-					</tr>
-				</tfoot>
-			</table>
-		</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td class="border-y">&nbsp;</td>
+					<td class="font-semibold text-end px-4 py-2 border-y">$ 2.252.300</td>
+					<td class="border-y">&nbsp;</td>
+					<td class="font-semibold text-end px-4 py-2 border-y">$ 135.300</td>
+					<td class="border-y">&nbsp;</td>
+				</tr>
+			</tfoot>
+		</table>
 	</div>
 
 	<div class="py-10">
