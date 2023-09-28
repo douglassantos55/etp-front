@@ -57,6 +57,14 @@
             "qty": 1125,
             "price": 20.75,
             "quality": 0
+        },
+        {
+            "id": 5,
+            "userId": 3,
+            "resourceId": 2,
+            "qty": 150,
+            "price": 33.75,
+            "quality": 10
         }
     ],
     "purchases": [

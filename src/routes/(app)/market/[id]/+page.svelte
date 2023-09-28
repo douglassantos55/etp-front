@@ -7,6 +7,7 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import { user } from '$lib/stores/user';
+	import OrdersTable from '$lib/components/OrdersTable.svelte';
 
 	export let data: PageData;
 
@@ -55,21 +56,21 @@
 
 	<table class="w-full border-collapse mt-4 mb-12">
 		<thead>
-			<th class="pe-4 text-left">Quality</th>
-			<th class="px-4 text-right">Qty</th>
-			<th class="px-4 text-right">Price</th>
-			<th class="px-4 text-right">Subtotal</th>
+			<th class="pe-4 py-2 text-left">Quality</th>
+			<th class="px-4 py-2 text-right">Qty</th>
+			<th class="px-4 py-2 text-right">Price</th>
+			<th class="px-4 py-2 text-right">Subtotal</th>
 			<th>&nbsp;</th>
 		</thead>
 
 		<tbody>
 			{#each data.recent as purchase}
 				<tr>
-					<td class="pe-4">{purchase.order.quality}</td>
-					<td class="px-4 text-right">{purchase.qty}</td>
-					<td class="px-4 text-right">{purchase.order.price}</td>
-					<td class="px-4 text-right">{purchase.order.price * purchase.qty}</td>
-					<td class="px-4 w-48">
+					<td class="py-2 border-y pe-4">{purchase.order.quality}</td>
+					<td class="py-2 border-y px-4 text-right">{purchase.qty}</td>
+					<td class="py-2 border-y px-4 text-right">{purchase.order.price}</td>
+					<td class="py-2 border-y px-4 text-right">{purchase.order.price * purchase.qty}</td>
+					<td class="py-2 border-y px-4 w-48 text-right">
 						<Button type="button" on:click={() => repurchase(purchase)}>Repurchase</Button>
 					</td>
 				</tr>
@@ -95,7 +96,7 @@
 					id="quality"
 					name="quality"
 					bind:value={quality}
-					class="w-full py-2 px-3 rounded-md bg-white border mt-2"
+					class="w-full py-2 px-3 rounded-md bg-white border"
 				>
 					{#each { length: 21 } as _, i}
 						<option value={i.toString()}>{i}</option>
@@ -116,31 +117,7 @@
 </div>
 
 {#if data.orders.length > 0}
-	<table class="w-full border-collapse">
-		<thead>
-			<th>&nbsp;</th>
-			<th class="px-4 text-right">Qty</th>
-			<th class="px-4 text-right">Price</th>
-			<th class="px-4 text-right">Subtotal</th>
-		</thead>
-
-		<tbody>
-			{#each data.orders as order}
-				<tr>
-					<td class="flex items-center">
-						<div class="relative inline-block w-12 h-12 mr-4">
-							<img src={order.user.company_logo} alt={order.user.company_name} />
-							<span class="top-0 right-1 absolute text-white">{order.quality}</span>
-						</div>
-						{order.user.company_name}
-					</td>
-					<td class="px-4 text-right">{order.qty}</td>
-					<td class="px-4 text-right">{order.price}</td>
-					<td class="px-4 text-right">{order.price * order.qty}</td>
-				</tr>
-			{/each}
-		</tbody>
-	</table>
+	<OrdersTable orders={data.orders} current={data.user.id} />
 {:else}
 	<p>No orders for this resource</p>
 {/if}
