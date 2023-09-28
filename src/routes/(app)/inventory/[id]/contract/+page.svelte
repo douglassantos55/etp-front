@@ -4,6 +4,7 @@
 	import type { FormEventHandler } from 'svelte/elements';
 	import type { PageData } from './$types';
 	import Options from './Options.svelte';
+	import OrderItem from '$lib/components/OrderItem.svelte';
 
 	export let data: PageData;
 
@@ -31,7 +32,7 @@
 <form>
 	<input type="hidden" name="company_id" value={selected?.id} />
 
-	<div class="grid grid-cols-2">
+	<div class="grid grid-cols-2 gap-10">
 		<div class="relative max-w-lg">
 			<div class="group mb-4">
 				<label for="recipient">Recipient</label>
@@ -82,31 +83,21 @@
 			{#await data.stream.contracts}
 				<p>Loading contracts...</p>
 			{:then contracts}
-				<h2 class="font-semibold">Recent contracts</h2>
+				<h2 class="font-semibold uppercase tracking-tight">Recent contracts</h2>
 
 				<table class="w-full border-collapse">
 					<thead>
 						<th>&nbsp;</th>
-						<th class="px-4 text-right">Qty</th>
-						<th class="px-4 text-right">Price</th>
-						<th class="px-4 text-right">Subtotal</th>
+						<th class="px-4 py-2 text-right">Qty</th>
+						<th class="px-4 py-2 text-right">Price</th>
+						<th class="px-4 py-2 text-right">Subtotal</th>
 						<th>&nbsp;</th>
 					</thead>
 
 					<tbody>
 						{#each contracts as contract}
-							<tr>
-								<td class="flex items-center">
-									<div class="relative inline-block w-12 h-12 mr-4">
-										<img src={contract.user.company_logo} alt={contract.user.company_name} />
-										<span class="top-0 right-1 absolute text-white">{contract.quality}</span>
-									</div>
-									{contract.user.company_name}
-								</td>
-								<td class="px-4 text-right">{contract.qty}</td>
-								<td class="px-4 text-right">{contract.price}</td>
-								<td class="px-4 text-right">{contract.price * contract.qty}</td>
-								<td class="px-4">
+							<OrderItem order={contract} current={data.user.id}>
+								<td class="px-4 py-2 border-y text-right">
 									<form>
 										<input type="hidden" name="userId" value={contract.userId} />
 										<input type="hidden" name="resourceId" value={contract.resourceId} />
@@ -116,7 +107,7 @@
 										<Button type="submit">Resend</Button>
 									</form>
 								</td>
-							</tr>
+							</OrderItem>
 						{/each}
 					</tbody>
 				</table>
