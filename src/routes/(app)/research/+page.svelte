@@ -6,116 +6,118 @@
 </script>
 
 <div class="container px-4 py-12 mx-auto">
-	<div class="flex items-center justify-between mb-4">
+	<div class="flex items-center mb-4">
 		<h2 class="text-xl uppercase font-semibold tracking-tight">Staff (4/10)</h2>
-		<div class="ml-32">
+		<div class="ml-auto">
 			<Button>Hire staff</Button>
 		</div>
 	</div>
 
-	<table class="table-auto">
-		<thead>
-			<tr>
-				<th class="text-left border-b p-2">Name</th>
-				<th class="text-left border-b p-2">Skills</th>
-				<th class="text-left border-b p-2">Salary</th>
-				<th class="border-b">&nbsp;</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td class="border-b p-2">
-					<img src="https://picsum.photos/100" class="w-8 h-8 inline-block" alt="John Doe" />
-					John Doe
-				</td>
-				<td class="border-b p-2">
-					<div class="rounded-xl bg-stone-100 h-2 w-32">
+	<div class="grid gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+		<a href={`/research/staff/${1}`} class="px-3 py-4 shadow-lg border border-gray-100">
+			<div class="flex items-center gap-3">
+				<img src="https://picsum.photos/100" class="w-14 h-14 inline-block" alt="John Doe" />
+
+				<div class="flex flex-col flex-wrap">
+					<h3 class="font-semibold">John Doe</h3>
+					<p>$ 1,000.00</p>
+
+					<div class="rounded-xl bg-stone-100 h-2 w-28 mt-1">
 						<div class="rounded-xl bg-teal-500 h-2 w-10" />
 					</div>
-				</td>
-				<td class="border-b p-2">$ 2.000</td>
-				<td class="border-b p-2">
-					<Button>
-						Train
-						<span class="text-xs block">$ 1.000 (10 hr)</span>
-					</Button>
-				</td>
-			</tr>
-			<tr>
-				<td class="border-b p-2">
-					<img src="https://picsum.photos/100" class="w-8 h-8 inline-block" alt="John Doe" />
-					Jane Doe
-				</td>
-				<td class="border-b p-2">
-					<div class="rounded-xl bg-stone-100 h-2 w-32">
-						<div class="rounded-xl bg-teal-500 h-2 w-14" />
-					</div>
-				</td>
-				<td class="border-b p-2">$ 5.000</td>
-				<td class="border-b p-2">
-					<Button>
-						Train
-						<span class="text-xs block">$ 5.000 (15 hr)</span>
-					</Button>
-				</td>
-			</tr>
-			<tr>
-				<td class="border-b p-2">
-					<img src="https://picsum.photos/100" class="w-8 h-8 inline-block" alt="John Doe" />
-					James Doe
-				</td>
-				<td class="border-b p-2">
-					<div class="rounded-xl bg-stone-100 h-2 w-32">
-						<div class="rounded-xl bg-teal-500 h-2 w-20" />
-					</div>
-				</td>
-				<td class="border-b p-2">$ 10.000</td>
-				<td class="border-b p-2">
-					<Button>
-						Train
-						<span class="text-xs block">$ 10.000 (20 hr)</span>
-					</Button>
-				</td>
-			</tr>
-			<tr>
-				<td class="border-b p-2">
-					<img src="https://picsum.photos/100" class="w-8 h-8 inline-block" alt="John Doe" />
-					Jack Doe
-				</td>
-				<td class="border-b p-2">
-					<div class="rounded-xl bg-stone-100 h-2 w-32">
-						<div class="rounded-xl bg-teal-500 h-2 w-24" />
-					</div>
-				</td>
-				<td class="border-b p-2">$ 15.000</td>
-				<td class="border-b p-2">
-					<Button>
-						Train
-						<span class="text-xs block">$ 15.000 (24 hr)</span>
-					</Button>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+				</div>
 
-	<div class="space-y-10 mt-12">
+				<div class="ml-auto text-right">
+					<Button>Train</Button>
+				</div>
+			</div>
+
+			<p class="mt-4 py-1 px-4 rounded-lg text-sm bg-yellow-200">Was offered $ 10,000.00</p>
+		</a>
+
+		<a href={`/research/staff/${5}`} class="px-3 py-4 shadow-lg border border-gray-100">
+			<div class="flex items-center gap-3">
+				<img src="https://picsum.photos/100" class="w-14 h-14 inline-block" alt="John Doe" />
+
+				<div class="flex flex-col flex-wrap">
+					<h3 class="font-semibold">John Doe</h3>
+					<p>$ 5,000.00</p>
+
+					<div class="rounded-xl bg-stone-100 h-2 w-28 mt-1">
+						<div class="rounded-xl bg-teal-500 h-2 w-10" />
+					</div>
+				</div>
+
+				<div class="ml-auto text-right">
+					<p class="text-sm leading-snug">Training ends in</p>
+					<span class="text-teal-500 leading-snug tracking-tight">20 hrs</span>
+				</div>
+			</div>
+
+			<p class="mt-4 py-1 px-4 rounded-lg text-sm bg-yellow-200">Requested a raise of 10%</p>
+		</a>
+
+		<a href={`/research/staff/${6}`} class="px-3 py-4 shadow-lg border border-gray-100">
+			<div class="flex items-center gap-3">
+				<img src="https://picsum.photos/100" class="w-14 h-14 inline-block" alt="John Doe" />
+
+				<div class="flex flex-col flex-wrap">
+					<h3 class="font-semibold">John Doe</h3>
+					<p>$ 5,000.00</p>
+
+					<div class="rounded-xl bg-stone-100 h-2 w-28 mt-1">
+						<div class="rounded-xl bg-teal-500 h-2 w-10" />
+					</div>
+				</div>
+
+				<div class="ml-auto text-right">
+					<p class="text-sm leading-snug">Training ends in</p>
+					<span class="text-teal-500 leading-snug tracking-tight">3 mins</span>
+				</div>
+			</div>
+		</a>
+
+		<a href={`/research/staff/${6}`} class="px-3 py-4 shadow-lg border border-gray-100">
+			<div class="flex items-center gap-3">
+				<img src="https://picsum.photos/100" class="w-14 h-14 inline-block" alt="John Doe" />
+
+				<div class="flex flex-col flex-wrap">
+					<h3 class="font-semibold">John Doe</h3>
+					<p>$ 5,000.00</p>
+
+					<div class="rounded-xl bg-stone-100 h-2 w-28 mt-1">
+						<div class="rounded-xl bg-teal-500 h-2 w-10" />
+					</div>
+				</div>
+
+				<div class="ml-auto text-right">
+					<p class="text-sm leading-snug">Training ends in</p>
+					<span class="text-teal-500 leading-snug tracking-tight">3 secs</span>
+				</div>
+			</div>
+		</a>
+	</div>
+
+	<div class="mt-12 space-y-10">
 		{#each data.categories as category}
 			<div>
 				<h2 class="text-xl uppercase font-semibold tracking-tight mb-4">{category.name}</h2>
 
-				<div class="flex flex-wrap column gap-4">
+				<div class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
 					{#each category.resources as resource}
 						<div>
 							<img src={resource.image} alt={resource.name} class="w-32 h-32 mb-2" />
 							<span class="uppercase font-semibold">{resource.name}</span>
 
-							<div class="rounded-xl bg-stone-100 h-2 w-32 mb-4">
+							<div class="rounded-xl bg-stone-100 h-2 w-32 mt-2 mb-3">
 								<div class="rounded-xl bg-teal-500 h-2 w-20" />
 							</div>
 
 							<div>
-								<p>Investment: $ 132.050</p>
-								<p class="mb-4">Duration: 24 hr</p>
+								<p>Investment: <span class="tracking-tight">$1,350.00</span></p>
+								<p class="mb-3">
+									Duration: <span class="text-teal-500 tracking-tight">24 hr</span>
+								</p>
 
 								<Button>Research</Button>
 							</div>
