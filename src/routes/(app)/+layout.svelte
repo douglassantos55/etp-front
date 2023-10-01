@@ -1,19 +1,34 @@
 <script lang="ts">
+	import { onNavigate } from '$app/navigation';
+	import CloseIcon from '$lib/components/CloseIcon.svelte';
+	import HamburgerIcon from '$lib/components/HamburgerIcon.svelte';
 	import { user } from '$lib/stores/user';
 	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
+	let menuVisible = false;
 
-	$: console.log(data);
 	$: user.set(data.user);
+
+	function toggleMenu() {
+		menuVisible = !menuVisible;
+	}
+
+	onNavigate(() => {
+		menuVisible = false;
+	});
 </script>
 
-<header class="py-4 bg-stone-100 border-b border-stone-200">
-	<div class="container mx-auto">
-		<div class="flex items-center">
+<header class="py-4 bg-stone-100 border-b border-stone-200 sticky top-0">
+	<div class="container px-4 mx-auto">
+		<div class="flex flex-wrap items-center">
 			<div class="inline-flex gap-2.5">
 				<a href="/company">
-					<img src={$user.company_logo} alt={$user.company_name} class="w-14 h-full object-cover" />
+					<img
+						src={$user.company_logo}
+						alt={$user.company_name}
+						class="w-14 h-full rounded-full object-cover"
+					/>
 				</a>
 
 				<div class="py-1">
@@ -23,11 +38,31 @@
 			</div>
 
 			<div class="ml-auto">
-				<a href="/inventory" class="px-4">Inventory</a>
-				<a href="/market" class="px-4">Market</a>
-				<a href="/financing" class="px-4">Finances</a>
-				<a href="/research" class="px-4">Research</a>
-				<a href="/chat" class="px-4">Chat</a>
+				<button on:click={toggleMenu} class="sm:hidden">
+                    <HamburgerIcon />
+				</button>
+
+				<div
+					class="flex flex-col fixed left-0 top-0 bg-white w-3/4 h-screen py-4 px-4 shadow-xl z-50 sm:block sm:static sm:h-auto sm:w-auto sm:bg-transparent sm:shadow-none sm:z-auto"
+					class:hidden={!menuVisible}
+				>
+					<button on:click={toggleMenu} class="ml-auto sm:hidden">
+                        <CloseIcon />
+					</button>
+
+					<a href="/inventory" class="px-2 py-2">Inventory</a>
+					<a href="/market" class="px-2 py-2">Market</a>
+					<a href="/financing" class="px-2 py-2">Finances</a>
+					<a href="/research" class="px-2 py-2">Research</a>
+					<a href="/chat" class="px-2 py-2">Chat</a>
+				</div>
+
+				<button
+					tabindex="-1"
+					class="fixed left-0 top-0 w-screen h-screen bg-black opacity-30 z-10"
+					class:hidden={!menuVisible}
+					on:click={toggleMenu}
+				/>
 			</div>
 		</div>
 	</div>
