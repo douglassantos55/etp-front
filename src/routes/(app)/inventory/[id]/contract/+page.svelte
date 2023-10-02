@@ -29,12 +29,12 @@
 	};
 </script>
 
-<form>
+<form class="mb-10">
 	<input type="hidden" name="company_id" value={selected?.id} />
 
-	<div class="grid grid-cols-2 gap-10">
-		<div class="relative max-w-lg">
-			<div class="group mb-4">
+	<div class="flex flex-wrap gap-4">
+		<div class="relative w-full">
+			<div class="group">
 				<label for="recipient">Recipient</label>
 
 				<Input
@@ -63,55 +63,57 @@
 					{/await}
 				</div>
 			</div>
-
-			<div class="grid grid-cols-2 sm:grid-cols-3 gap-5 mb-8 items-end max-w-xl">
-				<div class="shrink-0">
-					<label for="qty">Qty</label>
-					<Input id="qty" name="qty" type="number" />
-				</div>
-
-				<div>
-					<label for="price">Price/unit</label>
-					<Input id="price" name="price" />
-				</div>
-
-				<Button type="submit">Send contract</Button>
-			</div>
 		</div>
 
-		<div>
-			{#await data.stream.contracts}
-				<p>Loading contracts...</p>
-			{:then contracts}
-				<h2 class="font-semibold uppercase tracking-tight">Recent contracts</h2>
+		<div class="grid grid-cols-2 sm:grid-cols-3 gap-5 items-end">
+			<div class="shrink-0">
+				<label for="qty">Qty</label>
+				<Input id="qty" name="qty" type="number" />
+			</div>
 
-				<table class="w-full border-collapse">
-					<thead>
-						<th>&nbsp;</th>
-						<th class="px-4 py-2 text-right">Qty</th>
-						<th class="px-4 py-2 text-right">Price</th>
-						<th class="px-4 py-2 text-right">Subtotal</th>
-						<th>&nbsp;</th>
-					</thead>
+			<div>
+				<label for="price">Price/unit</label>
+				<Input id="price" name="price" />
+			</div>
 
-					<tbody>
-						{#each contracts as contract}
-							<OrderItem order={contract} current={data.user.id}>
-								<td class="px-4 py-2 border-y text-right">
-									<form>
-										<input type="hidden" name="userId" value={contract.userId} />
-										<input type="hidden" name="resourceId" value={contract.resourceId} />
-										<input type="hidden" name="qty" value={contract.qty} />
-										<input type="hidden" name="price" value={contract.price} />
-
-										<Button type="submit">Resend</Button>
-									</form>
-								</td>
-							</OrderItem>
-						{/each}
-					</tbody>
-				</table>
-			{/await}
+			<Button type="submit">Send contract</Button>
 		</div>
 	</div>
 </form>
+
+<div class="mb-10">
+	{#await data.stream.contracts}
+		<p>Loading contracts...</p>
+	{:then contracts}
+		<h2 class="font-semibold uppercase tracking-tight">Recent contracts</h2>
+
+		<div class=" overflow-x-auto">
+			<table class="w-full border-collapse">
+				<thead>
+					<th>&nbsp;</th>
+					<th class="px-4 py-2 text-right">Qty</th>
+					<th class="px-4 py-2 text-right">Price</th>
+					<th class="px-4 py-2 text-right">Subtotal</th>
+					<th>&nbsp;</th>
+				</thead>
+
+				<tbody>
+					{#each contracts as contract}
+						<OrderItem order={contract} current={data.user.id}>
+							<td class="pl-4 py-2 border-y text-right">
+								<form>
+									<input type="hidden" name="userId" value={contract.userId} />
+									<input type="hidden" name="resourceId" value={contract.resourceId} />
+									<input type="hidden" name="qty" value={contract.qty} />
+									<input type="hidden" name="price" value={contract.price} />
+
+									<Button type="submit">Resend</Button>
+								</form>
+							</td>
+						</OrderItem>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{/await}
+</div>

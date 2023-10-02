@@ -9,13 +9,13 @@
 <div class="container mx-auto px-4">
 	<div class="flex flex-wrap items-center gap-10 py-12">
 		<div class="flex flex-wrap gap-5">
-			<img src={data.item.resource.image} alt={data.item.resource.name} class="w-30" />
+			<img src={data.item.resource.image} alt={data.item.resource.name} class="w-24 h-24" />
 
 			<div class="">
 				<h2 class="text-xl font-bold tracking-tight uppercase mb-1">{data.item.resource.name}</h2>
 
 				<p class="text-lg">{data.item.qty} units</p>
-				<p>Sourcing cost: {data.item.sourcing_cost}</p>
+				<p>Sourcing cost: ${data.item.sourcing_cost}</p>
 			</div>
 		</div>
 
@@ -27,29 +27,33 @@
 
 	<slot />
 
-	<div class="grid grid-cols-2 gap-10">
-		{#await data.streamed.orders}
-			<p>Loading current market orders...</p>
-		{:then orders}
-			<div>
-				<h2 class="font-semibold uppercase tracking-tight mb-4">Market orders</h2>
+	<div class="grid lg:grid-cols-2 gap-10">
+		<div>
+			{#await data.streamed.orders}
+				<p>Loading current market orders...</p>
+			{:then orders}
+				<h2 class="font-semibold uppercase tracking-tight">Market orders</h2>
 
-				<OrdersTable {orders} current={data.user.id} />
-			</div>
-		{:catch error}
-			<p>Could not fetch orders: {error}</p>
-		{/await}
+				<div class="overflow-x-auto">
+					<OrdersTable {orders} current={data.user.id} />
+				</div>
+			{:catch error}
+				<p>Could not fetch orders: {error}</p>
+			{/await}
+		</div>
 
-		{#await data.streamed.contracts}
-			<p>Loading pending contracts...</p>
-		{:then contracts}
-			<div>
-				<h2 class="uppercase tracking-tight font-semibold mb-4">Pending contracts</h2>
+		<div>
+			{#await data.streamed.contracts}
+				<p>Loading pending contracts...</p>
+			{:then contracts}
+				<h2 class="uppercase tracking-tight font-semibold">Pending contracts</h2>
 
-				<OrdersTable orders={contracts} current={data.user.id} />
-			</div>
-		{:catch error}
-			<p>Could not fetch contracts: {error}</p>
-		{/await}
+				<div class="overflow-x-auto">
+					<OrdersTable orders={contracts} current={data.user.id} />
+				</div>
+			{:catch error}
+				<p>Could not fetch contracts: {error}</p>
+			{/await}
+		</div>
 	</div>
 </div>

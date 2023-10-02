@@ -24,7 +24,7 @@
 			<div class="flex flex-wrap gap-x-6 gap-y-10">
 				{#each categories[name] as item}
 					<a href={`/inventory/${item.resource.id}`}>
-						<img src={item.resource.image} alt={item.resource.name} class="w-30 mb-2" />
+						<img src={item.resource.image} alt={item.resource.name} class="w-24 h-24 mb-2" />
 						<span class="text-xl font-semibold">{item.qty}</span>x {item.resource.name}
 						<div class="text-sm font-bold">{item.sourcing_cost}</div>
 					</a>

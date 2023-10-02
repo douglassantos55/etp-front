@@ -19,7 +19,7 @@
 	});
 </script>
 
-<header class="py-4 bg-stone-100 border-b border-stone-200 sticky top-0">
+<header class="py-2 bg-stone-100 border-b border-stone-200 sticky top-0 z-50">
 	<div class="container px-4 mx-auto">
 		<div class="flex flex-wrap items-center">
 			<div class="inline-flex gap-2.5">
