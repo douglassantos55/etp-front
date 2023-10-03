@@ -51,73 +51,90 @@
 		qty > totalOrders ? 'Too much my dude' : total > $user.available_cash ? 'Not enough cash' : '';
 </script>
 
-{#if data.recent.length > 0}
-	<h2 class="uppercase font-semibold tracking-tight">Recent purchases</h2>
+<div class="container px-4 py-12 mx-auto">
+	<div class="flex gap-4 items-center">
+		<img src={data.resource.image} alt={data.resource.name} class="w-16 h-16" />
+		<h1 class="uppercase tracking-tight font-bold text-xl">{data.resource.name}</h1>
 
-	<table class="w-full border-collapse mt-4 mb-12">
-		<thead>
-			<th class="pe-4 py-2 text-left">Quality</th>
-			<th class="px-4 py-2 text-right">Qty</th>
-			<th class="px-4 py-2 text-right">Price</th>
-			<th class="px-4 py-2 text-right">Subtotal</th>
-			<th>&nbsp;</th>
-		</thead>
+		<a href="/market" class="ml-auto">&larr; Back</a>
+	</div>
 
-		<tbody>
-			{#each data.recent as purchase}
-				<tr>
-					<td class="py-2 border-y pe-4">{purchase.order.quality}</td>
-					<td class="py-2 border-y px-4 text-right">{purchase.qty}</td>
-					<td class="py-2 border-y px-4 text-right">{purchase.order.price}</td>
-					<td class="py-2 border-y px-4 text-right">{purchase.order.price * purchase.qty}</td>
-					<td class="py-2 border-y px-4 w-48 text-right">
-						<Button type="button" on:click={() => repurchase(purchase)}>Repurchase</Button>
-					</td>
-				</tr>
-			{/each}
-		</tbody>
-	</table>
-{/if}
+	<div class="mb-10">
+		<form class="space-y-4">
+			<input type="hidden" name="resourceId" value={$page.params.id} />
 
-<div class="mb-12">
-	<form>
-		<input type="hidden" name="resourceId" value={$page.params.id} />
+			<div class="flex items-start gap-4">
+				<div>
+					<label for="qty">Qty</label>
+					<Input id="qty" name="qty" type="number" bind:value={_qty} />
+					<span class="text-red-600">{error}</span>
+				</div>
 
-		<table class="w-full table-auto align-bottom">
-			<td>
-				<label for="qty">Qty</label>
-				<Input id="qty" name="qty" type="number" bind:value={_qty} />
-				<span class="text-red-600">{error}</span>
-			</td>
+				<div>
+					<label for="quality">Quality</label>
+					<select
+						id="quality"
+						name="quality"
+						bind:value={quality}
+						class="w-full py-2 px-3 rounded-md bg-white border"
+					>
+						{#each { length: 21 } as _, i}
+							<option value={i.toString()}>{i}</option>
+						{/each}
+					</select>
+				</div>
 
-			<td class="px-8">
-				<label for="quality">Quality</label>
-				<select
-					id="quality"
-					name="quality"
-					bind:value={quality}
-					class="w-full py-2 px-3 rounded-md bg-white border"
-				>
-					{#each { length: 21 } as _, i}
-						<option value={i.toString()}>{i}</option>
-					{/each}
-				</select>
-			</td>
+				<div>
+					<!-- svelte-ignore a11y-label-has-associated-control -->
+					<label class="block">&nbsp;</label>
+					<Button type="submit" disabled={!qty || error}>Purchase</Button>
+				</div>
+			</div>
 
-			<td class="pe-8">
+			<div>
 				<p><strong>Total:</strong> {total}</p>
 				<p><strong>Sourcing cost:</strong> {sourcingCost}</p>
-			</td>
+			</div>
+		</form>
+	</div>
 
-			<td>
-				<Button type="submit" disabled={!qty || error}>Purchase</Button>
-			</td>
-		</table>
-	</form>
+	{#if data.recent.length > 0}
+		<h2 class="uppercase font-semibold tracking-tight">Recent purchases</h2>
+
+		<div class="overflow-x-auto mb-10">
+			<table class="w-full border-collapse mt-4">
+				<thead>
+					<th class="pe-4 py-2 text-left">Quality</th>
+					<th class="px-4 py-2 text-right">Qty</th>
+					<th class="px-4 py-2 text-right">Price</th>
+					<th class="px-4 py-2 text-right">Subtotal</th>
+					<th>&nbsp;</th>
+				</thead>
+
+				<tbody>
+					{#each data.recent as purchase}
+						<tr>
+							<td class="py-2 border-y pe-4">{purchase.order.quality}</td>
+							<td class="py-2 border-y px-4 text-right">{purchase.qty}</td>
+							<td class="py-2 border-y px-4 text-right">{purchase.order.price}</td>
+							<td class="py-2 border-y px-4 text-right">{purchase.order.price * purchase.qty}</td>
+							<td class="py-2 border-y px-4 w-48 text-right">
+								<Button type="button" on:click={() => repurchase(purchase)}>Repurchase</Button>
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{/if}
+
+	{#if data.orders.length > 0}
+		<h2 class="uppercase font-semibold tracking-tight">Market orders</h2>
+
+		<div class="overflow-x-auto">
+			<OrdersTable orders={data.orders} current={data.user.id} />
+		</div>
+	{:else}
+		<p>No orders for this resource</p>
+	{/if}
 </div>
-
-{#if data.orders.length > 0}
-	<OrdersTable orders={data.orders} current={data.user.id} />
-{:else}
-	<p>No orders for this resource</p>
-{/if}

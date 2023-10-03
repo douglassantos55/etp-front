@@ -6,6 +6,7 @@ export const load: PageLoad = async function({ fetch, params, url, parent }) {
 
     const response = await fetch(`http://localhost:3000/orders?resourceId=${params.id}&quality=${quality}&_expand=resource&_expand=user&_sort=price`);
     const recent = await fetch(`http://localhost:3000/purchases?userId=${user.id}&resourceId=${params.id}&_expand=order&_limit=5`);
+    const resource = await fetch(`http://localhost:3000/resources/${params.id}`);
 
-    return { orders: response.json(), recent: recent.json() };
+    return { orders: response.json(), recent: recent.json(), resource: resource.json() };
 }
