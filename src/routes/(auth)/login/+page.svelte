@@ -7,7 +7,7 @@
 	export let form: ActionData;
 </script>
 
-<div class="container mx-auto">
+<div class="mx-auto">
 	<form method="post" use:enhance>
 		<div class="mb-4">
 			<label for="username">Username</label>
