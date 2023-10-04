@@ -40,46 +40,31 @@
 			<Button type="submit">Take loan</Button>
 		</form>
 
-		<div class="overflow-x-auto">
-			<table class="table-auto border-collapse">
-				<thead>
-					<tr>
-						<th class="py-2 px-4 text-right">Amount</th>
-						<th class="py-2 px-4 text-right">Interest rate</th>
-						<th class="py-2 px-4 text-right">Interest payment</th>
-						<th class="py-2 px-4 text-right">Payable at</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="py-2 px-4 border-y text-right">$ 1.252.300</td>
-						<td class="py-2 px-4 border-y text-right">10%</td>
-						<td class="py-2 px-4 border-y text-right">$ 125.230</td>
-						<td class="py-2 px-4 border-y text-right">01/10/2023</td>
-					</tr>
-					<tr>
-						<td class="py-2 px-4 border-y text-right">$ 1.000.000</td>
-						<td class="py-2 px-4 border-y text-right">1%</td>
-						<td class="py-2 px-4 border-y text-right">$ 10.000</td>
-						<td class="py-2 px-4 border-y text-right">
-							<div class="flex gap-2">
-								<div class="w-32 max-w-full">
-									<Input placeholder="Amount" max="1000000" type="number" />
-								</div>
-								<Button type="submit">Pay</Button>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td class="font-semibold text-end py-2 px-4 border-y">$ 2.252.300</td>
-						<td class="border-y">&nbsp;</td>
-						<td class="font-semibold text-end py-2 px-4 border-y">$ 135.300</td>
-						<td class="border-y">&nbsp;</td>
-					</tr>
-				</tfoot>
-			</table>
+		<div class="flex flex-wrap gap-10">
+			<div class="p-6 shadow-md bg-gray-100">
+				<p>Amount: $ 1,000,000.00</p>
+				<p>Interest rate: 1%</p>
+				<p>Interest payment: $10,000.00</p>
+				<p>Interest paid: $100,000.00</p>
+
+				<div class="flex gap-4 mt-4">
+					<div class="w-40 max-w-full">
+						<Input placeholder="Amount" max="1000000" type="number" value="1000000" />
+					</div>
+					<Button type="submit">Pay</Button>
+				</div>
+			</div>
+
+			<div class="p-6 shadow-md bg-gray-100">
+				<p>Amount: $ 1,252,300.00</p>
+				<p>Interest rate: 10%</p>
+				<p>Interest payment: $125,300.00</p>
+				<p>Interest paid: $1,253,000.00</p>
+
+				<div class="flex gap-4 mt-4">
+					<p>Payable at <span class="font-semibold text-indigo-700">11/11/2023</span></p>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -103,7 +88,7 @@
 		</form>
 
 		<div class="flex flex-wrap gap-10">
-			<div class="">
+			<div class="p-6 shadow-md bg-gray-100">
 				<img src="https://picsum.photos/100" alt="Company name" class="w-16 h-16 rounded-full" />
 
 				<div class="mt-2">
@@ -122,7 +107,7 @@
 				</div>
 			</div>
 
-			<div class="">
+			<div class="p-6 shadow-md bg-gray-100">
 				<img src="https://picsum.photos/100" alt="Company name" class="w-16 h-16 rounded-full" />
 
 				<div class="mt-2">
@@ -143,15 +128,17 @@
 	<div>
 		<h2 class="uppercase tracking-tight font-semibold mb-4">Bonds Owned</h2>
 
-		<div class="">
-			<img src="https://picsum.photos/100" alt="Company name" class="w-16 h-16 rounded-full" />
+		<div class="flex flex-wrap gap-10">
+			<div class="p-6 shadow-md bg-gray-100">
+				<img src="https://picsum.photos/100" alt="Company name" class="w-16 h-16 rounded-full" />
 
-			<div class="mt-2">
-				<h3 class="font-semibold mb-1">Company name</h3>
-				<p>Amount: $ 1,252,300.00</p>
-				<p>Interest rate: 10%</p>
-				<p>Interest payment: $125,300.00</p>
-				<p>Interest received: $1,253,000.00</p>
+				<div class="mt-2">
+					<h3 class="font-semibold mb-1">Company name</h3>
+					<p>Amount: $ 1,252,300.00</p>
+					<p>Interest rate: 10%</p>
+					<p>Interest payment: $125,300.00</p>
+					<p>Interest received: $1,253,000.00</p>
+				</div>
 			</div>
 		</div>
 	</div>
