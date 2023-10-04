@@ -22,12 +22,12 @@
 <header class="py-2 bg-stone-100 border-b border-stone-200 sticky top-0 z-50">
 	<div class="container px-4 mx-auto">
 		<div class="flex flex-wrap items-center">
-			<div class="inline-flex gap-2.5">
+			<div class="inline-flex items-center gap-2.5">
 				<a href="/company">
 					<img
 						src={$user.company_logo}
 						alt={$user.company_name}
-						class="w-14 h-full rounded-full object-cover"
+						class="w-14 h-14 rounded-full object-cover"
 					/>
 				</a>
 
