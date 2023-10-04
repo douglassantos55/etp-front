@@ -5,6 +5,8 @@
 	export let data: PageData;
 </script>
 
-{#each data.building.resources as resource}
-	<BuildingResource building={data.building} {resource} />
-{/each}
+<div class="grid gap-8 lg:grid-cols-2">
+	{#each data.building.resources as resource}
+		<BuildingResource building={data.building} {resource} />
+	{/each}
+</div>

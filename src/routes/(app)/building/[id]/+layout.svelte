@@ -24,9 +24,9 @@
 	$: rename && input && input.focus();
 </script>
 
-<div class="container mx-auto py-12">
+<div class="container mx-auto px-4 py-12">
 	<div class="mb-12">
-		<h2 class="text-4xl tracking-tight font-semibold">
+		<h2 class="text-2xl tracking-tight font-semibold">
 			{#if rename}
 				<input
 					type="text"

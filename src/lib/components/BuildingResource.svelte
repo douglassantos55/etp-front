@@ -2,6 +2,7 @@
 	import { inventory } from '$lib/stores/inventory';
 	import Input from '$lib/components/Input.svelte';
 	import Button from './Button.svelte';
+	import { format } from '$lib/helper';
 
 	export let building: Building;
 	export let resource: BuildingResource;
@@ -33,10 +34,10 @@
 	})();
 </script>
 
-<div class="flex gap-5 mb-12 items-center w-full">
-	<img src={resource.resource.image} alt={resource.resource.name} />
+<div class="flex flex-wrap gap-5 w-full">
+	<img src={resource.resource.image} alt={resource.resource.name} class="w-20 h-20" />
 
-	<div>
+	<div class="flex-grow">
 		<p class="uppercase font-semibold mb-2">{resource.resource.name}</p>
 
 		<p>Production/h: {resource.production_hour}</p>
@@ -44,14 +45,15 @@
 
 		{#if qty && qty > 0}
 			<hr class="my-3" />
-			<p>Finishes: {finishes.toLocaleString()}</p>
-			<p>Labor cost: {labor_cost}</p>
-			<p>Sourcing cost: {sourcing_cost}</p>
-			<p>Total cost: {total_cost} ({cost_per_unit}/unit)</p>
+			<p>Finishes: {finishes.toLocaleDateString()}</p>
+			<p>Labor cost: {format(labor_cost)}</p>
+			<p>Sourcing cost: {format(sourcing_cost)}</p>
+			<p>Total cost: {format(total_cost)}</p>
+			<p>Cost per unit: {format(cost_per_unit)}</p>
 		{/if}
 	</div>
 
-	<div>
+    <div>
 		<p class="uppercase font-semibold mb-2">Requirements</p>
 
 		<div class="flex items-center gap-4">
@@ -64,7 +66,7 @@
 		</div>
 	</div>
 
-	<div class="w-36">
+	<div class="w-32 flex-shrink-0">
 		<label for={inputId} class="uppercase font-semibold">Quantity</label>
 
 		<Input min="0" id={inputId} type="number" bind:value={qty} />
