@@ -13,8 +13,8 @@
 	}
 </script>
 
-<div class="container mx-auto py-12">
-	<div class="flex flex-wrap gap-5 py-5 justify-center max-w-3xl mx-auto bg-stone-800">
+<div class="container mx-auto px-4 py-12">
+	<div class="flex flex-wrap gap-5 p-5 justify-center max-w-3xl mx-auto bg-stone-600">
 		{#each { length: totalSlots } as _, i}
 			{#if i < data.user.available_slots}
 				{#if buildings[i]}
