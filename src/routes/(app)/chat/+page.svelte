@@ -26,7 +26,7 @@
 </script>
 
 <div class="container px-4 mx-auto py-12">
-	<div class="grid sm:grid-cols-2 py-2 gap-8">
+	<div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-2 gap-8">
 		{#each { length: 10 } as _, i}
 			<a href={`/chat/${i}`} class="flex items-center gap-4">
 				<img

@@ -1,11 +1,11 @@
 <script lang="ts">
-	function scroll() {
+	function scroll(_el: HTMLElement) {
 		setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 2);
 	}
 </script>
 
 <div class="container px-4 py-12 mx-auto">
-	<div class="flex items-center py-2 gap-3 sticky top-0 bg-white">
+	<div class="flex items-center py-2 gap-3 sticky top-20 bg-white">
 		<img
 			src="https://picsum.photos/100"
 			alt="Casas Bahia"
