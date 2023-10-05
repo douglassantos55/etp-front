@@ -33,7 +33,7 @@
 	<input type="hidden" name="company_id" value={selected?.id} />
 
 	<div class="flex flex-wrap gap-4">
-		<div class="relative w-full">
+		<div class="relative w-full sm:w-auto">
 			<div class="group">
 				<label for="recipient">Recipient</label>
 
@@ -65,8 +65,8 @@
 			</div>
 		</div>
 
-		<div class="grid grid-cols-2 sm:grid-cols-3 gap-5 items-end">
-			<div class="shrink-0">
+		<div class="flex gap-5 items-end">
+			<div>
 				<label for="qty">Qty</label>
 				<Input id="qty" name="qty" type="number" />
 			</div>
@@ -76,7 +76,9 @@
 				<Input id="price" name="price" />
 			</div>
 
-			<Button type="submit">Send contract</Button>
+			<div class="flex-shrink-0">
+				<Button type="submit">Send contract</Button>
+			</div>
 		</div>
 	</div>
 </form>
