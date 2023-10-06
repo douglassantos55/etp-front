@@ -5,7 +5,7 @@
 	export let data: PageData;
 </script>
 
-<div class="grid gap-8 lg:grid-cols-2">
+<div class="grid gap-8 md:grid-cols-2">
 	{#each data.building.resources as resource}
 		<BuildingResource building={data.building} {resource} />
 	{/each}

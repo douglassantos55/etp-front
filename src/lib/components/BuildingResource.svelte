@@ -12,6 +12,8 @@
 	function maxQty() {}
 
 	$: inputId = `qty-${resource.resource.id}`;
+	$: qualityId = `quality-${resource.resource.id}`;
+
 	$: duration = qty / resource.production_hour;
 
 	$: labor_cost = building.wages_hour * duration;
@@ -34,14 +36,67 @@
 	})();
 </script>
 
-<div class="flex flex-wrap gap-5 w-full">
-	<img src={resource.resource.image} alt={resource.resource.name} class="w-20 h-20" />
+<div class="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-5 w-full">
+	<div>
+		<div class="flex gap-4">
+			<img src={resource.resource.image} alt={resource.resource.name} class="w-20 h-20" />
 
-	<div class="flex-grow">
-		<p class="uppercase font-semibold mb-2">{resource.resource.name}</p>
+			<div>
+				<p class="uppercase font-semibold mb-2">{resource.resource.name}</p>
 
-		<p>Production/h: {resource.production_hour}</p>
-		<p>Wages/h: {building.wages_hour}</p>
+				<p>Production/h: {resource.production_hour}</p>
+				<p>Wages/h: {building.wages_hour}</p>
+			</div>
+		</div>
+
+		<div class="mt-6">
+			<p class="uppercase font-semibold mb-2">Requirements</p>
+
+			<div class="flex items-center gap-4">
+				{#each resource.resource.requirements as requirement}
+					<div class="flex items-center gap-2">
+						{requirement.qty * (qty || 1)}x
+						<img
+							src={requirement.resource.image}
+							alt={requirement.resource.name}
+							class="w-10 h-10"
+						/>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<div class="flex gap-4 mb-3">
+			<div>
+				<label for={qualityId} class="uppercase font-semibold">Quality</label>
+
+				<select id={qualityId} name="quality" class="w-full py-2 px-3 rounded-md bg-white border">
+					{#each { length: 21 } as _, i}
+						<option value={i.toString()}>{i}</option>
+					{/each}
+				</select>
+			</div>
+
+			<div>
+				<label for={inputId} class="uppercase font-semibold">Quantity</label>
+
+				<Input min="0" id={inputId} type="number" bind:value={qty} />
+			</div>
+		</div>
+
+		<div class="grid grid-cols-2 gap-3">
+			<Button variant="hollow" on:click={() => (qty = Math.floor(resource.production_hour * 24))}
+				>24h</Button
+			>
+
+			<Button variant="hollow" on:click={maxQty}>Max</Button>
+		</div>
+
+		<div class="grid mt-3">
+			<Button disabled={!qty || qty == 0}>Produce</Button>
+		</div>
 
 		{#if qty && qty > 0}
 			<hr class="my-3" />
@@ -50,34 +105,7 @@
 			<p>Sourcing cost: {format(sourcing_cost)}</p>
 			<p>Total cost: {format(total_cost)}</p>
 			<p>Cost per unit: {format(cost_per_unit)}</p>
+			<hr class="my-3" />
 		{/if}
-	</div>
-
-    <div>
-		<p class="uppercase font-semibold mb-2">Requirements</p>
-
-		<div class="flex items-center gap-4">
-			{#each resource.resource.requirements as requirement}
-				<div class="flex items-center gap-2">
-					{requirement.qty * (qty || 1)}x
-					<img src={requirement.resource.image} alt={requirement.resource.name} class="w-12 h-12" />
-				</div>
-			{/each}
-		</div>
-	</div>
-
-	<div class="w-32 flex-shrink-0">
-		<label for={inputId} class="uppercase font-semibold">Quantity</label>
-
-		<Input min="0" id={inputId} type="number" bind:value={qty} />
-
-		<div class="flex gap-3 my-3">
-			<Button variant="hollow" on:click={() => (qty = Math.floor(resource.production_hour * 24))}
-				>24h</Button
-			>
-			<Button variant="hollow" on:click={maxQty}>Max</Button>
-		</div>
-
-		<Button disabled={!qty || qty == 0}>Produce</Button>
 	</div>
 </div>
