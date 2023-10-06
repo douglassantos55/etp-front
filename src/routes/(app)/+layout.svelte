@@ -39,7 +39,7 @@
 
 			<div class="ml-auto">
 				<button on:click={toggleMenu} class="sm:hidden">
-                    <HamburgerIcon />
+					<HamburgerIcon />
 				</button>
 
 				<div
@@ -47,7 +47,7 @@
 					class:hidden={!menuVisible}
 				>
 					<button on:click={toggleMenu} class="ml-auto sm:hidden">
-                        <CloseIcon />
+						<CloseIcon />
 					</button>
 
 					<a href="/" class="px-2 py-4">Map</a>
@@ -60,7 +60,7 @@
 
 				<button
 					tabindex="-1"
-					class="fixed left-0 top-0 w-screen h-screen bg-black opacity-30 z-10"
+					class="fixed left-0 top-0 w-screen h-screen bg-black/70 z-10"
 					class:hidden={!menuVisible}
 					on:click={toggleMenu}
 				/>
