@@ -43,18 +43,19 @@
 				</button>
 
 				<div
-					class="flex flex-col fixed left-0 top-0 bg-white w-3/4 h-screen py-4 px-4 shadow-xl z-50 sm:block sm:static sm:h-auto sm:w-auto sm:bg-transparent sm:shadow-none sm:z-auto"
+					class="flex flex-col fixed left-0 top-0 bg-white w-3/4 h-screen py-4 px-4 shadow-xl z-50 sm:py-0 sm:px-0 sm:block sm:static sm:h-auto sm:w-auto sm:bg-transparent sm:shadow-none sm:z-auto"
 					class:hidden={!menuVisible}
 				>
 					<button on:click={toggleMenu} class="ml-auto sm:hidden">
                         <CloseIcon />
 					</button>
 
-					<a href="/inventory" class="px-2 py-2">Inventory</a>
-					<a href="/market" class="px-2 py-2">Market</a>
-					<a href="/financing" class="px-2 py-2">Finances</a>
-					<a href="/research" class="px-2 py-2">Research</a>
-					<a href="/chat" class="px-2 py-2">Chat</a>
+					<a href="/" class="px-2 py-4">Map</a>
+					<a href="/inventory" class="px-2 py-4">Inventory</a>
+					<a href="/market" class="px-2 py-4">Market</a>
+					<a href="/financing" class="px-2 py-4">Finances</a>
+					<a href="/research" class="px-2 py-4">Research</a>
+					<a href="/chat" class="px-2 py-4">Chat</a>
 				</div>
 
 				<button
