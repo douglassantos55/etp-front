@@ -1,26 +1,59 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import type { ActionData } from './$types';
+	import { applyAction } from '$app/forms';
 	import Input from '$lib/components/Input.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import { goto } from '$app/navigation';
 
-	export let form: ActionData;
+	export let form: {
+		errors: Record<string, string>;
+	};
+
+	async function authenticate(event: { currentTarget: EventTarget & HTMLFormElement }) {
+		const data = new FormData(event.currentTarget);
+
+        const response = await fetch(`http://localhost:1323/companies/login`, {
+			method: 'POST',
+			body: data,
+			headers: {
+				accept: 'application/json'
+			},
+			credentials: 'include'
+		});
+
+		const result = await response.json();
+		const type = result.errors ? 'failure' : 'success';
+
+		if (type == 'success') {
+			localStorage.setItem('access_token', result.token);
+			goto('/');
+		} else {
+			await applyAction({ type, status: response.status, data: result });
+		}
+	}
 </script>
 
 <div class="mx-auto">
-	<form method="post" use:enhance>
+	<form
+		method="post"
+		on:submit|preventDefault={authenticate}
+		action="http://localhost:1323/companies/login"
+	>
 		<div class="mb-4">
-			<label for="username">Username</label>
-			<Input type="text" id="username" name="username" />
+			<label for="email">Email</label>
+			<Input type="email" id="email" name="email" />
 
-			{#if form?.error}
-				<span class="text-red-500">{form?.message}</span>
+			{#if form?.errors?.email}
+				<span class="text-red-500">{form?.errors.email}</span>
 			{/if}
 		</div>
 
 		<div class="mb-8">
 			<label for="password">Password</label>
 			<Input type="password" id="password" name="password" />
+
+			{#if form?.errors?.password}
+				<span class="text-red-500">{form?.errors.password}</span>
+			{/if}
 		</div>
 
 		<Button type="submit">Login</Button>
