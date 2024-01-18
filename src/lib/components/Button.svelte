@@ -16,7 +16,7 @@
 	class:text-white={variant === 'primary'}
 	class:bg-indigo-600={variant === 'primary'}
 	class:hover:bg-indigo-500={variant === 'primary'}
-	class="py-2 px-3 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+	class="py-2 px-3 inline-block rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
 >
 	<slot />
 </svelte:element>
