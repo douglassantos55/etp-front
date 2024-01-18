@@ -27,3 +27,11 @@ export const user: UserStore = {
         }));
     },
 }
+
+export function getToken(): string {
+    const token = localStorage.getItem("access_token");
+    if (token == null) {
+        return "";
+    }
+    return token;
+}

@@ -25,14 +25,14 @@
 			<div class="inline-flex items-center gap-2.5">
 				<a href="/company">
 					<img
-						src={$user.company_logo}
-						alt={$user.company_name}
+						src={$user.logo}
+						alt={$user.name}
 						class="w-14 h-14 rounded-full object-cover"
 					/>
 				</a>
 
 				<div class="py-1">
-					<h2 class="text-xl font-semibold tracking-tight">{$user.company_name}</h2>
+					<h2 class="text-xl font-semibold tracking-tight">{$user.name}</h2>
 					<span class="text-medium tracking-wide">$ {$user.available_cash}</span>
 				</div>
 			</div>
