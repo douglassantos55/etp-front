@@ -43,6 +43,7 @@ declare global {
     interface BuildingResource {
         resource: Resource;
         qty_per_hour: number;
+        max_quality: number;
     }
 
     interface InventoryItem {

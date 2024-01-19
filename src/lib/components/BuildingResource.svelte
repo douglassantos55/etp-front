@@ -73,7 +73,7 @@
 				<label for={qualityId} class="uppercase font-semibold">Quality</label>
 
 				<select id={qualityId} name="quality" class="w-full py-2 px-3 rounded-md bg-white border">
-					{#each { length: 21 } as _, i}
+					{#each { length: resource.max_quality + 1 } as _, i}
 						<option value={i.toString()}>{i}</option>
 					{/each}
 				</select>
