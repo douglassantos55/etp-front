@@ -92,49 +92,18 @@
 					</thead>
 
 					<tbody>
-						<tr>
-							<td>
-								<img src="https://picsum.photos/100" class="w-8 h-8 inline-block" alt="" />
-								x152
-							</td>
+						{#each data.building.requirements as requirement}
+							<tr>
+								<td>
+									<img src={requirement.resource.image} class="w-8 h-8 inline-block" alt="" />
+									x{requirement.quantity} @Q{requirement.quality}
+								</td>
 
-							<td class="text-right">10 <span class="block text-teal-500">$52</span></td>
+								<td class="text-right">10 <span class="block text-teal-500">$52</span></td>
 
-							<td class="text-right">152 <span class="block text-teal-500">$10</span></td>
-						</tr>
-
-						<tr>
-							<td>
-								<img src="https://picsum.photos/100" class="w-8 h-8 inline-block" alt="" />
-								x152
-							</td>
-
-							<td class="text-right">0</td>
-
-							<td class="text-right">152 <span class="block text-teal-500">$10</span></td>
-						</tr>
-
-						<tr>
-							<td>
-								<img src="https://picsum.photos/100" class="w-8 h-8 inline-block" alt="" />
-								x152
-							</td>
-
-							<td class="text-right">100 <span class="block text-teal-500">$1,000</span></td>
-
-							<td class="text-right">100 <span class="block text-teal-500">$1,500</span></td>
-						</tr>
-
-						<tr>
-							<td>
-								<img src="https://picsum.photos/100" class="w-8 h-8 inline-block" alt="" />
-								x152
-							</td>
-
-							<td class="text-right">0</td>
-
-							<td class="text-right">152 <span class="block text-teal-500">$10</span></td>
-						</tr>
+								<td class="text-right">152 <span class="block text-teal-500">$10</span></td>
+							</tr>
+						{/each}
 					</tbody>
 
 					<tfoot>

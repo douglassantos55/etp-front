@@ -25,7 +25,8 @@ declare global {
 
     interface Requirement {
         resource: Resource;
-        qty: number;
+        quantity: number;
+        quality: number;
     }
 
     interface Building {
@@ -34,13 +35,14 @@ declare global {
         level: number;
         position: number;
         name: string;
-        wages_hour: number;
+        wages_per_hour: number;
         resources: BuildingResource[];
+        requirements: Requirement[];
     }
 
     interface BuildingResource {
         resource: Resource;
-        production_hour: number;
+        qty_per_hour: number;
     }
 
     interface InventoryItem {

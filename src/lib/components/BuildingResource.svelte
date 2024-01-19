@@ -14,15 +14,15 @@
 	$: inputId = `qty-${resource.resource.id}`;
 	$: qualityId = `quality-${resource.resource.id}`;
 
-	$: duration = qty / resource.production_hour;
+	$: duration = qty / resource.qty_per_hour;
 
-	$: labor_cost = building.wages_hour * duration;
+	$: labor_cost = building.wages_per_hour * duration;
 
 	$: sourcing_cost =
 		qty *
 		resource.resource.requirements.reduce(
 			(total: number, req: Requirement) =>
-				total + req.qty * inventory.getSourcingCost(req.resource.id),
+				total + req.quantity * inventory.getSourcingCost(req.resource.id),
 			0
 		);
 
@@ -44,8 +44,8 @@
 			<div>
 				<p class="uppercase font-semibold mb-2">{resource.resource.name}</p>
 
-				<p>Production/h: {resource.production_hour}</p>
-				<p>Wages/h: {building.wages_hour}</p>
+				<p>Production/h: {resource.qty_per_hour}</p>
+				<p>Wages/h: {building.wages_per_hour}</p>
 			</div>
 		</div>
 
@@ -55,7 +55,7 @@
 			<div class="flex items-center gap-4">
 				{#each resource.resource.requirements as requirement}
 					<div class="flex items-center gap-2">
-						{requirement.qty * (qty || 1)}x
+						{requirement.quantity * (qty || 1)}x
 						<img
 							src={requirement.resource.image}
 							alt={requirement.resource.name}
@@ -87,7 +87,7 @@
 		</div>
 
 		<div class="grid grid-cols-2 gap-3">
-			<Button variant="hollow" on:click={() => (qty = Math.floor(resource.production_hour * 24))}
+			<Button variant="hollow" on:click={() => (qty = Math.floor(resource.qty_per_hour * 24))}
 				>24h</Button
 			>
 
