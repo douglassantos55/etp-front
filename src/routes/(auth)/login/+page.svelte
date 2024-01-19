@@ -11,13 +11,10 @@
 	async function authenticate(event: { currentTarget: EventTarget & HTMLFormElement }) {
 		const data = new FormData(event.currentTarget);
 
-        const response = await fetch(`http://localhost:1323/companies/login`, {
+		const response = await fetch(event.currentTarget.action, {
 			method: 'POST',
 			body: data,
-			headers: {
-				accept: 'application/json'
-			},
-			credentials: 'include'
+			headers: { Accept: 'application/json' }
 		});
 
 		const result = await response.json();
