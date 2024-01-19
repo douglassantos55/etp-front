@@ -8,10 +8,10 @@ declare global {
         // interface Platform {}
     }
 
-    interface User {
+    interface Company {
         id: number;
-        company_name: string;
-        company_logo: string;
+        name: string;
+        logo: string;
         available_cash: number;
         available_slots: number;
     }
@@ -44,22 +44,22 @@ declare global {
     }
 
     interface InventoryItem {
-        qty: number;
+        quantity: number;
         resource: Resource;
-        sourcing_cost: number;
+        cost: number;
     }
 
     interface OrderItem {
         qty: number;
         price: number;
-        user: User;
+        user: Company;
         quality: number;
         resource: Resource;
     }
 
     interface Order {
         id: number;
-        user: User;
+        user: Company;
         quality: number;
         qty: number;
         price: number;
