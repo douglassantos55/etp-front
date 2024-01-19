@@ -1,10 +1,7 @@
-import { error } from "@sveltejs/kit";
 import type { LayoutLoad } from "./$types";
+import { getBuilding } from "$lib/api/buildings";
 
-export const load: LayoutLoad = async function({ fetch, params }) {
-    const response = await fetch(`http://localhost:3000/buildings/${params.id}?_expand=resources.resource.requirements.resource`)
-    if (response.status !== 200) {
-        throw error(response.status, await response.json());
-    }
-    return { building: await response.json() };
+export const load: LayoutLoad = async function({ fetch, params, parent }) {
+    const { user } = await parent();
+    return { building: await getBuilding(fetch, user.id, params.id) };
 }
