@@ -5,12 +5,12 @@
 	import { invalidateAll } from '$app/navigation';
 	import { applyAction } from '$app/forms';
 	import { user, getToken } from '$lib/stores/user';
-	import Requirement from './Requirement.svelte';
+	import RequirementComponent from './Requirement.svelte';
 
 	export let companyId: number;
 	export let building: Building;
 	export let resource: BuildingResource;
-	export let inventory: { items: InventoryItem[] };
+	export let inventory: Inventory;
 
 	let qty: string;
 	let quality: string;
@@ -108,7 +108,7 @@
 
 			<div class="flex items-center gap-4">
 				{#each resource.resource.requirements as requirement}
-					<Requirement
+					<RequirementComponent
 						stock={getStock(requirement.resource.id)}
 						quantity={parseInt(qty)}
 						{requirement}

@@ -46,6 +46,10 @@ declare global {
         max_quality: number;
     }
 
+    interface Inventory {
+        items: InventoryItem[];
+    }
+
     interface InventoryItem {
         quantity: number;
         resource: Resource;
