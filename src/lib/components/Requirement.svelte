@@ -1,10 +1,27 @@
 <script lang="ts">
+	import { applyAction } from '$app/forms';
+
 	export let stock: number;
 	export let quantity: number;
 	export let requirement: Requirement;
 
 	$: error = quantity * requirement.quantity > stock;
 	$: total = quantity ? quantity * requirement.quantity : requirement.quantity;
+	$: {
+		if (error) {
+			applyAction({
+				type: 'failure',
+				status: 400,
+				data: { message: 'not enough ' + requirement.resource.name }
+			});
+		} else {
+			applyAction({
+				type: 'success',
+				status: 200,
+				data: undefined
+			});
+		}
+	}
 </script>
 
 <div class="flex items-center gap-2" class:text-red-500={error}>

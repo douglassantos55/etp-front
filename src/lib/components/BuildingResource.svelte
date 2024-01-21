@@ -88,6 +88,16 @@
 		date.setTime(date.getTime() + duration * 60 * 60 * 1000);
 		return date;
 	})();
+
+	$: tooExpensive = total_cost > $user.available_cash;
+
+	$: {
+		if (tooExpensive) {
+			applyAction({ type: 'failure', status: 400, data: { message: 'not enough cash' } });
+		} else {
+			applyAction({ type: 'success', status: 200, data: undefined });
+		}
+	}
 </script>
 
 <div class="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-5 w-full">
@@ -165,7 +175,8 @@
 		{/if}
 
 		<div class="grid mt-3">
-			<Button disabled={!qty || parseInt(qty) == 0}>Produce</Button>
+			<Button disabled={!qty || parseInt(qty) == 0 || form?.message || form?.errors}>Produce</Button
+			>
 		</div>
 
 		{#if qty && parseInt(qty) > 0}
