@@ -17,7 +17,17 @@
 	let qty: string;
 	let quality: string;
 
-	function maxQty() {}
+	function maxQty() {
+		let total = Infinity;
+
+		for (const requirement of resource.resource.requirements) {
+			const stock = getStock(requirement.resource.id);
+			total = Math.floor(Math.min(total, stock / requirement.quantity));
+		}
+
+		total = Math.floor(Math.min(total, max_qty));
+		qty = total.toString();
+	}
 
 	function getSourcingCost(resource: number): number {
 		const item = inventory.items.find((item: InventoryItem) => {
@@ -65,6 +75,7 @@
 	$: qualityId = `quality-${resource.resource.id}`;
 
 	$: duration = parseInt(qty) / resource.qty_per_hour;
+	$: max_qty = resource.qty_per_hour * 48;
 
 	$: labor_cost = building.wages_per_hour * duration;
 
@@ -151,7 +162,7 @@
 			<div>
 				<label for={inputId} class="uppercase font-semibold">Quantity</label>
 
-				<Input name="quantity" min="1" id={inputId} type="number" bind:value={qty} />
+				<Input name="quantity" min="1" max={max_qty} id={inputId} type="number" bind:value={qty} />
 
 				{#if $errors.quantity}
 					<span class="text-red-500">{$errors.quantity}</span>
