@@ -5,14 +5,14 @@
 	import { invalidateAll } from '$app/navigation';
 	import { user, getToken } from '$lib/stores/user';
 	import RequirementComponent from './Requirement.svelte';
-	import { useErrors } from '$lib/errors';
+	import { createErrors } from '$lib/errors';
 
 	export let companyId: number;
 	export let building: Building;
 	export let resource: BuildingResource;
 	export let inventory: Inventory;
 
-	const errors = useErrors();
+	const errors = createErrors();
 
 	let qty: string;
 	let quality: string;

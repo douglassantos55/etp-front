@@ -1,9 +1,6 @@
 <script lang="ts">
 	import BuildingResource from '$lib/components/BuildingResource.svelte';
-	import { createErrors } from '$lib/errors';
 	import type { PageData } from './$types';
-
-	createErrors();
 
 	export let data: PageData;
 </script>
