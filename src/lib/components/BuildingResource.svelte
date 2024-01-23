@@ -119,6 +119,7 @@
 					<RequirementComponent
 						stock={getStock(requirement.resource.id)}
 						quantity={parseInt(qty)}
+						quality={parseInt(quality)}
 						{requirement}
 					/>
 				{/each}
@@ -168,8 +169,8 @@
 			<Button type="button" variant="hollow" on:click={maxQty}>Max</Button>
 		</div>
 
-		{#each Object.values($errors) as error }
-			<div class="text-red-500">{error}</div>
+		{#each Object.values($errors) as error}
+			<div class="text-red-500">{@html error}</div>
 		{/each}
 
 		<div class="grid mt-3">
