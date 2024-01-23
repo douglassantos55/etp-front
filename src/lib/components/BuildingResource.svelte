@@ -158,7 +158,7 @@
 			</div>
 		</div>
 
-		<div class="grid grid-cols-2 gap-3">
+		<div class="grid grid-cols-2 gap-3 mb-3">
 			<Button
 				variant="hollow"
 				type="button"
@@ -168,9 +168,9 @@
 			<Button type="button" variant="hollow" on:click={maxQty}>Max</Button>
 		</div>
 
-		{#if $errors.message}
-			<span class="text-red-500">{$errors.message}</span>
-		{/if}
+		{#each Object.values($errors) as error }
+			<div class="text-red-500">{error}</div>
+		{/each}
 
 		<div class="grid mt-3">
 			<Button disabled={busyUntil || !qty || Object.keys($errors).length > 0}>

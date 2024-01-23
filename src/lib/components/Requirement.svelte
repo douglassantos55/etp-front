@@ -7,8 +7,8 @@
 
 	const errors = useErrors();
 
-	$: error = quantity * requirement.quantity > stock;
 	$: total = quantity ? quantity * requirement.quantity : requirement.quantity;
+	$: error = total > stock;
 
 	$: {
 		if (error) {
