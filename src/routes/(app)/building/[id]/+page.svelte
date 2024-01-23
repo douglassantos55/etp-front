@@ -1,19 +1,16 @@
 <script lang="ts">
 	import BuildingResource from '$lib/components/BuildingResource.svelte';
+	import { createErrors } from '$lib/errors';
 	import type { PageData } from './$types';
 
-	export let data: PageData;
+	createErrors();
 
-	export let form: {
-		message?: string;
-		errors: Record<string, string>;
-	};
+	export let data: PageData;
 </script>
 
 <div class="grid gap-8 md:grid-cols-2">
 	{#each data.building.resources as resource}
 		<BuildingResource
-			{form}
 			{resource}
 			building={data.building}
 			companyId={data.user.id}

@@ -1,25 +1,20 @@
 <script lang="ts">
-	import { applyAction } from '$app/forms';
+	import { useErrors } from '$lib/errors';
 
 	export let stock: number;
 	export let quantity: number;
 	export let requirement: Requirement;
 
+	const errors = useErrors();
+
 	$: error = quantity * requirement.quantity > stock;
 	$: total = quantity ? quantity * requirement.quantity : requirement.quantity;
+
 	$: {
 		if (error) {
-			applyAction({
-				type: 'failure',
-				status: 400,
-				data: { message: 'not enough ' + requirement.resource.name }
-			});
+			errors.add(requirement.resource.id, 'not enough ' + requirement.resource.name);
 		} else {
-			applyAction({
-				type: 'success',
-				status: 200,
-				data: undefined
-			});
+			errors.remove(requirement.resource.id);
 		}
 	}
 </script>

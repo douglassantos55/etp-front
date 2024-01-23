@@ -38,6 +38,7 @@ declare global {
         wages_per_hour: number;
         resources: BuildingResource[];
         requirements: Requirement[];
+        busy_until: string;
     }
 
     interface BuildingResource {

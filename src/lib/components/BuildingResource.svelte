@@ -3,22 +3,19 @@
 	import Button from './Button.svelte';
 	import { format } from '$lib/helper';
 	import { invalidateAll } from '$app/navigation';
-	import { applyAction } from '$app/forms';
 	import { user, getToken } from '$lib/stores/user';
 	import RequirementComponent from './Requirement.svelte';
+	import { useErrors } from '$lib/errors';
 
 	export let companyId: number;
 	export let building: Building;
 	export let resource: BuildingResource;
 	export let inventory: Inventory;
 
+	const errors = useErrors();
+
 	let qty: string;
 	let quality: string;
-
-	export let form: {
-		message?: string;
-		errors: Record<string, string>;
-	};
 
 	function maxQty() {}
 
@@ -55,12 +52,12 @@
 		);
 
 		const result = await response.json();
-		const type = result.errors || result.message ? 'failure' : 'success';
-
-		if (type == 'success') {
-			await invalidateAll();
+		if (result.errors) {
+			errors.set(result.errors);
+		} else if (result.message) {
+			errors.set({ message: result.message });
 		} else {
-			await applyAction({ type, status: response.status, data: result });
+			await invalidateAll();
 		}
 	}
 
@@ -90,12 +87,13 @@
 	})();
 
 	$: tooExpensive = total_cost > $user.available_cash;
+	$: busyUntil = building.busy_until ? new Date(building.busy_until) : null;
 
 	$: {
 		if (tooExpensive) {
-			applyAction({ type: 'failure', status: 400, data: { message: 'not enough cash' } });
+			errors.add('cost', 'not enough cash');
 		} else {
-			applyAction({ type: 'success', status: 200, data: undefined });
+			errors.remove('cost');
 		}
 	}
 </script>
@@ -144,18 +142,18 @@
 					{/each}
 				</select>
 
-				{#if form?.errors?.quality}
-					<span class="text-red-500">{form?.errors.quality}</span>
+				{#if $errors.quality}
+					<span class="text-red-500">{$errors.quality}</span>
 				{/if}
 			</div>
 
 			<div>
 				<label for={inputId} class="uppercase font-semibold">Quantity</label>
 
-				<Input name="quantity" min="0" id={inputId} type="number" bind:value={qty} />
+				<Input name="quantity" min="1" id={inputId} type="number" bind:value={qty} />
 
-				{#if form?.errors?.quantity}
-					<span class="text-red-500">{form?.errors.quantity}</span>
+				{#if $errors.quantity}
+					<span class="text-red-500">{$errors.quantity}</span>
 				{/if}
 			</div>
 		</div>
@@ -170,13 +168,14 @@
 			<Button type="button" variant="hollow" on:click={maxQty}>Max</Button>
 		</div>
 
-		{#if form?.message}
-			<span class="text-red-500">{form?.message}</span>
+		{#if $errors.message}
+			<span class="text-red-500">{$errors.message}</span>
 		{/if}
 
 		<div class="grid mt-3">
-			<Button disabled={!qty || parseInt(qty) == 0 || form?.message || form?.errors}>Produce</Button
-			>
+			<Button disabled={busyUntil || !qty || Object.keys($errors).length > 0}>
+				{busyUntil ? 'Busy until ' + busyUntil.toLocaleString() : 'Produce'}
+			</Button>
 		</div>
 
 		{#if qty && parseInt(qty) > 0}
