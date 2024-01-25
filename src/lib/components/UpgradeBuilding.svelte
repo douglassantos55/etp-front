@@ -4,9 +4,9 @@
 	import CloseIcon from '$lib/components/CloseIcon.svelte';
 	import { format, toHoursAndMinutes } from '$lib/helper';
 	import BuildingRequirement from './BuildingRequirement.svelte';
+	import { costs, stocks } from '$lib/stores/inventory';
 
 	export let building: Building;
-	export let inventory: Inventory;
 
 	let totals: Record<number, number> = {};
 	const dispatch = createEventDispatcher();
@@ -21,21 +21,19 @@
 		totals[event.detail.resourceId] = event.detail.total;
 	}
 
-	function getStock(resourceId: number): number {
-		const item = inventory.items.find((item: InventoryItem) => item.resource.id == resourceId);
-		if (item === undefined) {
-			return 0;
-		}
-		return item.quantity;
-	}
-
 	$: marketTotal = Object.values(totals).reduce(
 		(total: number, subtotal: number) => total + subtotal,
 		0
 	);
 
 	$: stockTotal = building.requirements.reduce((total: number, requirement: Requirement) => {
-		return total + getStock(requirement.resource.id);
+		const stock =
+			$stocks[requirement.resource.id] && $stocks[requirement.resource.id][requirement.quality];
+
+		const cost =
+			$costs[requirement.resource.id] && $costs[requirement.resource.id][requirement.quality];
+
+		return total + ((stock || 0) * (cost || 0));
 	}, 0);
 </script>
 

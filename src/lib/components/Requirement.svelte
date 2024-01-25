@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { useErrors } from '$lib/errors';
+	import { stocks } from '$lib/stores/inventory';
 
-	export let stock: number;
 	export let quality: number;
 	export let quantity: number;
 	export let requirement: Requirement;
@@ -9,6 +9,8 @@
 	const errors = useErrors();
 
 	$: total = quantity ? quantity * requirement.quantity : requirement.quantity;
+	$: stock = ($stocks[requirement.resource.id] && $stocks[requirement.resource.id][quality]) || 0;
+
 	$: error = total > stock;
 	$: diff = total - stock;
 

@@ -6,11 +6,18 @@
 	import { user, getToken } from '$lib/stores/user';
 	import RequirementComponent from './Requirement.svelte';
 	import { createErrors } from '$lib/errors';
+	import { inventory, costs, stocks } from '$lib/stores/inventory';
+	import { onMount } from 'svelte';
 
 	export let companyId: number;
 	export let building: Building;
 	export let resource: BuildingResource;
-	export let inventory: Inventory;
+
+	onMount(function () {
+		if ($inventory === undefined) {
+			inventory.load();
+		}
+	});
 
 	const errors = createErrors();
 
@@ -21,26 +28,15 @@
 		let total = Infinity;
 
 		for (const requirement of resource.resource.requirements) {
-			const stock = getStock(requirement.resource.id);
+			const stock =
+				($stocks[requirement.resource.id] && $stocks[requirement.resource.id][parseInt(quality)]) ||
+				0;
+
 			total = Math.floor(Math.min(total, stock / requirement.quantity));
 		}
 
 		total = Math.floor(Math.min(total, max_qty));
 		qty = total.toString();
-	}
-
-	function getSourcingCost(resource: number): number {
-		const item = inventory.items.find((item: InventoryItem) => {
-			return item.resource.id === resource;
-		});
-		return item ? item.cost : 0;
-	}
-
-	function getStock(resource: number): number {
-		const item = inventory.items.find((item: InventoryItem) => {
-			return item.resource.id === resource;
-		});
-		return item ? item.quantity : 0;
 	}
 
 	async function produce() {
@@ -81,11 +77,10 @@
 
 	$: sourcing_cost =
 		(parseInt(qty) *
-			resource.resource.requirements.reduce(
-				(total: number, req: Requirement) =>
-					total + req.quantity * getSourcingCost(req.resource.id),
-				0
-			)) /
+			resource.resource.requirements.reduce(function (total: number, req: Requirement) {
+				const sourcingCost = ($costs[req.resource.id] && $costs[req.resource.id][req.quality]) || 0;
+				return total + req.quantity * sourcingCost;
+			}, 0)) /
 		100;
 
 	$: total_cost = labor_cost + sourcing_cost;
@@ -128,7 +123,6 @@
 			<div class="flex items-center gap-4">
 				{#each resource.resource.requirements as requirement}
 					<RequirementComponent
-						stock={getStock(requirement.resource.id)}
 						quantity={parseInt(qty)}
 						quality={parseInt(quality)}
 						{requirement}

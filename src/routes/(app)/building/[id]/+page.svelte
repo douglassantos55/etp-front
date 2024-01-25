@@ -7,11 +7,6 @@
 
 <div class="grid gap-8 md:grid-cols-2">
 	{#each data.building.resources as resource}
-		<BuildingResource
-			{resource}
-			building={data.building}
-			companyId={data.user.id}
-			inventory={data.inventory}
-		/>
+		<BuildingResource {resource} building={data.building} companyId={data.user.id} />
 	{/each}
 </div>

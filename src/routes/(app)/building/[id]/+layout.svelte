@@ -59,10 +59,6 @@
 	<slot />
 
 	{#if upgrade}
-		<UpgradeBuilding
-			building={data.building}
-			inventory={data.inventory}
-			on:close={() => (upgrade = false)}
-		/>
+		<UpgradeBuilding building={data.building} on:close={() => (upgrade = false)} />
 	{/if}
 </div>
