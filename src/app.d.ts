@@ -35,6 +35,7 @@ declare global {
         level: number;
         position: number;
         name: string;
+        downtime: number;
         wages_per_hour: number;
         resources: BuildingResource[];
         requirements: Requirement[];

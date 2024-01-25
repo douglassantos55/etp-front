@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
 	import CloseIcon from '$lib/components/CloseIcon.svelte';
-	import { format } from '$lib/helper';
+	import { format, toHoursAndMinutes } from '$lib/helper';
 	import BuildingRequirement from './BuildingRequirement.svelte';
 
 	export let building: Building;
@@ -29,10 +29,8 @@
 		return item.quantity;
 	}
 
-	$: marketTotal = Object.values(totals).reduce(
-		(total: number, subtotal: number) => total + subtotal,
-		0
-    ) / 100;
+	$: marketTotal =
+		Object.values(totals).reduce((total: number, subtotal: number) => total + subtotal, 0) / 100;
 
 	$: stockTotal = building.requirements.reduce((total: number, requirement: Requirement) => {
 		return total + getStock(requirement.resource.id);
@@ -51,8 +49,13 @@
 		<button on:click={() => dispatch('close')} class="absolute right-3 top-3"><CloseIcon /></button>
 
 		<h3 class="uppercase text-xl font-bold">Upgrade building</h3>
-		<p class="mt-2">Production increase: 100%</p>
-		<p>Downtime: 24h</p>
+		<p class="mt-5">Production increase: <span class="font-semibold text-green-500">100%</span></p>
+		<p>
+			Downtime:
+			<span class="font-semibold text-red-500">
+				{toHoursAndMinutes(building.downtime)}
+			</span>
+		</p>
 
 		<table class="w-full table-auto mt-6">
 			<thead>
