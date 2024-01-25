@@ -54,6 +54,7 @@ declare global {
 
     interface InventoryItem {
         quantity: number;
+        quality: number;
         resource: Resource;
         cost: number;
     }

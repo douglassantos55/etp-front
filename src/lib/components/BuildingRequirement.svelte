@@ -1,38 +1,23 @@
 <script lang="ts">
-	import { format } from '$lib/helper';
 	import { createEventDispatcher } from 'svelte';
 	import ResourcePrice from './ResourcePrice.svelte';
+	import ResourceStock from './ResourceStock.svelte';
+	import ResourceSourcingCost from './ResourceSourcingCost.svelte';
+	import { stocks } from '$lib/stores/inventory';
 
-	export let inventory: Inventory;
 	export let requirement: Requirement;
 
 	const dispatch = createEventDispatcher();
 
-	$: stock = getStock(requirement.resource.id);
-	$: missing = requirement.quantity - stock;
-	$: sourcingCost = getSourcingCost(requirement.resource.id);
+	$: qualitiesStocks = $stocks[requirement.resource.id];
+	$: stock = qualitiesStocks && qualitiesStocks[requirement.quality];
+	$: missing = requirement.quantity - (stock || 0);
 
 	function updateTotal(event: CustomEvent) {
 		dispatch('update-total', {
 			resource: requirement.resource.id,
 			total: requirement.quantity * event.detail.price
 		});
-	}
-
-	function getStock(resourceId: number): number {
-		const item = inventory.items.find((item: InventoryItem) => item.resource.id == resourceId);
-		if (item === undefined) {
-			return 0;
-		}
-		return item.quantity;
-	}
-
-	function getSourcingCost(resourceId: number): number {
-		const item = inventory.items.find((item: InventoryItem) => item.resource.id == resourceId);
-		if (item === undefined) {
-			return 0;
-		}
-		return item.cost / 100;
 	}
 </script>
 
@@ -47,11 +32,8 @@
 	</td>
 
 	<td class="text-right">
-		{stock}
-
-		{#if sourcingCost > 0}
-			<span class="block text-teal-500">{format(sourcingCost)}</span>
-		{/if}
+		<ResourceStock resourceId={requirement.resource.id} quality={requirement.quality} />
+		<ResourceSourcingCost resourceId={requirement.resource.id} quality={requirement.quality} />
 	</td>
 
 	<td class="text-right">

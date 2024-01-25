@@ -29,8 +29,10 @@
 		return item.quantity;
 	}
 
-	$: marketTotal =
-		Object.values(totals).reduce((total: number, subtotal: number) => total + subtotal, 0) / 100;
+	$: marketTotal = Object.values(totals).reduce(
+		(total: number, subtotal: number) => total + subtotal,
+		0
+	);
 
 	$: stockTotal = building.requirements.reduce((total: number, requirement: Requirement) => {
 		return total + getStock(requirement.resource.id);
@@ -68,7 +70,7 @@
 
 			<tbody>
 				{#each building.requirements as requirement}
-					<BuildingRequirement {requirement} {inventory} on:update-total={updateTotals} />
+					<BuildingRequirement {requirement} on:update-total={updateTotals} />
 				{/each}
 			</tbody>
 

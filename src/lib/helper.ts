@@ -4,7 +4,7 @@ export function round(value: number): number {
 
 const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 export function format(value: number): string {
-    return formatter.format(value);
+    return formatter.format(value / 100);
 }
 
 export function toHoursAndMinutes(totalMinutes: number) {

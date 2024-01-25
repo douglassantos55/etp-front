@@ -27,5 +27,5 @@
 {#if price === undefined}
 	...
 {:else}
-	{format(price / 100)}
+	{format(price)}
 {/if}
