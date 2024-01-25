@@ -1,12 +1,16 @@
 <script lang="ts">
 	import { getResourcePrice } from '$lib/api/market';
 	import { format } from '$lib/helper';
-	import { onDestroy, onMount } from 'svelte';
+	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 
 	export let quality: number;
 	export let resourceId: number;
 
 	let price: number;
+
+	const dispatch = createEventDispatcher();
+
+	$: dispatch('update', { price });
 
 	onMount(async function () {
 		// set a listener to the socket

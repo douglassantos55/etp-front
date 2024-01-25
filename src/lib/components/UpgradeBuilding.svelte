@@ -3,17 +3,22 @@
 	import Button from '$lib/components/Button.svelte';
 	import CloseIcon from '$lib/components/CloseIcon.svelte';
 	import { format } from '$lib/helper';
-	import ResourcePrice from './ResourcePrice.svelte';
+	import BuildingRequirement from './BuildingRequirement.svelte';
 
 	export let building: Building;
 	export let inventory: Inventory;
 
+	let totals: Record<number, number> = {};
 	const dispatch = createEventDispatcher();
 
 	function handleKeyup(evt: KeyboardEvent) {
 		if (evt.key === 'Escape') {
 			dispatch('close');
 		}
+	}
+
+	function updateTotals(event: CustomEvent) {
+		totals[event.detail.resourceId] = event.detail.total;
 	}
 
 	function getStock(resourceId: number): number {
@@ -23,6 +28,11 @@
 		}
 		return item.quantity;
 	}
+
+	$: marketTotal = Object.values(totals).reduce(
+		(total: number, subtotal: number) => total + subtotal,
+		0
+    ) / 100;
 
 	$: stockTotal = building.requirements.reduce((total: number, requirement: Requirement) => {
 		return total + getStock(requirement.resource.id);
@@ -55,31 +65,7 @@
 
 			<tbody>
 				{#each building.requirements as requirement}
-					<tr>
-						<td>
-							<img
-								src={requirement.resource.image}
-								class="w-8 h-8 inline-block"
-								alt={requirement.resource.name}
-							/>
-							x{requirement.quantity} @Q{requirement.quality}
-						</td>
-
-						<td class="text-right">
-							{getStock(requirement.resource.id)}
-
-							{#if getStock(requirement.resource.id)}
-								<span class="block text-teal-500">$52</span>
-							{/if}
-						</td>
-
-						<td class="text-right">
-							152
-							<span class="block text-teal-500">
-								<ResourcePrice resourceId={requirement.resource.id} quality={requirement.quality} />
-							</span>
-						</td>
-					</tr>
+					<BuildingRequirement {requirement} {inventory} on:update-total={updateTotals} />
 				{/each}
 			</tbody>
 
@@ -87,7 +73,7 @@
 				<tr>
 					<td>Total</td>
 					<td class="text-right">{format(stockTotal)}</td>
-					<td class="text-right">$250,000</td>
+					<td class="text-right">{format(marketTotal)}</td>
 				</tr>
 			</tfoot>
 		</table>
