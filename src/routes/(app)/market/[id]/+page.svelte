@@ -34,9 +34,9 @@
 		for (let i = 0; left > 0 && i < data.orders.length; i++) {
 			const order = data.orders[i];
 
-			if (order.qty <= left) {
-				total += order.qty * order.price;
-				left -= order.qty;
+			if (order.quantity <= left) {
+				total += order.quantity * order.price;
+				left -= order.quantity;
 			} else {
 				total += left * order.price;
 				left -= qty;
@@ -44,7 +44,7 @@
 		}
 	}
 
-	$: totalOrders = data.orders.reduce((total: number, order: OrderItem) => total + order.qty, 0);
+	$: totalOrders = data.orders.reduce((total: number, order: Order) => total + order.quantity, 0);
 	$: sourcingCost = (qty && qty > 0 && round(total / qty)) || 0;
 
 	$: error =

@@ -76,9 +76,9 @@ declare global {
 
     interface Order {
         id: number;
-        user: Company;
+        company: Company;
         quality: number;
-        qty: number;
+        quantity: number;
         price: number;
         resource: Resource;
     }
