@@ -1,6 +1,6 @@
-import type { LayoutLoad } from "./$types";
+import { getCategories } from "$lib/api/inventory";
+import type { PageLoad } from "./$types";
 
-export const load: LayoutLoad = async function({ fetch }) {
-    const response = await fetch('http://localhost:3000/categories?_embed=resources');
-    return { categories: await response.json() };
+export const load: PageLoad = async function({ fetch }) {
+    return { categories: await getCategories(fetch) };
 }

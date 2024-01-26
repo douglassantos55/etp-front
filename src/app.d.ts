@@ -20,7 +20,14 @@ declare global {
         id: number;
         name: string;
         image: string;
+        category: Category;
         requirements: Array<Requirement>;
+    }
+
+    interface Category {
+        id: number;
+        name: string;
+        resources?: Resource[];
     }
 
     interface Requirement {

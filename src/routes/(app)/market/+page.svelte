@@ -10,13 +10,15 @@
 			<div>
 				<h2 class="uppercase tracking-tight font-semibold mb-4">{category.name}</h2>
 
-				<div class="flex flex-wrap gap-4">
-					{#each category.resources as resource}
-						<a href={`/market/${resource.id}`}>
-							<img src={resource.image} alt={resource.name} class="w-24 h-24" />
-						</a>
-					{/each}
-				</div>
+				{#if category.resources}
+					<div class="flex flex-wrap gap-4">
+						{#each category.resources as resource}
+							<a href={`/market/${resource.id}`}>
+								<img src={resource.image} alt={resource.name} class="w-24 h-24" />
+							</a>
+						{/each}
+					</div>
+				{/if}
 			</div>
 		{/each}
 	</div>
