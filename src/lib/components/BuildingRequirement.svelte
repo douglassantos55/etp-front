@@ -1,17 +1,20 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import ResourcePrice from './ResourcePrice.svelte';
-	import ResourceStock from './ResourceStock.svelte';
-	import ResourceSourcingCost from './ResourceSourcingCost.svelte';
-	import { stocks } from '$lib/stores/inventory';
+	import { costs, stocks } from '$lib/stores/inventory';
+	import { format } from '$lib/helper';
 
 	export let requirement: Requirement;
 
 	const dispatch = createEventDispatcher();
 
+	$: resourceCosts = $costs[requirement.resource.id];
+	$: sourcingCost = (resourceCosts && resourceCosts[requirement.quality]) || 0;
+
 	$: qualitiesStocks = $stocks[requirement.resource.id];
-	$: stock = qualitiesStocks && qualitiesStocks[requirement.quality];
-	$: missing = requirement.quantity - (stock || 0);
+	$: stock = (qualitiesStocks && qualitiesStocks[requirement.quality]) || 0;
+
+	$: missing = requirement.quantity - stock;
 
 	function updateTotal(event: CustomEvent) {
 		dispatch('update-total', {
@@ -32,8 +35,8 @@
 	</td>
 
 	<td class="text-right">
-		<ResourceStock resourceId={requirement.resource.id} quality={requirement.quality} />
-		<ResourceSourcingCost resourceId={requirement.resource.id} quality={requirement.quality} />
+		{stock}
+		<span class="block text-teal-500">{format(sourcingCost)}</span>
 	</td>
 
 	<td class="text-right">
