@@ -2,12 +2,14 @@
 	import type { PageData } from './$types';
 	import Button from '$lib/components/Button.svelte';
 	import Input from '$lib/components/Input.svelte';
-	import { round } from '$lib/helper';
+	import { format, round } from '$lib/helper';
 	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import { user } from '$lib/stores/user';
 	import OrdersTable from '$lib/components/OrdersTable.svelte';
+	import { savePurchase } from '$lib/api/market';
+	import { createErrors } from '$lib/errors';
 
 	export let data: PageData;
 
@@ -15,9 +17,29 @@
 	let _qty = $page.url.searchParams.get('qty') || '0';
 	let quality = $page.url.searchParams.get('quality') || '0';
 
+	let errors = createErrors();
+
 	function repurchase(purchase: Purchase) {
 		_qty = purchase.qty.toString();
 		quality = purchase.order.quality.toString();
+	}
+
+	async function purchase() {
+		const result = await savePurchase({
+			resource_id: data.resource.id,
+			quality: parseInt(quality),
+			quantity: qty
+		});
+
+        console.log(result);
+
+		if (result.errors) {
+			errors.set(result.errors);
+		} else if (result.message) {
+			errors.set({ message: result.message });
+		} else {
+			await invalidateAll();
+		}
 	}
 
 	$: qty = parseInt(_qty);
@@ -47,8 +69,15 @@
 	$: totalOrders = data.orders.reduce((total: number, order: Order) => total + order.quantity, 0);
 	$: sourcingCost = (qty && qty > 0 && round(total / qty)) || 0;
 
-	$: error =
-		qty > totalOrders ? 'Too much my dude' : total > $user.available_cash ? 'Not enough cash' : '';
+	$: {
+		if (qty > totalOrders) {
+			errors.add('quantity', 'Too much my dude');
+		} else if (total > $user.available_cash) {
+			errors.add('quantity', 'Not enough cash');
+		} else {
+			errors.remove('quantity');
+		}
+	}
 </script>
 
 <div class="container px-4 py-12 mx-auto">
@@ -60,14 +89,17 @@
 	</div>
 
 	<div class="mb-10">
-		<form class="space-y-4">
+		<form class="space-y-4" on:submit|preventDefault={purchase}>
 			<input type="hidden" name="resourceId" value={$page.params.id} />
 
 			<div class="flex items-start gap-4">
 				<div>
 					<label for="qty">Qty</label>
 					<Input id="qty" name="qty" type="number" bind:value={_qty} />
-					<span class="text-red-600">{error}</span>
+
+					{#if $errors?.quantity}
+						<span class="text-red-600">{$errors?.quantity}</span>
+					{/if}
 				</div>
 
 				<div>
@@ -87,13 +119,17 @@
 				<div>
 					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label class="block">&nbsp;</label>
-					<Button type="submit" disabled={!qty || error}>Purchase</Button>
+					<Button type="submit" disabled={!qty || $errors}>Purchase</Button>
 				</div>
 			</div>
 
+			{#if $errors?.message}
+				<span class="text-red-600">{$errors?.message}</span>
+			{/if}
+
 			<div>
-				<p><strong>Total:</strong> {total}</p>
-				<p><strong>Sourcing cost:</strong> {sourcingCost}</p>
+				<p><strong>Total:</strong> {format(total)}</p>
+				<p><strong>Sourcing cost:</strong> {format(sourcingCost)}</p>
 			</div>
 		</form>
 	</div>
