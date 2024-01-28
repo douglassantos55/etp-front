@@ -19,5 +19,9 @@ type PurchaseOrder = {
 }
 
 export function savePurchase(order: PurchaseOrder): Promise<Response<Order>> {
-    return makeAuthPost<Response<Order>>('market/orders/purchase', order, fetch);
+    return makeAuthPost('market/orders/purchase', order, fetch);
+}
+
+export function getRecentPurchases(resourceId: number): Promise<Purchase[]> {
+    return makeAuthRequest<Purchase[]>(`market/purchases/me?resource=${resourceId}`, fetch);
 }

@@ -31,7 +31,7 @@
 			quantity: qty
 		});
 
-        console.log(result);
+		console.log(result);
 
 		if (result.errors) {
 			errors.set(result.errors);
@@ -88,6 +88,38 @@
 		<a href="/market" class="ml-auto">&larr; Back</a>
 	</div>
 
+	{#if data.recent.length > 0}
+		<h2 class="mt-10 uppercase font-semibold tracking-tight">Recent purchases</h2>
+
+		<div class="overflow-x-auto mb-10">
+			<table class="w-full border-collapse mt-4">
+				<thead>
+					<th class="pe-4 py-2 text-left">Quality</th>
+					<th class="px-4 py-2 text-right">Qty</th>
+					<th class="px-4 py-2 text-right">Price</th>
+					<th class="px-4 py-2 text-right">Subtotal</th>
+					<th>&nbsp;</th>
+				</thead>
+
+				<tbody>
+					{#each data.recent as purchase}
+						<tr>
+							<td class="py-2 border-y pe-4">{purchase.order.quality}</td>
+							<td class="py-2 border-y px-4 text-right">{purchase.quantity}</td>
+							<td class="py-2 border-y px-4 text-right">{purchase.order.price}</td>
+							<td class="py-2 border-y px-4 text-right"
+								>{purchase.order.price * purchase.quantity}</td
+							>
+							<td class="py-2 border-y px-4 w-48 text-right">
+								<Button type="button" on:click={() => repurchase(purchase)}>Repurchase</Button>
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{/if}
+
 	<div class="mb-10">
 		<form class="space-y-4" on:submit|preventDefault={purchase}>
 			<input type="hidden" name="resourceId" value={$page.params.id} />
@@ -119,7 +151,7 @@
 				<div>
 					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label class="block">&nbsp;</label>
-					<Button type="submit" disabled={!qty || $errors}>Purchase</Button>
+					<Button type="submit" disabled={!qty || Object.keys($errors).length}>Purchase</Button>
 				</div>
 			</div>
 
@@ -133,36 +165,6 @@
 			</div>
 		</form>
 	</div>
-
-	{#if data.recent.length > 0}
-		<h2 class="uppercase font-semibold tracking-tight">Recent purchases</h2>
-
-		<div class="overflow-x-auto mb-10">
-			<table class="w-full border-collapse mt-4">
-				<thead>
-					<th class="pe-4 py-2 text-left">Quality</th>
-					<th class="px-4 py-2 text-right">Qty</th>
-					<th class="px-4 py-2 text-right">Price</th>
-					<th class="px-4 py-2 text-right">Subtotal</th>
-					<th>&nbsp;</th>
-				</thead>
-
-				<tbody>
-					{#each data.recent as purchase}
-						<tr>
-							<td class="py-2 border-y pe-4">{purchase.order.quality}</td>
-							<td class="py-2 border-y px-4 text-right">{purchase.qty}</td>
-							<td class="py-2 border-y px-4 text-right">{purchase.order.price}</td>
-							<td class="py-2 border-y px-4 text-right">{purchase.order.price * purchase.qty}</td>
-							<td class="py-2 border-y px-4 w-48 text-right">
-								<Button type="button" on:click={() => repurchase(purchase)}>Repurchase</Button>
-							</td>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
-		</div>
-	{/if}
 
 	{#if data.orders.length > 0}
 		<h2 class="uppercase font-semibold tracking-tight">Market orders</h2>

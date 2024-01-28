@@ -86,7 +86,8 @@ declare global {
     interface Purchase {
         id: number;
         order: Order;
-        qty: number;
+        quantity: number;
+        company: Company;
     }
 }
 
