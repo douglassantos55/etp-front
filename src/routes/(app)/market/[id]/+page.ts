@@ -7,8 +7,8 @@ export const load: PageLoad = async function({ fetch, params, url }) {
     const quality = parseInt(url.searchParams.get("quality") || '0');
 
     return {
-        recent: await getRecentPurchases(resourceId),
-        orders: await getOrders(resourceId, quality),
+        recent: await getRecentPurchases(resourceId, fetch),
+        orders: await getOrders(resourceId, quality, fetch),
         resource: await getResource(resourceId, fetch),
     };
 }

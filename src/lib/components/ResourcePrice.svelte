@@ -16,7 +16,7 @@
 		// set a listener to the socket
 
 		// fetch from the api
-		price = await getResourcePrice(resourceId, quality);
+		price = await getResourcePrice(resourceId, quality, fetch);
 	});
 
 	onDestroy(function () {
