@@ -5,7 +5,6 @@
 	import { format, round } from '$lib/helper';
 	import { page } from '$app/stores';
 	import { goto, invalidateAll } from '$app/navigation';
-	import { browser } from '$app/environment';
 	import { user } from '$lib/stores/user';
 	import OrdersTable from '$lib/components/OrdersTable.svelte';
 	import { savePurchase } from '$lib/api/market';
@@ -14,24 +13,30 @@
 	export let data: PageData;
 
 	let total: number = 0;
-	let _qty = $page.url.searchParams.get('qty') || '0';
-	let quality = $page.url.searchParams.get('quality') || '0';
 
+	let _qty = $page.url.searchParams.get('qty') || '0';
+	let _quality = $page.url.searchParams.get('quality') || '0';
+
+	async function updateUrl(quality: string) {
+		$page.url.searchParams.set('quality', quality);
+		await goto($page.url.toString());
+		await invalidateAll();
+	}
+
+	$: updateUrl(_quality);
 	let errors = createErrors();
 
 	function repurchase(purchase: Purchase) {
-		_qty = purchase.qty.toString();
-		quality = purchase.order.quality.toString();
+		_qty = purchase.quantity.toString();
+		_quality = purchase.order.quality.toString();
 	}
 
 	async function purchase() {
 		const result = await savePurchase({
 			resource_id: data.resource.id,
-			quality: parseInt(quality),
+			quality: quality,
 			quantity: qty
 		});
-
-		console.log(result);
 
 		if (result.errors) {
 			errors.set(result.errors);
@@ -43,11 +48,7 @@
 	}
 
 	$: qty = parseInt(_qty);
-
-	$: {
-		$page.url.searchParams.set('quality', quality);
-		browser && goto($page.url.toString());
-	}
+	$: quality = parseInt(_quality);
 
 	$: {
 		total = 0;
@@ -139,7 +140,7 @@
 					<select
 						id="quality"
 						name="quality"
-						bind:value={quality}
+						bind:value={_quality}
 						class="w-full py-2 px-3 rounded-md bg-white border"
 					>
 						{#each { length: 21 } as _, i}
