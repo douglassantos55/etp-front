@@ -89,6 +89,24 @@ declare global {
         quantity: number;
         company: Company;
     }
+
+    interface Bond {
+        amount: number;
+        purchased: number;
+        company?: Company;
+        creditors: Creditor[];
+    }
+
+    interface Creditor {
+        company: Company;
+        interest_rate: number;
+        interest_rate: number;
+        interest_paid: number;
+        payable_from: string;
+        principal: number;
+        principal_paid: number;
+        delayed_payments: number;
+    }
 }
 
 export { };
