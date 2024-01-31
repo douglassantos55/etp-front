@@ -16,6 +16,9 @@
 	let errors = createErrors();
 	let graph: HTMLCanvasElement;
 
+	let bondAmount: string;
+	let bondRate: string;
+
 	const graphData = {
 		labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
 		datasets: [
@@ -33,7 +36,10 @@
 	onMount(() => new Chart(graph, { type: 'line', data: graphData }));
 
 	async function issue() {
-		const result = await issueBond({ rate: 1, amount: 10000 });
+		const result = await issueBond({
+			rate: parseFloat(bondRate) / 100,
+			amount: parseInt(bondAmount) * 100
+		});
 
 		if (result.errors) {
 			errors.set(result.errors);
@@ -93,14 +99,14 @@
 		<h2 class="uppercase tracking-tight font-semibold mb-4">Bonds Issued</h2>
 
 		<form class="grid grid-cols-2 sm:flex items-end gap-4 mb-6" on:submit|preventDefault={issue}>
-			<div class="w-48 max-w-full">
-				<label for="bond">Amount</label>
-				<Input id="bond" name="amount" type="number" />
+			<div class="w-52 max-w-full">
+				<label for="bond">Amount ($)</label>
+				<Input id="bond" min="1000" step="100" type="number" bind:value={bondAmount} />
 			</div>
 
-			<div class="w-32 max-w-full">
-				<label for="rate">Interest rate</label>
-				<Input id="rate" name="rate" type="number" />
+			<div class="w-36 max-w-full">
+				<label for="rate">Interest rate (%)</label>
+				<Input id="rate" min="0.5" step=".1" type="number" bind:value={bondRate} />
 			</div>
 
 			<div class="flex-shrink-0">
