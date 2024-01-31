@@ -19,6 +19,8 @@
 	let bondAmount: string;
 	let bondRate: string;
 
+	let loanAmount: string;
+
 	const graphData = {
 		labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
 		datasets: [
@@ -51,7 +53,7 @@
 	}
 
 	async function loan() {
-		const result = await takeLoan(10000);
+		const result = await takeLoan(parseInt(loanAmount) * 100);
 
 		if (result.errors) {
 			errors.set(result.errors);
@@ -72,9 +74,9 @@
 		<h2 class="uppercase tracking-tight font-semibold mb-4">Loans</h2>
 
 		<form class="flex items-end gap-4 mb-6" on:submit|preventDefault={loan}>
-			<div class="w-48">
-				<label for="loan">Amount</label>
-				<Input id="loan" name="amount" type="number" />
+			<div class="w-52">
+				<label for="loan">Amount ($)</label>
+				<Input id="loan" min="5000" step="100" type="number" bind:value={loanAmount} />
 			</div>
 
 			<Button type="submit">Take loan</Button>
