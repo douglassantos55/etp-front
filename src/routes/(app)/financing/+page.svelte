@@ -9,6 +9,7 @@
 	import { createErrors } from '$lib/errors';
 	import { invalidateAll } from '$app/navigation';
 	import Loan from '$lib/components/Loan.svelte';
+	import Creditor from '$lib/components/Creditor.svelte';
 
 	export let data: PageData;
 
@@ -113,35 +114,16 @@
 			{:then bonds}
 				{#each bonds as bond}
 					<ul class="p-6 shadow-md bg-gray-100">
-						<li>Amount: {format(bond.amount)}</li>
-						<li>Interest rate: {bond.interest_rate}%</li>
-						<li>Purchased: {format(bond.purchased)}</li>
-						<li>Left: {format(bond.amount - bond.purchased)}</li>
+						<li>Amount: <span class="text-teal-500">{format(bond.amount)}</span></li>
+						<li>Interest rate: <span class="text-teal-500">{bond.interest_rate * 100}%</span></li>
+						<li>Purchased: <span class="text-teal-500">{format(bond.purchased)}</span></li>
+						<li>
+							Available: <span class="text-teal-500">{format(bond.amount - bond.purchased)}</span>
+						</li>
 					</ul>
 
 					{#each bond.creditors as creditor}
-						<div class="p-6 shadow-md bg-gray-100">
-							<img
-								src={creditor.company.logo}
-								alt={creditor.company.name}
-								class="w-16 h-16 rounded-full"
-							/>
-
-							<div class="mt-2">
-								<h3 class="font-semibold mb-1">{creditor.company.name}</h3>
-								<p>Amount: {format(creditor.principal)}</p>
-								<p>Interest rate: {creditor.interest_rate}</p>
-								<p>Interest payment: {format(creditor.principal_paid)}</p>
-								<p>Interest paid: {format(creditor.interest_paid)}</p>
-							</div>
-
-							<div class="flex gap-4 mt-4">
-								<div class="w-40 max-w-full">
-									<Input placeholder="Amount" max={bond.amount} type="number" />
-								</div>
-								<Button type="submit">Pay</Button>
-							</div>
-						</div>
+						<Creditor {creditor} />
 					{/each}
 				{/each}
 			{/await}

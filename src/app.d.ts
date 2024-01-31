@@ -110,7 +110,9 @@ declare global {
     }
 
     interface Creditor {
-        company: Company;
+        id: number;
+        name: string;
+        logo: string;
         interest_rate: number;
         interest_rate: number;
         interest_paid: number;
