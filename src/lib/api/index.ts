@@ -39,7 +39,7 @@ export async function makeAuthPost<T>(endpoint: string, data: any, fetch: Functi
     const json = await response.json();
 
     if (!response.ok) {
-        if (response.status != 422) {
+        if (response.status != 422 && response.status != 400) {
             throw new HttpError(response.status, json.message);
         }
         return json;

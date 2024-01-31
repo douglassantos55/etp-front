@@ -30,3 +30,7 @@ export function getLoans(fetch: Function): Promise<Loan[]> {
 export function takeLoan(amount: number): Promise<Response<Loan>> {
     return makeAuthPost(`financing/loans`, { amount }, fetch);
 }
+
+export function buyBackLoan(loanId: number, amount: number): Promise<Response<Loan>> {
+    return makeAuthPost(`financing/loans/${loanId}`, { amount }, fetch);
+}
