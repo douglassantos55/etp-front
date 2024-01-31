@@ -90,9 +90,21 @@ declare global {
         company: Company;
     }
 
+    interface Loan {
+        id: number;
+        interest_rate: number;
+        interest_paid: number;
+        payable_from: string;
+        principal: number;
+        principal_paid: number;
+        delayed_payments: number;
+    }
+
     interface Bond {
+        id: number;
         amount: number;
         purchased: number;
+        interest_rate: number;
         company?: Company;
         creditors: Creditor[];
     }

@@ -5,9 +5,10 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import { format } from '$lib/helper';
-	import { issueBond } from '$lib/api/financing';
+	import { issueBond, takeLoan } from '$lib/api/financing';
 	import { createErrors } from '$lib/errors';
 	import { invalidateAll } from '$app/navigation';
+	import Loan from '$lib/components/Loan.svelte';
 
 	export let data: PageData;
 
@@ -41,6 +42,18 @@
 			await invalidateAll();
 		}
 	}
+
+	async function loan() {
+		const result = await takeLoan(10000);
+
+		if (result.errors) {
+			errors.set(result.errors);
+		} else if (result.message) {
+			errors.set({ message: result.message });
+		} else {
+			await invalidateAll();
+		}
+	}
 </script>
 
 <div class="container px-4 mx-auto py-12">
@@ -51,7 +64,7 @@
 	<div class="mb-10">
 		<h2 class="uppercase tracking-tight font-semibold mb-4">Loans</h2>
 
-		<form class="flex items-end gap-4 mb-6">
+		<form class="flex items-end gap-4 mb-6" on:submit|preventDefault={loan}>
 			<div class="w-48">
 				<label for="loan">Amount</label>
 				<Input id="loan" name="amount" type="number" />
@@ -61,30 +74,17 @@
 		</form>
 
 		<div class="flex flex-wrap gap-10">
-			<div class="p-6 shadow-md bg-gray-100">
-				<p>Amount: $ 1,000,000.00</p>
-				<p>Interest rate: 1%</p>
-				<p>Interest payment: $10,000.00</p>
-				<p>Interest paid: $100,000.00</p>
-
-				<div class="flex gap-4 mt-4">
-					<div class="w-40 max-w-full">
-						<Input placeholder="Amount" max="1000000" type="number" value="1000000" />
-					</div>
-					<Button type="submit">Pay</Button>
-				</div>
-			</div>
-
-			<div class="p-6 shadow-md bg-gray-100">
-				<p>Amount: $ 1,252,300.00</p>
-				<p>Interest rate: 10%</p>
-				<p>Interest payment: $125,300.00</p>
-				<p>Interest paid: $1,253,000.00</p>
-
-				<div class="flex gap-4 mt-4">
-					<p>Payable at <span class="font-semibold text-indigo-700">11/11/2023</span></p>
-				</div>
-			</div>
+			{#await data.loans}
+				<p>Loading...</p>
+			{:then loans}
+				{#if loans.length > 0}
+					{#each loans as loan}
+						<Loan {loan} />
+					{/each}
+				{:else}
+					<p>No loans</p>
+				{/if}
+			{/await}
 		</div>
 	</div>
 
