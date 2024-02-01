@@ -3,6 +3,7 @@
 	import CloseIcon from '$lib/components/CloseIcon.svelte';
 	import HamburgerIcon from '$lib/components/HamburgerIcon.svelte';
 	import { user } from '$lib/stores/user';
+	import { format } from '$lib/helper';
 	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
@@ -33,7 +34,7 @@
 
 				<div class="py-1">
 					<h2 class="text-xl font-semibold tracking-tight">{$user.name}</h2>
-					<span class="text-medium tracking-wide">$ {$user.available_cash}</span>
+					<span class="text-medium tracking-wide">{format($user.available_cash)}</span>
 				</div>
 			</div>
 
