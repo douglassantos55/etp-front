@@ -122,16 +122,22 @@
 	<div class="mb-10">
 		<h2 class="uppercase tracking-tight font-semibold mb-4">Loans</h2>
 
-		<form class="flex items-end gap-4 mb-6" on:submit|preventDefault={loan}>
-			<div class="w-52">
-				<label for="loan">Amount ($)</label>
-				<Input id="loan" min="5000" step="100" type="number" bind:value={loanAmount} />
+		<form on:submit|preventDefault={loan}>
+			<div class="flex items-end gap-4">
+				<div class="w-52">
+					<label for="loan">Amount ($)</label>
+					<Input id="loan" min="5000" step="100" type="number" bind:value={loanAmount} required />
+				</div>
+
+				<Button type="submit">Take loan</Button>
 			</div>
 
-			<Button type="submit">Take loan</Button>
+			{#if $errors.amount || $errors.message}
+				<p class="text-red-500">{$errors.amount || $errors.message}</p>
+			{/if}
 		</form>
 
-		<div class="flex flex-wrap gap-10">
+		<div class="flex flex-wrap gap-10 mt-6">
 			{#await data.loans}
 				<p>Loading...</p>
 			{:then loans}
@@ -165,23 +171,38 @@
 			</div>
 		</form>
 
-		<div class="flex flex-wrap gap-10">
+		<div class="flex flex-col flex-wrap gap-10">
 			{#await data.bonds}
 				<p>Loading...</p>
 			{:then bonds}
 				{#each bonds as bond}
-					<ul class="p-6 shadow-md bg-gray-100">
-						<li>Amount: <span class="text-teal-500">{format(bond.amount)}</span></li>
-						<li>Interest rate: <span class="text-teal-500">{bond.interest_rate * 100}%</span></li>
-						<li>Purchased: <span class="text-teal-500">{format(bond.purchased)}</span></li>
-						<li>
-							Available: <span class="text-teal-500">{format(bond.amount - bond.purchased)}</span>
-						</li>
-					</ul>
+					<div class="p-6 border rounded-lg shadow-md">
+						<div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+							<span>Amount: <span class="text-teal-500">{format(bond.amount)}</span></span>
+							<span>Interest rate: <span class="text-teal-500">{bond.interest_rate * 100}%</span></span>
+							<span>Purchased: <span class="text-teal-500">{format(bond.purchased)}</span></span>
 
-					{#each bond.creditors as creditor}
-						<Creditor {creditor} />
-					{/each}
+							<span>
+								Available: <span class="text-teal-500">{format(bond.amount - bond.purchased)}</span>
+							</span>
+
+							{#if bond.amount - bond.purchased > 0}
+								<span>
+									<Button>Cancel remaining</Button>
+								</span>
+							{/if}
+						</div>
+
+						<div class="flex flex-wrap gap-10 mt-5">
+							{#if bond.creditors.length > 0}
+								{#each bond.creditors as creditor}
+									<Creditor {creditor} bondId={bond.id} />
+								{/each}
+							{:else}
+								<p>No creditors yet.</p>
+							{/if}
+						</div>
+					</div>
 				{/each}
 			{/await}
 		</div>

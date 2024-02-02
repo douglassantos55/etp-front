@@ -34,3 +34,7 @@ export function takeLoan(amount: number): Promise<Response<Loan>> {
 export function buyBackLoan(loanId: number, amount: number): Promise<Response<Loan>> {
     return makeAuthPost(`financing/loans/${loanId}`, { amount }, fetch);
 }
+
+export function buyBackBond(bondId: number, creditorId: number, amount: number): Promise<Response<Creditor>> {
+    return makeAuthPost(`financing/bonds/${bondId}`, { creditor_id: creditorId, amount }, fetch);
+}

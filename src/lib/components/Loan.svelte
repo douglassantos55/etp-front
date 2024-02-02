@@ -31,11 +31,11 @@
 
 <div class="p-6 shadow-md bg-gray-100">
 	<p>Principal: <span class="text-teal-500">{format(loan.principal)}</span></p>
+	<p>Principal paid: <span class="text-teal-500">{format(loan.principal_paid)}</span></p>
+	<p>Available: <span class="text-teal-500">{format(available)}</span></p>
 	<p>Interest rate: <span class="text-teal-500">{loan.interest_rate * 100}%</span></p>
 	<p>Interest payment: <span class="text-teal-500">{format(interestPayment)}</span></p>
 	<p>Interest paid: <span class="text-teal-500">{format(loan.interest_paid)}</span></p>
-	<p>Principal paid: <span class="text-teal-500">{format(loan.principal_paid)}</span></p>
-	<p>Available: <span class="text-teal-500">{format(available)}</span></p>
 
 	<div class="mt-4">
 		{#if payable}
