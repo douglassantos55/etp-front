@@ -10,6 +10,7 @@
 	import { createErrors } from '$lib/errors';
 	import { invalidateAll } from '$app/navigation';
 	import Loan from '$lib/components/Loan.svelte';
+	import BondComponent from '$lib/components/Bond.svelte';
 	import Creditor from '$lib/components/Creditor.svelte';
 
 	export let data: PageData;
@@ -172,14 +173,16 @@
 		</form>
 
 		<div class="flex flex-col flex-wrap gap-10">
-			{#await data.bonds}
+			{#await data.issuedBonds}
 				<p>Loading...</p>
 			{:then bonds}
 				{#each bonds as bond}
 					<div class="p-6 border rounded-lg shadow-md">
 						<div class="flex flex-wrap items-center gap-x-5 gap-y-2">
 							<span>Amount: <span class="text-teal-500">{format(bond.amount)}</span></span>
-							<span>Interest rate: <span class="text-teal-500">{bond.interest_rate * 100}%</span></span>
+							<span
+								>Interest rate: <span class="text-teal-500">{bond.interest_rate * 100}%</span></span
+							>
 							<span>Purchased: <span class="text-teal-500">{format(bond.purchased)}</span></span>
 
 							<span>
@@ -223,6 +226,20 @@
 					<p>Interest received: $1,253,000.00</p>
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<div class="mt-10">
+		<h2 class="uppercase tracking-tight font-semibold mb-4">Bonds Available</h2>
+
+		<div class="flex flex-wrap gap-10">
+			{#await data.bonds}
+				<p>Loading bonds...</p>
+			{:then bonds}
+				{#each bonds as bond}
+					<BondComponent {bond} />
+				{/each}
+			{/await}
 		</div>
 	</div>
 </div>

@@ -1,4 +1,4 @@
-import { makeAuthPost, makeAuthRequest, type Response } from "$lib/api";
+import { makeAuthPost, makeAuthRequest, type Result } from "$lib/api";
 
 export async function getResourcePrice(resourceId: number, quality: number, fetch: Function): Promise<number> {
     const orders = await getOrders(resourceId, quality, fetch);
@@ -18,7 +18,7 @@ type PurchaseOrder = {
     quantity: number;
 }
 
-export function savePurchase(order: PurchaseOrder): Promise<Response<Order>> {
+export function savePurchase(order: PurchaseOrder): Promise<Result<Order>> {
     return makeAuthPost('market/orders/purchase', order, fetch);
 }
 

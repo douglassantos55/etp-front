@@ -2,10 +2,18 @@ import { HttpError } from "$lib/errors";
 import { getToken } from "$lib/stores/user";
 import { PUBLIC_API_URL } from "$env/static/public";
 
-export type Response<T> = {
+export type Result<T> = {
     data?: T;
     errors?: Record<string, string>;
     message?: string;
+}
+
+export async function makeAuthPost<T>(endpoint: string, data: any, fetch: Function): Promise<Result<T>> {
+    return makeRequest(endpoint, data, fetch);
+}
+
+export async function makeAuthPut<T>(endpoint: string, data: any, fetch: Function): Promise<Result<T>> {
+    return makeRequest(endpoint, data, fetch, 'PUT');
 }
 
 export async function makeAuthRequest<T>(endpoint: string, fetch: Function): Promise<T> {
@@ -25,9 +33,9 @@ export async function makeAuthRequest<T>(endpoint: string, fetch: Function): Pro
     return data;
 }
 
-export async function makeAuthPost<T>(endpoint: string, data: any, fetch: Function): Promise<Response<T>> {
+async function makeRequest<T>(endpoint: string, data: any, fetch: Function, method = 'POST'): Promise<Result<T>> {
     const response = await fetch(PUBLIC_API_URL + endpoint, {
-        method: 'POST',
+        method,
         body: JSON.stringify(data),
         headers: {
             Accept: 'application/json',
@@ -36,6 +44,10 @@ export async function makeAuthPost<T>(endpoint: string, data: any, fetch: Functi
         },
     })
 
+    return parseResponse<T>(response);
+}
+
+async function parseResponse<T>(response: Response): Promise<Result<T>> {
     const json = await response.json();
 
     if (!response.ok) {
