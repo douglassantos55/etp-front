@@ -2,9 +2,14 @@ export function round(value: number): number {
     return Math.round((value + Number.EPSILON) * 100) / 100;
 }
 
-const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 export function format(value: number): string {
-    return formatter.format(value / 100);
+    return currencyFormatter.format(value / 100);
+}
+
+const percentageFormatter = new Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 2 });
+export function percent(value: number): string {
+    return percentageFormatter.format(value);
 }
 
 export function toHoursAndMinutes(totalMinutes: number) {

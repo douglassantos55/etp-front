@@ -11,7 +11,7 @@ type BondIssue = {
     amount: number;
 }
 
-export function getFinancingRates(fetch: Function): Promise<Rates> {
+export function getFinancingRates(fetch: Function): Promise<Rates[]> {
     return makeAuthRequest(`financing/rates`, fetch);
 }
 

@@ -1,10 +1,11 @@
 <script lang="ts">
+	import 'chartjs-adapter-date-fns';
 	import Button from '$lib/components/Button.svelte';
 	import Input from '$lib/components/Input.svelte';
-	import { Chart } from 'chart.js/auto';
+	import { Chart, type ChartData } from 'chart.js/auto';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import { format } from '$lib/helper';
+	import { format, percent } from '$lib/helper';
 	import { issueBond, takeLoan } from '$lib/api/financing';
 	import { createErrors } from '$lib/errors';
 	import { invalidateAll } from '$app/navigation';
@@ -21,21 +22,69 @@
 
 	let loanAmount: string;
 
-	const graphData = {
-		labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+	const graphData: ChartData = {
+		labels: [],
 		datasets: [
-			{
-				label: 'Inflation',
-				data: [10, 11, 10.3, 9.8, 9.5, 10.2, 9.95]
-			},
-			{
-				label: 'Interest rate',
-				data: [8, 9.5, 10, 10, 10, 10, 10]
-			}
+			{ label: 'Inflation', data: [] },
+			{ label: 'Interest rate', data: [] }
 		]
 	};
 
-	onMount(() => new Chart(graph, { type: 'line', data: graphData }));
+	for (const rate of data.rates) {
+		graphData.labels?.push(new Date(rate.period));
+		graphData.datasets[0].data.push(rate.inflation);
+		graphData.datasets[1].data.push(rate.interest);
+	}
+
+	onMount(
+		() =>
+			new Chart(graph, {
+				type: 'line',
+				data: graphData,
+				options: {
+					scales: {
+						y: {
+							ticks: {
+								callback: function (value: string | number) {
+									return percent(value as number);
+								}
+							}
+						},
+						x: {
+							type: 'time',
+							ticks: {
+								source: 'data'
+							},
+							time: {
+								tooltipFormat: 'MM/dd/yyyy',
+								displayFormats: {
+									day: 'MM/dd/yyyy'
+								}
+							}
+						}
+					},
+					plugins: {
+						tooltip: {
+							callbacks: {
+								label: function (context) {
+									let label = context.dataset.label || '';
+
+									if (label) {
+										label += ': ';
+									}
+
+									if (context.parsed.y !== null) {
+										label += percent(context.parsed.y);
+									}
+
+									return label;
+								}
+							}
+						}
+					}
+				}
+			})
+	);
 
 	async function issue() {
 		const result = await issueBond({

@@ -7,6 +7,6 @@ export const load: PageLoad = async function({ fetch, parent }) {
     return {
         loans: getLoans(fetch),
         bonds: getBonds(user.id, fetch),
-        rates: getFinancingRates(fetch),
+        rates: await getFinancingRates(fetch),
     }
 }
