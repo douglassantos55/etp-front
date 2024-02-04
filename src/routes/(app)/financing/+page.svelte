@@ -215,17 +215,37 @@
 		<h2 class="uppercase tracking-tight font-semibold mb-4">Bonds Owned</h2>
 
 		<div class="flex flex-wrap gap-10">
-			<div class="p-6 shadow-md bg-gray-100">
-				<img src="https://picsum.photos/100" alt="Company name" class="w-16 h-16 rounded-full" />
+			{#await data.ownedBonds}
+				<p>Loading...</p>
+			{:then creditors}
+				{#each creditors as creditor}
+					<div class="p-6 shadow-md bg-gray-100">
+						<img
+							src="https://picsum.photos/100"
+							alt={creditor.name}
+							class="w-16 h-16 rounded-full"
+						/>
 
-				<div class="mt-2">
-					<h3 class="font-semibold mb-1">Company name</h3>
-					<p>Amount: $ 1,252,300.00</p>
-					<p>Interest rate: 10%</p>
-					<p>Interest payment: $125,300.00</p>
-					<p>Interest received: $1,253,000.00</p>
-				</div>
-			</div>
+						<div class="mt-2">
+							<h3 class="font-semibold mb-1">{creditor.name}</h3>
+							<p>
+								Amount: <span class="text-teal-500"
+									>{format(creditor.principal - creditor.principal_paid)}</span
+								>
+							</p>
+							<p>Interest rate: <span class="text-teal-500">{percent(creditor.interest_rate)}</span></p>
+							<p>
+								Interest payment: <span class="text-teal-500"
+									>{format(creditor.principal * creditor.interest_rate)}</span
+								>
+							</p>
+							<p>
+								Interest received: <span class="text-teal-500">{format(creditor.interest_paid)}</span>
+							</p>
+						</div>
+					</div>
+				{/each}
+			{/await}
 		</div>
 	</div>
 

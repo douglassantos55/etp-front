@@ -15,8 +15,12 @@ export function getFinancingRates(fetch: Function): Promise<Rates[]> {
     return makeAuthRequest(`financing/rates`, fetch);
 }
 
-export function getCompanyBonds(companyId: number, fetch: Function): Promise<Bond[]> {
-    return makeAuthRequest(`financing/bonds?company=${companyId}`, fetch);
+export function getIssuedBonds(fetch: Function): Promise<Bond[]> {
+    return makeAuthRequest(`financing/bonds/issued`, fetch);
+}
+
+export function getOwnedBonds(fetch: Function): Promise<Creditor[]> {
+    return makeAuthRequest(`financing/bonds/owned`, fetch);
 }
 
 export function issueBond(bond: BondIssue): Promise<Result<Bond>> {

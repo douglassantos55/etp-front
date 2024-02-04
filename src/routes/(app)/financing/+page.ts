@@ -1,13 +1,12 @@
 import type { PageLoad } from "./$types";
-import { getBonds, getCompanyBonds, getFinancingRates, getLoans } from "$lib/api/financing";
+import { getBonds, getIssuedBonds, getFinancingRates, getLoans, getOwnedBonds } from "$lib/api/financing";
 
-export const load: PageLoad = async function({ fetch, parent }) {
-    const { user } = await parent();
-
+export const load: PageLoad = async function({ fetch }) {
     return {
         loans: getLoans(fetch),
         bonds: getBonds(fetch),
-        issuedBonds: getCompanyBonds(user.id, fetch),
+        ownedBonds: getOwnedBonds(fetch),
+        issuedBonds: getIssuedBonds(fetch),
         rates: await getFinancingRates(fetch),
     }
 }
