@@ -5,13 +5,14 @@
 	import { Chart, type ChartData } from 'chart.js/auto';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import { format, percent } from '$lib/helper';
+	import { percent } from '$lib/helper';
 	import { issueBond, takeLoan } from '$lib/api/financing';
 	import { createErrors } from '$lib/errors';
 	import { invalidateAll } from '$app/navigation';
 	import Loan from '$lib/components/Loan.svelte';
 	import BondComponent from '$lib/components/Bond.svelte';
-	import Creditor from '$lib/components/Creditor.svelte';
+	import OwnedBond from '$lib/components/OwnedBond.svelte';
+	import IssuedBond from '$lib/components/IssuedBond.svelte';
 
 	export let data: PageData;
 
@@ -177,35 +178,7 @@
 				<p>Loading...</p>
 			{:then bonds}
 				{#each bonds as bond}
-					<div class="p-6 border rounded-lg shadow-md">
-						<div class="flex flex-wrap items-center gap-x-5 gap-y-2">
-							<span>Amount: <span class="text-teal-500">{format(bond.amount)}</span></span>
-							<span
-								>Interest rate: <span class="text-teal-500">{bond.interest_rate * 100}%</span></span
-							>
-							<span>Purchased: <span class="text-teal-500">{format(bond.purchased)}</span></span>
-
-							<span>
-								Available: <span class="text-teal-500">{format(bond.amount - bond.purchased)}</span>
-							</span>
-
-							{#if bond.amount - bond.purchased > 0}
-								<span>
-									<Button>Cancel remaining</Button>
-								</span>
-							{/if}
-						</div>
-
-						<div class="flex flex-wrap gap-10 mt-5">
-							{#if bond.creditors.length > 0}
-								{#each bond.creditors as creditor}
-									<Creditor {creditor} bondId={bond.id} />
-								{/each}
-							{:else}
-								<p>No creditors yet.</p>
-							{/if}
-						</div>
-					</div>
+					<IssuedBond {bond} />
 				{/each}
 			{/await}
 		</div>
@@ -219,31 +192,7 @@
 				<p>Loading...</p>
 			{:then creditors}
 				{#each creditors as creditor}
-					<div class="p-6 shadow-md bg-gray-100">
-						<img
-							src="https://picsum.photos/100"
-							alt={creditor.name}
-							class="w-16 h-16 rounded-full"
-						/>
-
-						<div class="mt-2">
-							<h3 class="font-semibold mb-1">{creditor.name}</h3>
-							<p>
-								Amount: <span class="text-teal-500"
-									>{format(creditor.principal - creditor.principal_paid)}</span
-								>
-							</p>
-							<p>Interest rate: <span class="text-teal-500">{percent(creditor.interest_rate)}</span></p>
-							<p>
-								Interest payment: <span class="text-teal-500"
-									>{format(creditor.principal * creditor.interest_rate)}</span
-								>
-							</p>
-							<p>
-								Interest received: <span class="text-teal-500">{format(creditor.interest_paid)}</span>
-							</p>
-						</div>
-					</div>
+					<OwnedBond {creditor} />
 				{/each}
 			{/await}
 		</div>

@@ -50,3 +50,7 @@ export function getBonds(fetch: Function): Promise<Bond[]> {
 export function buyBond(bondId: number, amount: number): Promise<Result<Creditor>> {
     return makeAuthPost(`financing/bonds/${bondId}`, { amount }, fetch);
 }
+
+export function cancelBond(bondId: number): Promise<Result<void>> {
+    return makeAuthDelete(`financing/bonds/${bondId}`, fetch);
+}

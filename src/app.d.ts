@@ -106,6 +106,7 @@ declare global {
         purchased: number;
         interest_rate: number;
         company?: Company;
+        canceled_at?: string;
         creditors: Creditor[];
     }
 
