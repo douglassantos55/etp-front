@@ -12,42 +12,43 @@ export async function makeAuthPost<T>(endpoint: string, data: any, fetch: Functi
     return makeRequest(endpoint, data, fetch);
 }
 
+export async function makeAuthDelete<T>(endpoint: string, fetch: Function): Promise<Result<T>> {
+    return makeRequest(endpoint, null, fetch, 'DELETE');
+}
+
 export async function makeAuthPut<T>(endpoint: string, data: any, fetch: Function): Promise<Result<T>> {
     return makeRequest(endpoint, data, fetch, 'PUT');
 }
 
-export async function makeAuthRequest<T>(endpoint: string, fetch: Function): Promise<T> {
-    const response = await fetch(PUBLIC_API_URL + endpoint, {
-        headers: {
-            Accept: 'application/json',
-            Authorization: 'Bearer ' + getToken(),
-        },
-    })
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new HttpError(response.status, data.message);
-    }
-
-    return data;
+export async function makeAuthGet<T>(endpoint: string, fetch: Function): Promise<T> {
+    const result = await makeRequest(endpoint, null, fetch, 'GET');
+    return result.data as T;
 }
 
 async function makeRequest<T>(endpoint: string, data: any, fetch: Function, method = 'POST'): Promise<Result<T>> {
-    const response = await fetch(PUBLIC_API_URL + endpoint, {
+    const req: Record<string, any> = {
         method,
-        body: JSON.stringify(data),
         headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + getToken(),
             'Content-Type': 'application/json;charset=UTF-8',
         },
-    })
+    };
+
+    if (data) {
+        req.body = JSON.stringify(data);
+    }
+
+    const response = await fetch(PUBLIC_API_URL + endpoint, req)
 
     return parseResponse<T>(response);
 }
 
 async function parseResponse<T>(response: Response): Promise<Result<T>> {
+    if (response.status === 204) {
+        return {};
+    }
+
     const json = await response.json();
 
     if (!response.ok) {

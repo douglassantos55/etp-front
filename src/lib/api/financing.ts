@@ -1,4 +1,4 @@
-import { makeAuthPost, makeAuthPut, makeAuthRequest, type Result } from ".";
+import { makeAuthPost, makeAuthPut, makeAuthGet, makeAuthDelete, type Result } from ".";
 
 type Rates = {
     period: string;
@@ -12,15 +12,15 @@ type BondIssue = {
 }
 
 export function getFinancingRates(fetch: Function): Promise<Rates[]> {
-    return makeAuthRequest(`financing/rates`, fetch);
+    return makeAuthGet(`financing/rates`, fetch);
 }
 
 export function getIssuedBonds(fetch: Function): Promise<Bond[]> {
-    return makeAuthRequest(`financing/bonds/issued`, fetch);
+    return makeAuthGet(`financing/bonds/issued`, fetch);
 }
 
 export function getOwnedBonds(fetch: Function): Promise<Creditor[]> {
-    return makeAuthRequest(`financing/bonds/owned`, fetch);
+    return makeAuthGet(`financing/bonds/owned`, fetch);
 }
 
 export function issueBond(bond: BondIssue): Promise<Result<Bond>> {
@@ -28,7 +28,7 @@ export function issueBond(bond: BondIssue): Promise<Result<Bond>> {
 }
 
 export function getLoans(fetch: Function): Promise<Loan[]> {
-    return makeAuthRequest(`financing/loans`, fetch);
+    return makeAuthGet(`financing/loans`, fetch);
 }
 
 export function takeLoan(amount: number): Promise<Result<Loan>> {
@@ -44,7 +44,7 @@ export function buyBackBond(bondId: number, creditorId: number, amount: number):
 }
 
 export function getBonds(fetch: Function): Promise<Bond[]> {
-    return makeAuthRequest(`financing/bonds`, fetch);
+    return makeAuthGet(`financing/bonds`, fetch);
 }
 
 export function buyBond(bondId: number, amount: number): Promise<Result<Creditor>> {
