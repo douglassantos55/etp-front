@@ -3,41 +3,31 @@
 	import Input from '$lib/components/Input.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { goto } from '$app/navigation';
+	import { login } from '$lib/api/company';
 
 	export let form: {
 		errors: Record<string, string>;
 	};
 
-	async function authenticate(event: { currentTarget: EventTarget & HTMLFormElement }) {
-		const data = new FormData(event.currentTarget);
+	let data = { email: '', password: '' };
 
-		const response = await fetch(event.currentTarget.action, {
-			method: 'POST',
-			body: data,
-			headers: { Accept: 'application/json' }
-		});
+	async function authenticate() {
+		const result = await login(data);
 
-		const result = await response.json();
-		const type = result.errors ? 'failure' : 'success';
-
-		if (type == 'success') {
-			localStorage.setItem('access_token', result.token);
+		if (result.errors || result.message) {
+			await applyAction({ type: 'failure', status: 400, data: result });
+		} else if (result.data) {
+			localStorage.setItem('access_token', result.data.token);
 			goto('/');
-		} else {
-			await applyAction({ type, status: response.status, data: result });
 		}
 	}
 </script>
 
-<div class="mx-auto">
-	<form
-		method="post"
-		on:submit|preventDefault={authenticate}
-		action="http://localhost:1323/companies/login"
-	>
+<div class="mx-auto w-96">
+	<form method="post" on:submit|preventDefault={authenticate}>
 		<div class="mb-4">
 			<label for="email">Email</label>
-			<Input type="email" id="email" name="email" />
+			<Input type="email" id="email" name="email" bind:value={data.email} />
 
 			{#if form?.errors?.email}
 				<span class="text-red-500">{form?.errors.email}</span>
@@ -46,13 +36,17 @@
 
 		<div class="mb-8">
 			<label for="password">Password</label>
-			<Input type="password" id="password" name="password" />
+			<Input type="password" id="password" name="password" bind:value={data.password} />
 
 			{#if form?.errors?.password}
 				<span class="text-red-500">{form?.errors.password}</span>
 			{/if}
 		</div>
 
-		<Button type="submit">Login</Button>
+		<Button type="submit" size="full">Login</Button>
+
+		<div class="mt-6 text-center">
+			<a href="/register" class="hover:underline underline-offset-4">Create an account</a>
+		</div>
 	</form>
 </div>

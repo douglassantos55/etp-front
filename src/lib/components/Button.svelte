@@ -1,5 +1,8 @@
 <script lang="ts">
+	type Size = 'full' | 'auto';
 	type ButtonVariant = 'hollow' | 'primary' | undefined;
+
+	export let size: Size = 'auto';
 	export let variant: ButtonVariant = 'primary';
 
 	$: component = $$props.href ? 'a' : 'button';
@@ -11,6 +14,7 @@
 	role="button"
 	tabindex="0"
 	{...$$props}
+	class:w-full={size === 'full'}
 	class:border={variant === 'hollow'}
 	class:hover:bg-slate-100={variant === 'hollow'}
 	class:text-white={variant === 'primary'}

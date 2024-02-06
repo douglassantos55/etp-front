@@ -20,8 +20,6 @@
 	async function register() {
 		const result = await registerCompany(data);
 
-		console.log(result);
-
 		if (result.errors || result.message) {
 			await applyAction({ type: 'failure', status: 401, data: result });
 		} else if (result.data) {
@@ -31,7 +29,7 @@
 	}
 </script>
 
-<div class="mx-auto">
+<div class="mx-auto w-96">
 	<form
 		method="post"
 		on:submit|preventDefault={register}
@@ -78,6 +76,10 @@
 			{/if}
 		</div>
 
-		<Button type="submit">Register</Button>
+		<Button type="submit" size="full">Register</Button>
+
+		<div class="mt-6 text-center">
+			<a href="/login" class="hover:underline underline-offset-4">Already have an account</a>
+		</div>
 	</form>
 </div>

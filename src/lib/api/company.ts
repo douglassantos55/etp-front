@@ -4,6 +4,10 @@ export async function getCompany(fetch: Function): Promise<Company> {
     return makeAuthGet('companies/me', fetch)
 }
 
+export async function login(data: any): Promise<Result<{ token: string }>> {
+    return makeAuthPost('companies/login', data, fetch);
+}
+
 type Registration = {
     token: string;
     company: Company;
