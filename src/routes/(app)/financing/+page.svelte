@@ -177,9 +177,13 @@
 			{#await data.issuedBonds}
 				<p>Loading...</p>
 			{:then bonds}
-				{#each bonds as bond}
-					<IssuedBond {bond} />
-				{/each}
+				{#if bonds.length > 0}
+					{#each bonds as bond}
+						<IssuedBond {bond} />
+					{/each}
+				{:else}
+					<p>No bonds issued.</p>
+				{/if}
 			{/await}
 		</div>
 	</div>
@@ -191,9 +195,13 @@
 			{#await data.ownedBonds}
 				<p>Loading...</p>
 			{:then creditors}
-				{#each creditors as creditor}
-					<OwnedBond {creditor} />
-				{/each}
+				{#if creditors.length > 0}
+					{#each creditors as creditor}
+						<OwnedBond {creditor} />
+					{/each}
+				{:else}
+					<p>No bonds owned.</p>
+				{/if}
 			{/await}
 		</div>
 	</div>
@@ -205,9 +213,13 @@
 			{#await data.bonds}
 				<p>Loading bonds...</p>
 			{:then bonds}
-				{#each bonds as bond}
-					<BondComponent {bond} />
-				{/each}
+				{#if bonds.length > 0}
+					{#each bonds as bond}
+						<BondComponent {bond} />
+					{/each}
+				{:else}
+					<p>No bonds available.</p>
+				{/if}
 			{/await}
 		</div>
 	</div>
