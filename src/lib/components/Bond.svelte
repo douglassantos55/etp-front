@@ -27,7 +27,7 @@
 </script>
 
 <div class="p-6 shadow-md bg-gray-100">
-	<img src="https://picsum.photos/100" alt={bond.company?.name} class="w-16 h-16 rounded-full" />
+	<img src={bond.company?.logo} alt={bond.company?.name} class="w-16 h-16 rounded-full" />
 
 	<div class="mt-2">
 		<h3 class="font-semibold mb-1">{bond.company?.name}</h3>
