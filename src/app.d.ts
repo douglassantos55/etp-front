@@ -14,6 +14,7 @@ declare global {
         logo: string;
         available_cash: number;
         available_slots: number;
+        available_terrains: number;
     }
 
     interface Resource {
@@ -39,13 +40,17 @@ declare global {
     interface Building {
         id: number;
         name: string;
+        wages_per_hour: number;
+        admin_per_hour: number;
+        maintenance_per_hour: number;
+        downtime: number;
+        requirements: Requirement[];
+        resources: BuildingResource[];
+    }
+
+    interface CompanyBuilding extends Building {
         level: number;
         position: number;
-        name: string;
-        downtime: number;
-        wages_per_hour: number;
-        resources: BuildingResource[];
-        requirements: Requirement[];
         busy_until: string;
     }
 

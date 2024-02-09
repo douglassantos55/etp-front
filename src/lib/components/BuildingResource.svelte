@@ -10,7 +10,7 @@
 	import { onMount } from 'svelte';
 
 	export let companyId: number;
-	export let building: Building;
+	export let building: CompanyBuilding;
 	export let resource: BuildingResource;
 
 	onMount(function () {
