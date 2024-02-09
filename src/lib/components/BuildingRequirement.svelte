@@ -6,6 +6,7 @@
 
 	export let requirement: Requirement;
 
+	let price: number;
 	const dispatch = createEventDispatcher();
 
 	$: resourceCosts = $costs[requirement.resource.id];
@@ -16,11 +17,13 @@
 
 	$: missing = requirement.quantity - stock;
 
-	function updateTotal(event: CustomEvent) {
-		dispatch('update-total', {
-			resource: requirement.resource.id,
-			total: missing * event.detail.price
-		});
+	$: dispatch('update-total', {
+		resource: requirement.resource.id,
+		total: missing * price
+	});
+
+	function updatePrice(event: CustomEvent) {
+		price = event.detail.price;
 	}
 </script>
 
@@ -43,7 +46,7 @@
 		{missing}
 		<span class="block text-teal-500">
 			<ResourcePrice
-				on:update={updateTotal}
+				on:update={updatePrice}
 				resourceId={requirement.resource.id}
 				quality={requirement.quality}
 			/>
