@@ -19,7 +19,7 @@
 	function updateTotal(event: CustomEvent) {
 		dispatch('update-total', {
 			resource: requirement.resource.id,
-			total: requirement.quantity * event.detail.price
+			total: missing * event.detail.price
 		});
 	}
 </script>
