@@ -18,3 +18,7 @@ export function toHoursAndMinutes(totalMinutes: number) {
 
     return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`;
 }
+
+export function parseDateTime(value: string): string {
+    return new Date(value).toLocaleString();
+}

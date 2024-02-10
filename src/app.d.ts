@@ -52,6 +52,7 @@ declare global {
         level: number;
         position: number;
         busy_until: string;
+        completes_at: string;
     }
 
     interface BuildingResource {

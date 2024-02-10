@@ -1,6 +1,7 @@
 <script lang="ts">
 	import BuildingsModal from '$lib/components/BuildingsModal.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import { parseDateTime } from '$lib/helper';
 	import type { PageData } from './$types';
 	export let data: PageData;
 
@@ -22,9 +23,19 @@
 		{#each { length: totalSlots } as _, i}
 			{#if i < data.user.available_terrains}
 				{#if buildings[i]}
-					<a href={`/building/${buildings[i].id}`}>
-						<div class="flex bg-white items-center justify-center border w-32 h-32">
-							{buildings[i].name} ({buildings[i].level})
+					<a
+						href={`/building/${buildings[i].id}`}
+						class:opacity-65={buildings[i].completes_at}
+						class:pointer-events-none={buildings[i].completes_at}
+					>
+						<div class="flex flex-col bg-white items-center justify-center border w-32 h-32">
+							<div>{buildings[i].name} ({buildings[i].level})</div>
+
+							{#if buildings[i].completes_at}
+								<div class="mt-2 text-sm text-center">
+									{parseDateTime(buildings[i].completes_at)}
+								</div>
+							{/if}
 						</div>
 					</a>
 				{:else}
