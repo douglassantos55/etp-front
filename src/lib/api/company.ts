@@ -16,3 +16,7 @@ type Registration = {
 export async function registerCompany(data: any): Promise<Result<Registration>> {
     return makeAuthPost('companies/register', data, fetch);
 }
+
+export async function purchaseTerrain(position: number): Promise<Result<void>> {
+    return makeAuthPost(`companies/terrains/${position}`, { position }, fetch);
+}
