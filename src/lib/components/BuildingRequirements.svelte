@@ -59,7 +59,7 @@
 
 	$: totalMissing = Object.values(missing).reduce((total: number, qty: number) => {
 		return total + qty;
-	});
+	}, 0);
 </script>
 
 <table class="w-full table-auto mt-6">

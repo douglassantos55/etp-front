@@ -1,17 +1,29 @@
 <script lang="ts">
 	import Modal from './Modal.svelte';
 	import BuildingItem from './BuildingItem.svelte';
-	import { getBuilding, getBuildings } from '$lib/api/buildings';
+	import { construct, getBuilding, getBuildings } from '$lib/api/buildings';
 	import Currency from './Currency.svelte';
 	import Time from './Time.svelte';
 	import BuildingRequirements from './BuildingRequirements.svelte';
 	import Button from './Button.svelte';
+	import { invalidateAll } from '$app/navigation';
+	import { createEventDispatcher } from 'svelte';
+
+	export let company: number;
+	export let position: number;
 
 	let building: Promise<Building>;
 	const buildings = getBuildings(fetch);
+	const dispatch = createEventDispatcher();
 
 	function update(evt: CustomEvent) {
 		building = getBuilding(evt.detail.buildingId, fetch);
+	}
+
+	async function constructBuilding(id: number) {
+		await construct(id, position, company);
+		dispatch('close');
+		await invalidateAll();
 	}
 </script>
 
@@ -64,7 +76,9 @@
 				<h4 class="font-semibold uppercase">Requirements</h4>
 
 				<BuildingRequirements {building} let:missing>
-					<Button disabled={missing > 0}>Construct</Button>
+					<Button on:click={() => constructBuilding(building.id)} disabled={missing > 0}>
+						Construct
+					</Button>
 				</BuildingRequirements>
 			</div>
 		{/await}

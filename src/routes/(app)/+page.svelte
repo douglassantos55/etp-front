@@ -4,8 +4,8 @@
 	import type { PageData } from './$types';
 	export let data: PageData;
 
-	let modalOpen = false;
 	let buildings: Record<number, any> = {};
+	let position: number | undefined = undefined;
 
 	$: totalSlots = 5 * Math.ceil((1 + data.user.available_terrains) / 5);
 
@@ -30,7 +30,7 @@
 				{:else}
 					<div class="flex flex-col bg-white items-center justify-center border w-32 h-32 p-3">
 						<span class="block mb-2">Available {i}</span>
-						<Button on:click={() => (modalOpen = true)}>Build</Button>
+						<Button on:click={() => (position = i)}>Build</Button>
 					</div>
 				{/if}
 			{:else}
@@ -43,6 +43,6 @@
 	</div>
 </div>
 
-{#if modalOpen}
-	<BuildingsModal on:close={() => (modalOpen = false)} />
+{#if position !== undefined}
+	<BuildingsModal {position} company={data.user.id} on:close={() => (position = undefined)} />
 {/if}
