@@ -1,10 +1,7 @@
 <script lang="ts">
-	export let value: number;
+	import { toHoursAndMinutes } from '$lib/helper';
 
-	$: hours = Math.floor(value / 60);
-	$: minutes = value % 60;
+	export let value: number;
 </script>
 
-<span>
-	{hours}h {#if minutes > 0}{minutes}m{/if}
-</span>
+<span class="text-orange-800">{toHoursAndMinutes(value)}</span>

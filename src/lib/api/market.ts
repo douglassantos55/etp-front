@@ -18,7 +18,7 @@ type PurchaseOrder = {
     quantity: number;
 }
 
-export function savePurchase(order: PurchaseOrder): Promise<Result<Order>> {
+export function savePurchase(order: PurchaseOrder): Promise<Result<InventoryItem[]>> {
     return makeAuthPost('market/orders/purchase', order, fetch);
 }
 

@@ -5,6 +5,7 @@
 	import Currency from './Currency.svelte';
 	import Time from './Time.svelte';
 	import BuildingRequirements from './BuildingRequirements.svelte';
+	import Button from './Button.svelte';
 
 	let building: Promise<Building>;
 	const buildings = getBuildings(fetch);
@@ -62,7 +63,9 @@
 			<div class="mt-10">
 				<h4 class="font-semibold uppercase">Requirements</h4>
 
-				<BuildingRequirements {building} />
+				<BuildingRequirements {building} let:missing>
+					<Button disabled={missing > 0}>Construct</Button>
+				</BuildingRequirements>
 			</div>
 		{/await}
 	{/if}

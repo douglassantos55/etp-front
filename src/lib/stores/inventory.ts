@@ -3,15 +3,21 @@ import { writable, type Readable, derived } from "svelte/store"
 
 type InventoryStore = Readable<Inventory> & {
     load(): Promise<void>;
+    add(items: InventoryItem[]): void;
 }
 
-const { subscribe, set } = writable<Inventory>();
+const { subscribe, set, update } = writable<Inventory>();
 
 export const inventory: InventoryStore = {
     subscribe,
     load: async function(this): Promise<void> {
         set(await getCompanyInventory(fetch));
     },
+    add: function(items: InventoryItem[]) {
+        update((inv: Inventory) => ({
+            items: [...inv.items, ...items]
+        }));
+    }
 }
 
 export const stocks: Readable<Record<number, Record<number, number>>> = derived(inventory, function($inventory) {
