@@ -77,12 +77,13 @@
 	$: labor_cost = building.wages_per_hour * duration;
 
 	$: sourcing_cost =
-		(parseInt(qty) *
-			resource.resource.requirements.reduce(function (total: number, req: Requirement) {
-				const sourcingCost = ($costs[req.resource.id] && $costs[req.resource.id][req.quality]) || 0;
-				return total + req.quantity * sourcingCost;
-			}, 0)) /
-		100;
+		parseInt(qty) *
+		resource.resource.requirements.reduce(function (total: number, req: Requirement) {
+			const sourcingCost =
+				($costs[req.resource.id] && $costs[req.resource.id][Math.max(0, parseInt(quality) - 1)]) ||
+				0;
+			return total + req.quantity * sourcingCost;
+		}, 0);
 
 	$: total_cost = labor_cost + sourcing_cost;
 	$: cost_per_unit = total_cost / parseInt(qty);
