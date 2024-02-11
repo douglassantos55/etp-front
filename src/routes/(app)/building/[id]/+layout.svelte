@@ -24,6 +24,7 @@
 	}
 
 	$: rename && input && input.focus();
+	$: disabled = !!data.building.busy_until || !!data.building.completes_at;
 </script>
 
 <div class="container mx-auto px-4 py-12">
@@ -53,12 +54,16 @@
 			<span class="font-medium uppercase">Level {data.building.level}</span>
 		</div>
 
-		<Button on:click={() => (upgrade = true)}>Upgrade</Button>
+		<Button {disabled} on:click={() => (upgrade = true)}>Upgrade</Button>
 	</div>
 
 	<slot />
 
 	{#if upgrade}
-		<UpgradeBuilding building={data.building} on:close={() => (upgrade = false)} />
+		<UpgradeBuilding
+			building={data.building}
+			companyId={data.user.id}
+			on:close={() => (upgrade = false)}
+		/>
 	{/if}
 </div>

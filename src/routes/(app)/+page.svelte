@@ -44,6 +44,12 @@
 						<div class="flex flex-col bg-white items-center justify-center border w-32 h-32">
 							<div>{buildings[i].name} ({buildings[i].level})</div>
 
+							{#if buildings[i].busy_until}
+								<div class="mt-2 text-sm text-center">
+									{parseDateTime(buildings[i].busy_until)}
+								</div>
+							{/if}
+
 							{#if buildings[i].completes_at}
 								<div class="mt-2 text-sm text-center">
 									{parseDateTime(buildings[i].completes_at)}

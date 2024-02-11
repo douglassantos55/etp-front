@@ -9,6 +9,7 @@
 	import { inventory, costs, stocks } from '$lib/stores/inventory';
 	import { onMount } from 'svelte';
 
+	export let disabled = false;
 	export let companyId: number;
 	export let building: CompanyBuilding;
 	export let resource: BuildingResource;
@@ -179,7 +180,7 @@
 		{/each}
 
 		<div class="grid mt-3">
-			<Button disabled={busyUntil || !qty || Object.keys($errors).length > 0}>
+			<Button disabled={disabled || !qty || Object.keys($errors).length > 0}>
 				{busyUntil ? 'Busy until ' + busyUntil.toLocaleString() : 'Produce'}
 			</Button>
 		</div>

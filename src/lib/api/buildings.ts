@@ -19,3 +19,7 @@ export function getBuilding(id: number, fetch: Function): Promise<Building> {
 export function construct(building_id: number, position: number, companyId: number): Promise<Result<CompanyBuilding>> {
     return makeAuthPost(`companies/${companyId}/buildings`, { building_id, position }, fetch);
 }
+
+export function upgrade(buildingId: number, companyId: number): Promise<Result<CompanyBuilding>> {
+    return makeAuthPost(`companies/${companyId}/buildings/${buildingId}/upgrade`, null, fetch);
+}
