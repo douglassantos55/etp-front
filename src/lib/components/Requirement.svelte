@@ -8,8 +8,9 @@
 
 	const errors = useErrors();
 
+	$: qual = Math.max(0, quality - 1);
 	$: total = quantity ? quantity * requirement.quantity : requirement.quantity;
-	$: stock = ($stocks[requirement.resource.id] && $stocks[requirement.resource.id][quality]) || 0;
+	$: stock = ($stocks[requirement.resource.id] && $stocks[requirement.resource.id][qual]) || 0;
 
 	$: error = total > stock;
 	$: diff = total - stock;
@@ -25,7 +26,7 @@
 					'&qty=' +
 					diff +
 					'&quality=' +
-					Math.max(quality - 1, 0) +
+					qual +
 					'">(Purchase on market)</a></span>'
 			);
 		} else {
