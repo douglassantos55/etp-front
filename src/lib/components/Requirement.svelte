@@ -21,9 +21,9 @@
 				requirement.resource.id,
 				'Not enough ' +
 					requirement.resource.name +
-					'. <span class="text-blue-500 text-sm"><a href="/market?resource=' +
+					'. <span class="text-blue-500 text-sm"><a href="/market/' +
 					requirement.resource.id +
-					'&qty=' +
+					'?qty=' +
 					diff +
 					'&quality=' +
 					qual +
