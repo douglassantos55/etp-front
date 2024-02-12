@@ -4,6 +4,7 @@
 	import BuildingsModal from '$lib/components/BuildingsModal.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { format, parseDateTime } from '$lib/helper';
+	import notification from '$lib/stores/notification';
 	import type { PageData } from './$types';
 	export let data: PageData;
 
@@ -23,6 +24,8 @@
 		const result = await purchaseTerrain(position);
 		if (!result.message) {
 			await invalidateAll();
+		} else {
+			notification.add(result.message, 'error');
 		}
 	}
 

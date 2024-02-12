@@ -5,6 +5,7 @@
 	import { user } from '$lib/stores/user';
 	import { format } from '$lib/helper';
 	import type { LayoutData } from './$types';
+	import Notification from '$lib/components/Notification.svelte';
 
 	export let data: LayoutData;
 	let menuVisible = false;
@@ -25,11 +26,7 @@
 		<div class="flex flex-wrap items-center">
 			<div class="inline-flex items-center gap-2.5">
 				<a href="/company">
-					<img
-						src={$user.logo}
-						alt={$user.name}
-						class="w-14 h-14 rounded-full object-cover"
-					/>
+					<img src={$user.logo} alt={$user.name} class="w-14 h-14 rounded-full object-cover" />
 				</a>
 
 				<div class="py-1">
@@ -71,3 +68,5 @@
 </header>
 
 <slot />
+
+<Notification />
