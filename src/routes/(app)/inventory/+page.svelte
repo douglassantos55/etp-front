@@ -1,4 +1,5 @@
 <script lang="ts">
+	import QualityTag from '$lib/components/QualityTag.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -6,7 +7,7 @@
 	let categories: Record<string, Array<InventoryItem>> = {};
 
 	$: {
-		data.inventory.forEach((item: any) => {
+		data.items.forEach((item: any) => {
 			const category = item.resource.category.name;
 			if (!categories[category]) {
 				categories[category] = [];
@@ -23,10 +24,13 @@
 
 			<div class="flex flex-wrap gap-x-6 gap-y-10">
 				{#each categories[name] as item}
-					<a href={`/inventory/${item.resource.id}`}>
-						<img src={item.resource.image} alt={item.resource.name} class="w-24 h-24 mb-2" />
-						<span class="text-xl font-semibold">{item.qty}</span>x {item.resource.name}
-						<div class="text-sm font-bold">{item.sourcing_cost}</div>
+					<a href={`/inventory/${item.resource.id}?quality=${item.quality}`}>
+						<div class="relative w-24 h-24 mb-2">
+							<img src={item.resource.image} alt={item.resource.name} class="w-full h-full" />
+							<QualityTag quality={item.quality} />
+						</div>
+						<span class="text-xl font-semibold">{item.quantity}</span>x {item.resource.name}
+						<div class="text-sm font-bold">{item.cost}</div>
 					</a>
 				{/each}
 			</div>
