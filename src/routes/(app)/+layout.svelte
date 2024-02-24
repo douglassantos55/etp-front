@@ -2,15 +2,18 @@
 	import { onNavigate } from '$app/navigation';
 	import CloseIcon from '$lib/components/CloseIcon.svelte';
 	import HamburgerIcon from '$lib/components/HamburgerIcon.svelte';
-	import { user } from '$lib/stores/user';
+	import { getToken, user } from '$lib/stores/user';
 	import { format } from '$lib/helper';
 	import type { LayoutData } from './$types';
 	import Notification from '$lib/components/Notification.svelte';
+	import * as socket from '$lib/socket';
 
 	export let data: LayoutData;
 	let menuVisible = false;
 
 	$: user.set(data.user);
+
+	socket.connect(getToken());
 
 	function toggleMenu() {
 		menuVisible = !menuVisible;
