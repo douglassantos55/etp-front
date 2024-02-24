@@ -1,18 +1,15 @@
 import { writable, type Writable } from "svelte/store";
 
-type User = {
-    available_cash: number;
-}
-
-type UserStore = Writable<User> & {
+type UserStore = Writable<Company> & {
     incrementCash: (amount: number) => void
     reduceCash: (amount: number) => void
 }
 
-const { subscribe, update, set } = writable<User>({ available_cash: 1000 });
+const { subscribe, update, set } = writable<Company>();
 
 export const user: UserStore = {
     subscribe,
+    update,
     set,
     incrementCash: function(amount: number) {
         update((user: any) => ({
