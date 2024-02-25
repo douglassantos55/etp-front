@@ -107,10 +107,10 @@
 						<tr>
 							<td class="py-2 border-y pe-4">{purchase.order.quality}</td>
 							<td class="py-2 border-y px-4 text-right">{purchase.quantity}</td>
-							<td class="py-2 border-y px-4 text-right">{purchase.order.price}</td>
-							<td class="py-2 border-y px-4 text-right"
-								>{purchase.order.price * purchase.quantity}</td
-							>
+							<td class="py-2 border-y px-4 text-right">{format(purchase.order.price)}</td>
+							<td class="py-2 border-y px-4 text-right">
+								{format(purchase.order.price * purchase.quantity)}
+							</td>
 							<td class="py-2 border-y px-4 w-48 text-right">
 								<Button type="button" on:click={() => repurchase(purchase)}>Repurchase</Button>
 							</td>
