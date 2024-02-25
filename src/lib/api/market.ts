@@ -25,3 +25,14 @@ export function savePurchase(order: PurchaseOrder): Promise<Result<InventoryItem
 export function getRecentPurchases(resourceId: number, fetch: Function): Promise<Purchase[]> {
     return makeAuthGet<Purchase[]>(`market/purchases/me?resource=${resourceId}`, fetch);
 }
+
+type PlaceOrder = {
+    quantity: number;
+    price: number;
+    quality: number;
+    resource_id: number;
+}
+
+export function placeOrder(order: PlaceOrder): Promise<Result<Order>> {
+    return makeAuthPost('market/orders', order, fetch)
+}
