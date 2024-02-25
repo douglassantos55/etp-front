@@ -3,6 +3,7 @@
 	import ResourcePrice from './ResourcePrice.svelte';
 	import { costs, stocks } from '$lib/stores/inventory';
 	import { format } from '$lib/helper';
+	import QualityTag from './QualityTag.svelte';
 
 	export let requirement: Requirement;
 
@@ -29,12 +30,18 @@
 
 <tr>
 	<td>
-		<img
-			src={requirement.resource.image}
-			class="w-8 h-8 inline-block"
-			alt={requirement.resource.name}
-		/>
-		x{requirement.quantity} @Q{requirement.quality}
+		<div class="flex items-center gap-2">
+			<figure class="relative w-12 h-12 inline-block">
+				<img
+					class="w-full h-full"
+					alt={requirement.resource.name}
+					src={requirement.resource.image}
+				/>
+				<QualityTag size="xs" quality={requirement.quality} />
+			</figure>
+
+			<span>x{requirement.quantity}</span>
+		</div>
 	</td>
 
 	<td class="text-right">

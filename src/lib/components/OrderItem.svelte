@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { format } from "$lib/helper";
+	import { format } from '$lib/helper';
+	import QualityTag from './QualityTag.svelte';
 
 	export let order: Order;
 	export let current: number;
@@ -10,7 +11,7 @@
 		<div class="flex items-center">
 			<div class="relative w-12 h-12 mr-3">
 				<img src={order.company.logo} alt={order.company.name} />
-				<span class="top-0 right-1 absolute text-white">{order.quality}</span>
+				<QualityTag size="xs" quality={order.quality} />
 			</div>
 			<span class="hidden sm:inline-block">{order.company.name}</span>
 		</div>

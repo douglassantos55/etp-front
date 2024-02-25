@@ -119,7 +119,7 @@
 				<p class="uppercase font-semibold mb-2">{resource.resource.name}</p>
 
 				<p>Production/h: {resource.qty_per_hour}</p>
-				<p>Wages/h: {building.wages_per_hour}</p>
+				<p>Wages/h: {format(building.wages_per_hour)}</p>
 			</div>
 		</div>
 
