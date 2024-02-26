@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import Button from '$lib/components/Button.svelte';
+	import { format } from '$lib/helper';
 
 	export let data: PageData;
 </script>
@@ -103,26 +104,35 @@
 			<div>
 				<h2 class="text-xl uppercase font-semibold tracking-tight mb-4">{category.name}</h2>
 
-				<div class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-					{#each category.resources as resource}
-						<div>
-							<img src={resource.image} alt={resource.name} class="w-32 h-32 mb-2" />
-							<span class="uppercase font-semibold">{resource.name}</span>
-
-							<div class="rounded-xl bg-stone-100 h-2 w-32 mt-2 mb-3">
-								<div class="rounded-xl bg-teal-500 h-2 w-20" />
-							</div>
-
+				<div
+					class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+				>
+					{#if category.resources}
+						{#each category.resources as resource}
 							<div>
-								<p>Investment: <span class="tracking-tight">$1,350.00</span></p>
-								<p class="mb-3">
-									Duration: <span class="text-teal-500 tracking-tight">24 hr</span>
-								</p>
+								<img src={resource.image} alt={resource.name} class="w-32 h-32 mb-2" />
+								<span class="uppercase font-semibold">{resource.name}</span>
 
-								<Button>Research</Button>
+								<div class="rounded-xl bg-stone-100 h-2 w-32 mt-2 mb-3">
+									<div class="rounded-xl bg-teal-500 h-2" style:width="{resource.patents}%" />
+								</div>
+
+								<div>
+									<p>
+										Investment: <span class="tracking-tight">{format(resource.investment)}</span>
+									</p>
+									<p class="mb-3">
+										Duration:
+										<span class="text-teal-500 tracking-tight">
+											{resource.duration} hrs
+										</span>
+									</p>
+
+									<Button>Research</Button>
+								</div>
 							</div>
-						</div>
-					{/each}
+						{/each}
+					{/if}
 				</div>
 			</div>
 		{/each}

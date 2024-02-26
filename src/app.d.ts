@@ -23,6 +23,9 @@ declare global {
         image: string;
         category: Category;
         requirements: Array<Requirement>;
+        patents: number;
+        investment: number;
+        duration: number;
     }
 
     interface Category {
