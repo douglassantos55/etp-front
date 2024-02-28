@@ -1,102 +1,55 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import Staff from '$lib/components/Staff.svelte';
 	import Button from '$lib/components/Button.svelte';
-	import { format } from '$lib/helper';
+	import ResearchResource from '$lib/components/ResearchResource.svelte';
+	import { findExperienced, findGraduate } from '$lib/api/research';
+	import notification from '$lib/stores/notification';
+	import { invalidateAll } from '$app/navigation';
+	import StaffSearch from '$lib/components/StaffSearch.svelte';
 
 	export let data: PageData;
+
+	async function searchGraduate() {
+		const result = await findGraduate();
+		if (result.message) {
+			notification.add(result.message, 'error');
+		} else {
+			await invalidateAll();
+		}
+	}
+
+	async function searchExperienced() {
+		const result = await findExperienced();
+		if (result.message) {
+			notification.add(result.message, 'error');
+		} else {
+			await invalidateAll();
+		}
+	}
 </script>
 
 <div class="container px-4 py-12 mx-auto">
 	<div class="flex items-center mb-4">
-		<h2 class="text-xl uppercase font-semibold tracking-tight">Staff (4/10)</h2>
-		<div class="ml-auto">
-			<Button>Hire staff</Button>
+		<h2 class="text-xl uppercase font-semibold tracking-tight">Staff ({data.staff.length}/10)</h2>
+		<div class="flex items-center ml-auto gap-4">
+			<Button on:click={searchGraduate}>Search for graduate</Button>
+			<Button on:click={searchExperienced}>Search for experienced</Button>
 		</div>
 	</div>
 
 	<div class="grid gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-		<a href={`/research/staff/${1}`} class="px-3 py-4 shadow-lg border border-gray-100">
-			<div class="flex items-center gap-3">
-				<img src="https://picsum.photos/100" class="w-14 h-14 inline-block" alt="John Doe" />
+		{#if data.staff.length > 0 || data.searches.length > 0}
+			{#each data.staff as staff}
+				<Staff {staff} />
+			{/each}
 
-				<div class="flex flex-col flex-wrap">
-					<h3 class="font-semibold">John Doe</h3>
-					<p>$ 1,000.00</p>
-
-					<div class="rounded-xl bg-stone-100 h-2 w-28 mt-1">
-						<div class="rounded-xl bg-teal-500 h-2 w-10" />
-					</div>
-				</div>
-
-				<div class="ml-auto text-right">
-					<Button>Train</Button>
-				</div>
-			</div>
-
-			<p class="mt-4 py-1 px-4 rounded-lg text-sm bg-yellow-200">Was offered $ 10,000.00</p>
-		</a>
-
-		<a href={`/research/staff/${5}`} class="px-3 py-4 shadow-lg border border-gray-100">
-			<div class="flex items-center gap-3">
-				<img src="https://picsum.photos/100" class="w-14 h-14 inline-block" alt="John Doe" />
-
-				<div class="flex flex-col flex-wrap">
-					<h3 class="font-semibold">John Doe</h3>
-					<p>$ 5,000.00</p>
-
-					<div class="rounded-xl bg-stone-100 h-2 w-28 mt-1">
-						<div class="rounded-xl bg-teal-500 h-2 w-10" />
-					</div>
-				</div>
-
-				<div class="ml-auto text-right">
-					<p class="text-sm leading-snug">Training ends in</p>
-					<span class="text-teal-500 leading-snug tracking-tight">20 hrs</span>
-				</div>
-			</div>
-
-			<p class="mt-4 py-1 px-4 rounded-lg text-sm bg-yellow-200">Requested a raise of 10%</p>
-		</a>
-
-		<a href={`/research/staff/${6}`} class="px-3 py-4 shadow-lg border border-gray-100">
-			<div class="flex items-center gap-3">
-				<img src="https://picsum.photos/100" class="w-14 h-14 inline-block" alt="John Doe" />
-
-				<div class="flex flex-col flex-wrap">
-					<h3 class="font-semibold">John Doe</h3>
-					<p>$ 5,000.00</p>
-
-					<div class="rounded-xl bg-stone-100 h-2 w-28 mt-1">
-						<div class="rounded-xl bg-teal-500 h-2 w-10" />
-					</div>
-				</div>
-
-				<div class="ml-auto text-right">
-					<p class="text-sm leading-snug">Training ends in</p>
-					<span class="text-teal-500 leading-snug tracking-tight">3 mins</span>
-				</div>
-			</div>
-		</a>
-
-		<a href={`/research/staff/${6}`} class="px-3 py-4 shadow-lg border border-gray-100">
-			<div class="flex items-center gap-3">
-				<img src="https://picsum.photos/100" class="w-14 h-14 inline-block" alt="John Doe" />
-
-				<div class="flex flex-col flex-wrap">
-					<h3 class="font-semibold">John Doe</h3>
-					<p>$ 5,000.00</p>
-
-					<div class="rounded-xl bg-stone-100 h-2 w-28 mt-1">
-						<div class="rounded-xl bg-teal-500 h-2 w-10" />
-					</div>
-				</div>
-
-				<div class="ml-auto text-right">
-					<p class="text-sm leading-snug">Training ends in</p>
-					<span class="text-teal-500 leading-snug tracking-tight">3 secs</span>
-				</div>
-			</div>
-		</a>
+			{#each data.searches as search}
+				<StaffSearch {search} />
+			{/each}
+		{:else}
+			<p>No staff hired yet.</p>
+		{/if}
 	</div>
 
 	<div class="mt-12 space-y-10">
@@ -109,28 +62,7 @@
 				>
 					{#if category.resources}
 						{#each category.resources as resource}
-							<div>
-								<img src={resource.image} alt={resource.name} class="w-32 h-32 mb-2" />
-								<span class="uppercase font-semibold">{resource.name}</span>
-
-								<div class="rounded-xl bg-stone-100 h-2 w-32 mt-2 mb-3">
-									<div class="rounded-xl bg-teal-500 h-2" style:width="{resource.patents}%" />
-								</div>
-
-								<div>
-									<p>
-										Investment: <span class="tracking-tight">{format(resource.investment)}</span>
-									</p>
-									<p class="mb-3">
-										Duration:
-										<span class="text-teal-500 tracking-tight">
-											{resource.duration} hrs
-										</span>
-									</p>
-
-									<Button>Research</Button>
-								</div>
-							</div>
+							<ResearchResource {resource} />
 						{/each}
 					{/if}
 				</div>

@@ -131,6 +131,26 @@ declare global {
         principal_paid: number;
         delayed_payments: number;
     }
+
+    interface Staff {
+        id: number;
+        name: string;
+        skill: number;
+        talent: number;
+        salary: number;
+        status: number;
+        offer?: number;
+        raise?: number;
+        poacher_id?: number;
+        employer_id: number;
+        training_duration?: number;
+    }
+
+    interface Search {
+        id: number;
+        expertise: number;
+        finishes_at: string;
+    }
 }
 
 export { };
