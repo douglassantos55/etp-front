@@ -16,11 +16,11 @@
 
 <script lang="ts">
 	import { format } from '$lib/helper';
-	import Time from '$lib/components/Time.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { hireStaff } from '$lib/api/research';
 	import notification from '$lib/stores/notification';
 	import { invalidateAll } from '$app/navigation';
+	import RelativeTime from '$lib/components/RelativeTime.svelte';
 
 	export let staff: Staff;
 </script>
@@ -42,22 +42,20 @@
 			<div class="ml-auto text-right">
 				<Button on:click={() => hire(staff.id)}>Hire</Button>
 			</div>
+		{:else if staff.busy_until}
+			<div class="ml-auto text-right">
+				<p class="text-sm leading-snug">Training ends in</p>
+
+				<span class="text-teal-500 leading-snug tracking-tight">
+					<RelativeTime value={staff.busy_until} />
+				</span>
+			</div>
 		{:else}
 			<div class="ml-auto text-right">
 				<Button>Train</Button>
 			</div>
 		{/if}
 	</div>
-
-	{#if staff.training_duration}
-		<div class="ml-auto text-right">
-			<p class="text-sm leading-snug">Training ends in</p>
-
-			<span class="text-teal-500 leading-snug tracking-tight">
-				<Time value={staff.training_duration} />
-			</span>
-		</div>
-	{/if}
 
 	{#if staff.offer}
 		<p class="mt-4 py-1 px-4 rounded-lg text-sm bg-yellow-200">

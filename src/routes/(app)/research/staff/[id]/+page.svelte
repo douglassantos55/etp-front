@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	import Input from '$lib/components/Input.svelte';
+	import RelativeTime from '$lib/components/RelativeTime.svelte';
 	import { Status, hire } from '$lib/components/Staff.svelte';
 	import { format, parseDateTime } from '$lib/helper';
 	import type { PageData } from './$types';
@@ -28,9 +29,17 @@
 				<div class="ml-auto text-right">
 					<Button on:click={() => hire(data.staff.id)}>Hire</Button>
 				</div>
+			{:else if data.staff.busy_until}
+				<div class="ml-auto text-right">
+					<p class="text-sm leading-snug">Training ends in</p>
+
+					<span class="text-teal-500 leading-snug tracking-tight">
+						<RelativeTime value={data.staff.busy_until} />
+					</span>
+				</div>
 			{:else}
 				<div class="ml-auto text-right">
-					<Button>Train</Button>
+					<Button on:click={() => train(data.staff.id)}>Train</Button>
 				</div>
 			{/if}
 		</div>
@@ -64,88 +73,31 @@
 		<h3 class="mb-4 uppercase font-semibold">Recent trainings</h3>
 
 		<div class="inline-grid gap-3">
-			{#if $page.params.id == '1'}
-				<p>John Doe has not received any training yet.</p>
+			{#if data.staff.trainings.length > 0}
+				{#each data.staff.trainings as training}
+					<div class="pt-2 pb-3 divide-x inline-flex items-center bg-gray-100">
+						<div class="px-4">
+							<span class="block text-sm text-gray-500">Started</span>
+							{training.started_at}
+						</div>
+
+						<div class="px-4">
+							<span class="block text-sm text-gray-500">Completed</span>
+							{parseDateTime(training.completed_at ?? '')}
+						</div>
+
+						<div class="px-4">
+							<span class="block text-sm text-gray-500">Result</span>
+							<span
+								class="px-2 py-1 inline-block rounded-full text-white font-semibold text-xs bg-teal-500"
+							>
+								+{training.result}
+							</span>
+						</div>
+					</div>
+				{/each}
 			{:else}
-				<div class="pt-2 pb-3 divide-x inline-flex items-center bg-gray-100">
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">Start</span>
-						15/10/2023
-					</div>
-
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">End</span>
-						16/10/2023
-					</div>
-
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">Result</span>
-						<span
-							class="px-2 py-1 inline-block rounded-full text-white font-semibold text-xs bg-teal-500"
-							>+125</span
-						>
-					</div>
-				</div>
-
-				<div class="pt-2 pb-3 divide-x inline-flex items-center bg-gray-100">
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">Start</span>
-						14/10/2023
-					</div>
-
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">End</span>
-						15/10/2023
-					</div>
-
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">Result</span>
-						<span
-							class="px-2 py-1 inline-block rounded-full text-white font-semibold text-xs bg-teal-500"
-							>+25</span
-						>
-					</div>
-				</div>
-
-				<div class="pt-2 pb-3 divide-x inline-flex items-center bg-gray-100">
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">Start</span>
-						13/10/2023
-					</div>
-
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">End</span>
-						14/10/2023
-					</div>
-
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">Result</span>
-						<span
-							class="px-2 py-1 inline-block rounded-full text-white font-semibold text-xs bg-teal-500"
-							>+15</span
-						>
-					</div>
-				</div>
-
-				<div class="pt-2 pb-3 divide-x inline-flex items-center bg-gray-100">
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">Start</span>
-						12/10/2023
-					</div>
-
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">End</span>
-						13/10/2023
-					</div>
-
-					<div class="px-4">
-						<span class="block text-sm text-gray-500">Result</span>
-						<span
-							class="px-2 py-1 inline-block rounded-full text-white font-semibold text-xs bg-teal-500"
-							>+105</span
-						>
-					</div>
-				</div>
+				<p>{data.staff.name} has not completed any trainings yet.</p>
 			{/if}
 		</div>
 	</div>
