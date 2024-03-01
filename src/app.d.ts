@@ -143,7 +143,16 @@ declare global {
         raise?: number;
         poacher_id?: number;
         employer_id: number;
-        training_duration?: number;
+        trainings: Training[];
+        busy_until?: string;
+    }
+
+    interface Training {
+        id: number;
+        result: number;
+        started_at: string;
+        finishes_at?: string;
+        completed_at?: string;
     }
 
     interface Search {

@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import Button from '$lib/components/Button.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import { Status, hire } from '$lib/components/Staff.svelte';
-	import Time from '$lib/components/Time.svelte';
-	import { format } from '$lib/helper';
+	import { format, parseDateTime } from '$lib/helper';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -34,14 +32,6 @@
 				<div class="ml-auto text-right">
 					<Button>Train</Button>
 				</div>
-			{/if}
-
-			{#if data.staff.training_duration}
-				<p class="text-sm leading-snug">Training ends in</p>
-
-				<span class="text-teal-500 leading-snug tracking-tight">
-					<Time value={data.staff.training_duration} />
-				</span>
 			{/if}
 		</div>
 	</div>
