@@ -1,3 +1,19 @@
+<script context="module" lang="ts">
+	export enum Status {
+		PENDING,
+		HIRED
+	}
+
+	export async function hire(id: number) {
+		const result = await hireStaff(id);
+		if (result.message) {
+			notification.add(result.message, 'error');
+		} else {
+			await invalidateAll();
+		}
+	}
+</script>
+
 <script lang="ts">
 	import { format } from '$lib/helper';
 	import Time from '$lib/components/Time.svelte';
@@ -6,21 +22,7 @@
 	import notification from '$lib/stores/notification';
 	import { invalidateAll } from '$app/navigation';
 
-	enum Status {
-		PENDING,
-		HIRED
-	}
-
 	export let staff: Staff;
-
-	async function hire() {
-		const result = await hireStaff(staff.id);
-		if (result.message) {
-			notification.add(result.message, 'error');
-		} else {
-			await invalidateAll();
-		}
-	}
 </script>
 
 <a href={`/research/staff/${staff.id}`} class="px-3 py-4 shadow-lg border border-gray-100">
@@ -38,7 +40,7 @@
 
 		{#if staff.status == Status.PENDING}
 			<div class="ml-auto text-right">
-				<Button on:click={hire}>Hire</Button>
+				<Button on:click={() => hire(staff.id)}>Hire</Button>
 			</div>
 		{:else}
 			<div class="ml-auto text-right">

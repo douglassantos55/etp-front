@@ -2,6 +2,12 @@
 	import { page } from '$app/stores';
 	import Button from '$lib/components/Button.svelte';
 	import Input from '$lib/components/Input.svelte';
+	import { Status, hire } from '$lib/components/Staff.svelte';
+	import Time from '$lib/components/Time.svelte';
+	import { format } from '$lib/helper';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 </script>
 
 <div class="container mx-auto py-12 px-4">
@@ -11,20 +17,31 @@
 		<img src="https://picsum.photos/100" class="w-16 h-16" alt="John Doe" />
 
 		<div class="flex flex-col flex-wrap">
-			<h2 class="font-bold text-lg">Jeniffer Smith</h2>
-			<p>$ 1,000.00</p>
+			<h2 class="font-bold text-lg">{data.staff.name}</h2>
+			<p>{format(data.staff.salary)}</p>
 
 			<div class="rounded-xl bg-stone-100 h-2 w-28 mt-1">
-				<div class="rounded-xl bg-teal-500 h-2 w-10" />
+				<div class="rounded-xl bg-teal-500 h-2" style:width="{data.staff.skill}%" />
 			</div>
 		</div>
 
 		<div class="ml-auto text-right">
-			{#if $page.params.id == '1'}
-				<Button>Train</Button>
+			{#if data.staff.status == Status.PENDING}
+				<div class="ml-auto text-right">
+					<Button on:click={() => hire(data.staff.id)}>Hire</Button>
+				</div>
 			{:else}
+				<div class="ml-auto text-right">
+					<Button>Train</Button>
+				</div>
+			{/if}
+
+			{#if data.staff.training_duration}
 				<p class="text-sm leading-snug">Training ends in</p>
-				<span class="text-teal-500 leading-snug tracking-tight">20 hrs</span>
+
+				<span class="text-teal-500 leading-snug tracking-tight">
+					<Time value={data.staff.training_duration} />
+				</span>
 			{/if}
 		</div>
 	</div>
@@ -41,7 +58,17 @@
 		</div>
 	</div>
 
-	<p class="mt-4 py-1 px-4 rounded-lg bg-yellow-200">Was offered $ 10,000.00</p>
+	{#if data.staff.offer}
+		<p class="mt-4 py-1 px-4 rounded-lg text-sm bg-yellow-200">
+			Was offered {format(data.staff.offer)}
+		</p>
+	{/if}
+
+	{#if data.staff.raise}
+		<p class="mt-4 py-1 px-4 rounded-lg text-sm bg-yellow-200">
+			Requested a raise of {data.staff.raise}%
+		</p>
+	{/if}
 
 	<div class="mt-8">
 		<h3 class="mb-4 uppercase font-semibold">Recent trainings</h3>

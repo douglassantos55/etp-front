@@ -12,6 +12,10 @@ export function getSearches(fetch: Function): Promise<Search[]> {
     return makeAuthGet('research/staff/searches', fetch);
 }
 
+export function getStaffMember(id: number, fetch: Function): Promise<Staff> {
+    return makeAuthGet(`research/staff/me/${id}`, fetch);
+}
+
 export function cancelSearch(id: number): Promise<Result<void>> {
     return makeAuthDelete(`research/staff/searches/${id}`, fetch);
 }
