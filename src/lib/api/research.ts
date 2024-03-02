@@ -31,3 +31,7 @@ export function findExperienced(): Promise<Result<void>> {
 export function hireStaff(id: number): Promise<Result<Staff>> {
     return makeAuthPost(`research/staff/${id}/hire`, null, fetch);
 }
+
+export function trainStaff(id: number): Promise<Result<Training>> {
+    return makeAuthPost(`research/staff/${id}/train`, null, fetch);
+}

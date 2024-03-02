@@ -2,7 +2,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import RelativeTime from '$lib/components/RelativeTime.svelte';
-	import { Status, hire } from '$lib/components/Staff.svelte';
+	import { Status, hire, train } from '$lib/components/Staff.svelte';
 	import { format, parseDateTime } from '$lib/helper';
 	import type { PageData } from './$types';
 

@@ -4,6 +4,15 @@
 		HIRED
 	}
 
+	export async function train(id: number) {
+		const result = await trainStaff(id);
+		if (result.message) {
+			notification.add(result.message, 'error');
+		} else {
+			await invalidateAll();
+		}
+	}
+
 	export async function hire(id: number) {
 		const result = await hireStaff(id);
 		if (result.message) {
@@ -17,7 +26,7 @@
 <script lang="ts">
 	import { format } from '$lib/helper';
 	import Button from '$lib/components/Button.svelte';
-	import { hireStaff } from '$lib/api/research';
+	import { hireStaff, trainStaff } from '$lib/api/research';
 	import notification from '$lib/stores/notification';
 	import { invalidateAll } from '$app/navigation';
 	import RelativeTime from '$lib/components/RelativeTime.svelte';
