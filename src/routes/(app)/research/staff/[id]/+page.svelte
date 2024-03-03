@@ -91,7 +91,7 @@
 							<span
 								class="px-2 py-1 inline-block rounded-full text-white font-semibold text-xs bg-teal-500"
 							>
-								+{training.result}
+								+{training.result || 0}
 							</span>
 						</div>
 					</div>

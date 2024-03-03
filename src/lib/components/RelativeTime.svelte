@@ -3,7 +3,9 @@
 
 	export let value: string;
 
-	$: diff = (new Date(value).getTime() - Date.now()) / 1000 / 60;
+	$: diff = (new Date(value).getTime() - Date.now()) / 1000;
+
+	setInterval(() => diff--, 1000);
 </script>
 
-<Time value={Math.floor(diff)} />
+<Time seconds={Math.floor(diff)} />

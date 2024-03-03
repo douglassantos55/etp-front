@@ -56,7 +56,7 @@
 					<p>Administration/h: <Currency value={building.admin_per_hour} /></p>
 					<p>Wages/h: <Currency value={building.wages_per_hour} /></p>
 					<p>Maintenance/h: <Currency value={building.maintenance_per_hour} /></p>
-					<p>Downtime: <Time value={building.downtime} /></p>
+					<p>Downtime: <Time seconds={building.downtime * 60} /></p>
 				</div>
 			</div>
 

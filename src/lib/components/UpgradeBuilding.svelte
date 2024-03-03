@@ -22,7 +22,7 @@
 <Modal on:close>
 	<h3 class="uppercase text-xl font-bold">Upgrade building</h3>
 	<p class="mt-5">Production increase: <span class="font-semibold text-blue-700">100%</span></p>
-	<p>Downtime: <Time value={building.downtime} /></p>
+	<p>Downtime: <Time seconds={building.downtime * 60} /></p>
 
 	<BuildingRequirements {building} let:missing>
 		<div class="space-x-4 space-y-4 text-center">
