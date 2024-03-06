@@ -26,6 +26,7 @@ declare global {
         patents: number;
         investment: number;
         duration: number;
+        research_until?: string;
     }
 
     interface Category {
@@ -145,6 +146,8 @@ declare global {
         employer_id: number;
         trainings: Training[];
         busy_until?: string;
+        training_until?: string;
+        on_strike_until?: string;
     }
 
     interface Training {

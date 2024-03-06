@@ -62,7 +62,7 @@
 				>
 					{#if category.resources}
 						{#each category.resources as resource}
-							<ResearchResource {resource} />
+							<ResearchResource {resource} members={data.staff} />
 						{/each}
 					{/if}
 				</div>

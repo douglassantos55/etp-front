@@ -51,9 +51,17 @@
 			<div class="ml-auto text-right">
 				<Button on:click={() => hire(staff.id)}>Hire</Button>
 			</div>
-		{:else if staff.busy_until}
+		{:else if staff.training_until}
 			<div class="ml-auto text-right">
 				<p class="text-sm leading-snug">Training ends in</p>
+
+				<span class="text-teal-500 leading-snug tracking-tight">
+					<RelativeTime value={staff.training_until} />
+				</span>
+			</div>
+		{:else if staff.busy_until}
+			<div class="ml-auto text-right">
+				<p class="text-sm leading-snug">Available in</p>
 
 				<span class="text-teal-500 leading-snug tracking-tight">
 					<RelativeTime value={staff.busy_until} />

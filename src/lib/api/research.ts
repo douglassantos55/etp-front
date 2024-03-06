@@ -35,3 +35,7 @@ export function hireStaff(id: number): Promise<Result<Staff>> {
 export function trainStaff(id: number): Promise<Result<Training>> {
     return makeAuthPost(`research/staff/${id}/train`, null, fetch);
 }
+
+export function startResearch(resourceId: number, staffIds: number[]): Promise<Result<void>> {
+    return makeAuthPost(`research/${resourceId}`, { staff_ids: staffIds }, fetch);
+}
