@@ -1,12 +1,32 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
+	import { giveRaise } from '$lib/api/research';
 	import Button from '$lib/components/Button.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import RelativeTime from '$lib/components/RelativeTime.svelte';
 	import { Status, hire, train } from '$lib/components/Staff.svelte';
+	import { createErrors } from '$lib/errors';
 	import { format, parseDateTime } from '$lib/helper';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+
+	let salary: string;
+	let errors = createErrors();
+
+	async function raiseSalary() {
+		const result = await giveRaise(data.staff.id, +salary * 100);
+
+		if (result.errors) {
+			errors.set(result.errors);
+		} else if (result.message) {
+			errors.set({ salary: result.message });
+		} else {
+			salary = '';
+            errors.remove('salary');
+			await invalidateAll();
+		}
+	}
 </script>
 
 <div class="container mx-auto py-12 px-4">
@@ -45,17 +65,21 @@
 		</div>
 	</div>
 
-	<div class="flex items-center gap-4">
-		<div class="">
+	<form class="flex gap-4" on:submit|preventDefault={raiseSalary}>
+		<div class="max-w-52">
 			<label for="amount" class="inline-block mb-1">New salary</label>
-			<Input id="amount" type="number" />
+			<Input id="amount" type="number" step="0.01" bind:value={salary} />
+
+			{#if $errors.salary}
+				<span class="text-red-500">{$errors.salary}</span>
+			{/if}
 		</div>
 
 		<div class="flex-shrink-0">
 			<p>&nbsp;</p>
-			<Button>Give raise</Button>
+			<Button type="submit">Give raise</Button>
 		</div>
-	</div>
+	</form>
 
 	{#if data.staff.offer}
 		<p class="mt-4 py-1 px-4 rounded-lg text-sm bg-yellow-200">

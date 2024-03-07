@@ -39,3 +39,7 @@ export function trainStaff(id: number): Promise<Result<Training>> {
 export function startResearch(resourceId: number, staffIds: number[]): Promise<Result<void>> {
     return makeAuthPost(`research/${resourceId}`, { staff_ids: staffIds }, fetch);
 }
+
+export function giveRaise(staffId: number, newSalary: number): Promise<Result<Staff>> {
+    return makeAuthPost(`research/staff/${staffId}/raise`, { salary: newSalary }, fetch);
+}
